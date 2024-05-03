@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 #. "${0%/*}/h"
 
-npm --prefix ecommerce-application run lint:staged
+npm --prefix src run lint:staged
