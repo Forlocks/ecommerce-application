@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 #. "${0%/*}/h"
 
-npm run lint:staged
+npm src run lint:staged
