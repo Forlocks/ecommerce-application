@@ -8,8 +8,8 @@
     "dev": "webpack serve --env dev",
     "lint": "eslint \"src/**/*.ts\"",
     "lint:fix": "eslint \"src/**/*.ts\" --fix",
-    "ci:format": "prettier \"src/**/*.ts\" --check",
-    "format": "prettier \"src/**/*.ts\" --write",
+    "prettier": "prettier \"src/**/*.ts\" --check",
+    "prettier:format": "prettier \"src/**/*.ts\" --write",
     "prepare": "cd .. && husky fun-chat/.husky",
     "lint:staged": "lint-staged",
     "validate-branch-name": "validate-branch-name"
