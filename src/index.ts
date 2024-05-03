@@ -1,3 +1,3 @@
 import './index.scss';
 
-'test huskystest huskytest huskytest huskytest huskytest huskytest huskytest huskytest huskytest huskytest huskytest huskytest huskytest huskytest huskytest huskytest huskytest huskytest husky'
+const a = 'test huskystest huskytest huskytest huskytest huskytest huskytest huskytest huskytest huskytest huskytest huskytest huskytest huskytest huskytest huskytest huskytest huskytest huskytest husky'

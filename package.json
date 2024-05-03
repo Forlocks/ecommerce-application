@@ -10,7 +10,7 @@
     "lint:fix": "eslint \"src/**/*.ts\" --fix",
     "prettier": "prettier \"src/**/*.ts\" --check",
     "prettier:format": "prettier \"src/**/*.ts\" --write",
-    "prepare": "cd .. && husky fun-chat/.husky",
+    "prepare": "cd .. && husky .husky",
     "lint:staged": "lint-staged",
     "validate-branch-name": "validate-branch-name"
   },
