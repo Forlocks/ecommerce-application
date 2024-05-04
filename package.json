@@ -8,6 +8,8 @@
     "dev": "webpack serve --env dev",
     "lint": "eslint \"src/**/*.tsx\"",
     "lint:fix": "eslint \"src/**/*.tsx\" --fix",
+    "prettier": "prettier \"src/**/*.tsx\" --check",
+    "prettier:format": "prettier \"src/**/*.tsx\" --write",
     "prepare": "husky && echo npm run lint-staged > .husky/pre-commit && echo npm run validate-branch-name > .husky/pre-push",
     "lint-staged": "lint-staged",
     "validate-branch-name": "validate-branch-name"
