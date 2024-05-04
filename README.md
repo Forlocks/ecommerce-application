@@ -38,3 +38,10 @@ The application is powered by CommerceTools, a leading provider of commerce solu
 
 - _pre-commit_ – the _lint-staged_ script is triggered
 - _pre-push_ – the _validate-branch-name_ script is triggered
+
+## Getting started with your local repository
+
+1) Clone the repository - either through _the vscode button_ or through _git clone_
+2) Go to the current sprint branch - _git checkout release/(release name)_
+3) Add the latest changes - _git pull_
+4) Install all dependencies to work - _npm install_
