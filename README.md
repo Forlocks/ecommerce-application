@@ -26,7 +26,7 @@ The application is powered by CommerceTools, a leading provider of commerce solu
 - _dev-build_ - creates a dev build in the dist folder
 - _dev_ - starts the server on localhost
 - _lint_ - runs ESLint checks
-- _lint:fix_ – runs checks and auto-fixes for simple ESLint errors
+- _lint:fix_ – runs checks and fixes for simple ESLint errors
 - _prettier_ – runs Prettier checks
 - _prettier:format_ - runs checks and fixes for simple Prettier errors
 - _test_ – starts execution of tests (can be limited to a specific file)
