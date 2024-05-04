@@ -19,3 +19,22 @@ The application is powered by CommerceTools, a leading provider of commerce solu
 - ESLint
 - Prettier
 - Husky
+
+## Scripts descriprion
+
+- _prod-build_ - creates a prod build in the dist folder
+- _dev-build_ - creates a dev build in the dist folder
+- _dev_ - starts the server on localhost
+- _lint_ - runs ESLint checks
+- _lint:fix_ – runs checks and auto-fixes for simple ESLint errors
+- _prettier_ – runs Prettier checks
+- _prettier:format_ - runs checks and fixes for simple Prettier errors
+- _test_ – starts execution of tests (can be limited to a specific file)
+- _prepare_ – initializes the husky operation
+- _lint-staged_ - runs lint:fix and prettier:format on files from src in stage area
+- _validate-branch-name_ – checks the branch (you cannot push in main/develop/release)
+
+## Husky hooks description
+
+- _pre-commit_ – the _lint-staged_ script is triggered
+- _pre-push_ – the _validate-branch-name_ script is triggered
