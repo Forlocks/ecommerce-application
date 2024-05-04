@@ -7,10 +7,10 @@
     "prod-build": "webpack --env prod",
     "dev-build": "webpack --env dev",
     "dev": "webpack serve --env dev",
-    "lint": "eslint \"src/**/*.ts\"",
-    "lint:fix": "eslint \"src/**/*.ts\" --fix",
-    "prettier": "prettier \"src/**/*.ts\" --check",
-    "prettier:format": "prettier \"src/**/*.ts\" --write",
+    "lint": "eslint \"src/**/*.tsx\"",
+    "lint:fix": "eslint \"src/**/*.tsx\" --fix",
+    "prettier": "prettier \"src/**/*.tsx\" --check",
+    "prettier:format": "prettier \"src/**/*.tsx\" --write",
     "prepare": "husky && echo npm run lint-staged > .husky/pre-commit && echo npm run validate-branch-name > .husky/pre-push",
     "lint-staged": "lint-staged",
     "validate-branch-name": "validate-branch-name"
@@ -19,6 +19,8 @@
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "@types/jest": "^29.5.12",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "clean-webpack-plugin": "^4.0.0",
@@ -45,7 +47,7 @@
     "style-loader": "^3.3.4",
     "ts-jest": "^29.1.2",
     "ts-loader": "^9.5.1",
-    "typescript": "^5.4.2",
+    "typescript": "^5.4.5",
     "validate-branch-name": "^1.3.0",
     "webpack": "^5.90.3",
     "webpack-cli": "^5.1.4",
@@ -53,12 +55,16 @@
   },
   "lint-staged": {
     "*.ts": [
-      "eslint \"src/**/*.ts\" --fix",
-      "prettier \"src/**/*.ts\" --write"
+      "eslint \"src/**/*.tsx\" --fix",
+      "prettier \"src/**/*.tsx\" --write"
     ]
   },
   "validate-branch-name": {
     "pattern": "^(?!(main|develop|release)).*$",
     "errorMsg": "You can't push in this branch"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }
