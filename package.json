@@ -58,7 +58,7 @@
     ]
   },
   "validate-branch-name": {
-    "pattern": "^(init|chores|refactor|docs|feat|fix).*$",
+    "pattern": "^(init|abichores|refactor|docs|feat|fix).*$",
     "errorMsg": "You can't push in this branch"
   }
 }
