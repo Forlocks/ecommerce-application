@@ -11,8 +11,9 @@
     "lint:fix": "eslint \"src/**/*.ts\" --fix",
     "prettier": "prettier \"src/**/*.ts\" --check",
     "prettier:format": "prettier \"src/**/*.ts\" --write",
-    "prepare": "husky .husky",
-    "lint:staged": "lint-staged"
+    "prepare": "husky && echo npm run lint-staged > .husky/pre-commit && echo npm run validate-branch-name > .husky/pre-push",
+    "lint-staged": "lint-staged",
+    "validate-branch-name": "validate-branch-name"
   },
   "author": "Code Keepers",
   "devDependencies": {
@@ -55,5 +56,9 @@
       "eslint \"src/**/*.ts\" --fix",
       "prettier \"src/**/*.ts\" --write"
     ]
+  },
+  "validate-branch-name": {
+    "pattern": "^(?!(main|develop|release)).*$",
+    "errorMsg": "You can't push in this branch"
   }
 }
