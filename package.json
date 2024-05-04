@@ -19,6 +19,8 @@
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "@types/jest": "^29.5.12",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.2.0",
     "clean-webpack-plugin": "^4.0.0",
@@ -45,7 +47,7 @@
     "style-loader": "^3.3.4",
     "ts-jest": "^29.1.2",
     "ts-loader": "^9.5.1",
-    "typescript": "^5.4.2",
+    "typescript": "^5.4.5",
     "validate-branch-name": "^1.3.0",
     "webpack": "^5.90.3",
     "webpack-cli": "^5.1.4",
@@ -60,5 +62,9 @@
   "validate-branch-name": {
     "pattern": "^(?!(main|develop|release)).*$",
     "errorMsg": "You can't push in this branch"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }

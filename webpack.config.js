@@ -10,7 +10,7 @@ module.exports = (env) => {
   return {
     mode: isDev ? 'development' : 'production',
     devtool: isDev ? 'inline-source-map' : false,
-    entry: './src/index.ts',
+    entry: './src/index.tsx',
     output: {
       path: path.resolve(__dirname, 'dist'),
       filename: 'bundle.js',
@@ -27,13 +27,14 @@ module.exports = (env) => {
           use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
         },
         {
-          test: /\.ts$/i,
+          test: /\.tsx?$/,
           use: 'ts-loader',
+          exclude: /node_modules/
         }
       ]
     },
     resolve: {
-      extensions: ['.js', '.ts'],
+      extensions: ['.tsx', '.ts', '.js'],
     },
     plugins: [
       new HtmlWebpackPlugin({
