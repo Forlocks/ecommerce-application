@@ -1,7 +1,7 @@
 {
-  "name": "fun-chat",
+  "name": "ecommerce",
   "version": "1.0.0",
-  "description": "fun-chat task",
+  "description": "ecommerce application",
   "scripts": {
     "prod-build": "webpack --env prod",
     "dev-build": "webpack --env dev",
