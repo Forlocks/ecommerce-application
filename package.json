@@ -6,10 +6,10 @@
     "prod-build": "webpack --env prod",
     "dev-build": "webpack --env dev",
     "dev": "webpack serve --env dev",
-    "lint": "eslint \"src/**/*.tsx\"",
-    "lint:fix": "eslint \"src/**/*.tsx\" --fix",
-    "prettier": "prettier \"src/**/*.tsx\" --check",
-    "prettier:format": "prettier \"src/**/*.tsx\" --write",
+    "lint": "eslint \"src/**/*.{tsx,ts}\"",
+    "lint:fix": "eslint \"src/**/*.{tsx,ts}\" --fix",
+    "prettier": "prettier \"src/**/*.{tsx,ts}\" --check",
+    "prettier:format": "prettier \"src/**/*.{tsx,ts}\" --write",
     "test": "jest",
     "prepare": "husky && echo npm run lint-staged > .husky/pre-commit && echo npm run validate-branch-name > .husky/pre-push",
     "lint-staged": "lint-staged",
@@ -55,8 +55,8 @@
   },
   "lint-staged": {
     "*.ts": [
-      "eslint \"src/**/*.tsx\" --fix",
-      "prettier \"src/**/*.tsx\" --write"
+      "eslint \"src/**/*.{tsx,ts}\" --fix",
+      "prettier \"src/**/*.{tsx,ts}\" --write"
     ]
   },
   "validate-branch-name": {
