@@ -35,6 +35,9 @@ module.exports = (env) => {
     },
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
+      alias: {
+        'node-fetch': "isomorphic-fetch",
+      }
     },
     plugins: [
       new HtmlWebpackPlugin({
