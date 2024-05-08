@@ -1,0 +1,18 @@
+.input-wrapper {
+  margin-bottom: 20px;
+  color: #666;
+}
+.input-wrapper input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+}
+.input-wrapper input:hover {
+  border-color: #666;
+}
+.input-wrapper input:focus {
+  outline: none;
+  border-color: #007bff;
+}/*# sourceMappingURL=inputBase.css.map */
