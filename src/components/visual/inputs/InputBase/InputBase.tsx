@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { InputProps } from './inputBaseInterface';
+import { InputProps } from './IInputBase';
 
 class Input extends Component<InputProps> {
   render() {

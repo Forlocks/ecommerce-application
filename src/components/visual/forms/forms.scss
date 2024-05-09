@@ -3,3 +3,13 @@ form {
     flex-direction: column;
     gap: 16px;
 }
+
+button {
+    align-self: flex-start;
+}
+
+.login-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

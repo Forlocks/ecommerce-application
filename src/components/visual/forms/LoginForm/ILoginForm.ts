@@ -3,6 +3,7 @@ interface LoginFormState {
 	emailError: string;
 	password: string;
 	passwordError: string;
+	showPassword: boolean;
 }
 
 export { LoginFormState };

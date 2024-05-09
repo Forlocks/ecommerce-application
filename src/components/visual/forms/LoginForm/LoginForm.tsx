@@ -1,6 +1,6 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react';
 import { EmailInput } from '../../inputs/EmailInput/EmailInput';
-import { LoginFormState } from './LoginFormInterface';
+import { LoginFormState } from './ILoginForm';
 import { PasswordInput } from '../../inputs/PasswordInput/PasswordInput';
 
 class LoginForm extends Component<object, LoginFormState> {
@@ -8,7 +8,14 @@ class LoginForm extends Component<object, LoginFormState> {
     email: '',
     emailError: '',
     password: '',
-    passwordError: 'ddjjdjd',
+    passwordError: '',
+    showPassword: false,
+  };
+
+  togglePasswordVisibility = () => {
+    this.setState((prevState) => ({
+      showPassword: !prevState.showPassword,
+    }));
   };
 
   handleEmailChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -69,25 +76,33 @@ class LoginForm extends Component<object, LoginFormState> {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <EmailInput
-          label="Email"
-          name="email"
-          placeholder='Enter your email'
-          value={this.state.email}
-          onChange={this.handleEmailChange}
-          error={this.state.emailError}
-        />
-        <PasswordInput
-          label="Password"
-          name="password"
-          placeholder='Enter your password'
-          value={this.state.password}
-          onChange={this.handlePasswordChange}
-          error={this.state.passwordError}
-        />
-        <button type="submit">Submit</button>
-      </form>
+			<form onSubmit={this.handleSubmit}>
+				<EmailInput
+					label="Email"
+					name="email"
+					placeholder="Enter your email"
+					value={this.state.email}
+					onChange={this.handleEmailChange}
+					error={this.state.emailError}
+				/>
+				<PasswordInput
+					label="Password"
+					name="password"
+					placeholder="Enter your password"
+					value={this.state.password}
+					onChange={this.handlePasswordChange}
+          showPassword={this.state.showPassword}
+          togglePasswordVisibility={this.togglePasswordVisibility}
+					error={this.state.passwordError}
+				/>
+        <div className="login-buttons">
+				<button type="submit">Submit</button>
+        <div className="link">
+          <span> Don't have an account?
+          <a href="/">Register now</a></span>
+</div>
+</div>
+			</form>
     );
   }
 }

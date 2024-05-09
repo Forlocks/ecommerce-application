@@ -20,6 +20,9 @@
   padding: 24px 32px 32px 32px;
   gap: 16px;
 }
+.form_container span {
+  max-width: 440px;
+}
 
 .image_container-big {
   grid-column: span 2;

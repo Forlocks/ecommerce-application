@@ -1,4 +1,4 @@
-import { InputProps } from '../InputBase/inputBaseInterface';
+import { InputProps } from '../InputBase/IInputBase';
 
 interface PasswordInputProps extends InputProps {
 	showPassword: boolean;

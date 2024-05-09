@@ -1,9 +1,20 @@
 import React from 'react';
-import { InputProps } from '../InputBase/inputBaseInterface';
 import { Input } from '../InputBase/InputBase';
+import { PasswordInputProps } from './IPasswordInput';
 
-interface PasswordInputProps extends InputProps {}
-
-const PasswordInput: React.FC<PasswordInputProps> = (props) => <Input {...props} type="password" />;
+const PasswordInput: React.FC<PasswordInputProps> = (
+  { showPassword, togglePasswordVisibility, ...props },
+) => (
+    <div style={{ position: 'relative' }}>
+      <Input {...props} type={showPassword ? 'text' : 'password'} />
+      <button
+        onClick={togglePasswordVisibility}
+        type="button"
+        style={{ position: 'absolute', right: 0, top: 0 }}
+      >
+        {showPassword ? 'hide' : 'show'}
+      </button>
+    </div>
+);
 
 export { PasswordInput };
