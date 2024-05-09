@@ -2,10 +2,10 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.scss';
-import ErrorPage from './pages/error-page/error-page';
-import MainPage from './pages/main-page/main-page';
-import RegisterPage from './pages/register-page/register-page';
-import LoginPage from './pages/login-page/login-page';
+import ErrorPage from './pages/ErrorPage/ErrorPage';
+import MainPage from './pages/MainPage/MainPage';
+import RegistrationPage from './pages/RegistrationPage/RegistrationPage';
+import LoginPage from './pages/LoginPage/LoginPage';
 
 const root = document.createElement('div');
 root.setAttribute('id', 'root');
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
 	},
 	{
 		path: '/register',
-		element: <RegisterPage />,
+		element: <RegistrationPage />,
 	},
 	{
 		path: '/login',
