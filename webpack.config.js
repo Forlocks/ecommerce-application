@@ -65,7 +65,8 @@ module.exports = (env) => {
       port: 8080,
       static: {
         directory: path.resolve(__dirname, 'dist')
-      }
+      },
+      historyApiFallback: true
     } : {}
   };
 };
