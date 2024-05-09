@@ -141,23 +141,47 @@ html {
 /*
     Global settings
 */
-.input-wrapper {
-  margin-bottom: 20px;
-  color: #666;
+.input label {
+  display: block;
+  color: #121212;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
 }
-.input-wrapper input {
+.input input {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  padding: 8px 16px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  background-color: #f3f3f3;
+  border: 1px solid;
+  border-color: #979292;
   transition: border-color 0.3s ease;
-}
-.input-wrapper input:hover {
-  border-color: #666;
-}
-.input-wrapper input:focus {
+  border-radius: 0px;
   outline: none;
-  border-color: #007bff;
+}
+.input input::-moz-placeholder {
+  color: #606060;
+}
+.input input::placeholder {
+  color: #606060;
+}
+.input input:hover, .input input:focus, .input input:focus-visible {
+  border-color: #121212;
+  color: #121212;
+}
+.input .error {
+  margin-left: 16px;
+  margin-top: 8px;
+  font-family: "Roboto", sans-serif;
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: -0.225px;
+  color: #ff6464;
 }
 
 .login_page {
@@ -174,6 +198,13 @@ html {
 
 .form_container {
   grid-column: span 2;
+}
+
+.form_container {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 32px 32px 32px;
+  gap: 16px;
 }
 
 .image_container-big {
@@ -207,6 +238,12 @@ html {
     width: 100%;
   }
 }
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 @font-face {
   font-family: "Craftwork Grotesk Heavy";
   font-style: normal;
@@ -263,11 +300,25 @@ h3 {
   color: #121212;
 }
 
+h4 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+
+h5 {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+}
+
 p {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-size: 17px;
-  line-height: 129%;
+  line-height: 130%;
   letter-spacing: -0.03em;
   color: #121212;
 }
@@ -276,6 +327,7 @@ span {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
   font-size: 11px;
+  line-height: 130%;
   letter-spacing: 0.02em;
   color: #606060;
 }

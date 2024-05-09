@@ -7,5 +7,4 @@ const root = document.createElement('div');
 root.setAttribute('id', 'root');
 document.body.append(root);
 
-// Рендерим компонент LoginPage внутри элемента с id 'root'
 ReactDOM.render(<LoginPage />, document.getElementById('root'));

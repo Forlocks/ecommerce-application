@@ -137,17 +137,18 @@ html {
 */
 
 // ------ fonts colors --------
-$black-color: #121212;
-$grey-color: #606060;
-$red-color: #ff6464;
+$black-text: #121212;
+$grey-text: #606060;
+$red-text: #ff6464;
 
 // ------ background colors --------
 $white-color: #f3f3f3;
+$grey-color: #979292;
 $green-color: #e3fd16;
 
-@import './components/visual/inputs/InputBase/inputBase.scss';
+@import './components/visual/inputs/inputs.scss';
 @import './pages/loginPage/loginPage.scss';
-
+@import './components/visual/forms/forms.scss';
 
 // ------ fonts --------
 @font-face {
@@ -177,13 +178,13 @@ body {
 	position: relative;
 	height: 100vh;
 	font-size: 16px;
-    background-color: $white-color;
-    margin: 0 48px;
+	background-color: $white-color;
+	margin: 0 48px;
 }
 
 header {
-    grid-column: 1 / -1;
-  }
+	grid-column: 1 / -1;
+}
 
 h1 {
 	font-family: 'Craftwork Grotesk', sans-serif;
@@ -191,7 +192,7 @@ h1 {
 	font-size: 4em;
 	line-height: 130%;
 	letter-spacing: 0.01em;
-	color: $black-color;
+	color: $black-text;
 }
 
 h2 {
@@ -199,7 +200,7 @@ h2 {
 	font-weight: 500;
 	font-size: 3em;
 	line-height: 125%;
-	color: $black-color;
+	color: $black-text;
 }
 
 h3 {
@@ -208,24 +209,39 @@ h3 {
 	font-size: 16px;
 	line-height: 150%;
 	letter-spacing: 0.01em;
-	color: $black-color;
+	color: $black-text;
+}
+
+h4 {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 500;
+	font-size: 15px;
+	letter-spacing: -0.01em;
+}
+
+h5 {
+	font-family: 'Roboto', sans-serif;
+	font-weight: 400;
+	font-size: 12px;
+	letter-spacing: 0.02em;
 }
 
 p {
-    font-family: "Roboto", sans-serif;
-    font-weight: 400;
-    font-size: 17px;
-    line-height: 129%;
-    letter-spacing: -0.03em;
-    color: $black-color;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 400;
+	font-size: 17px;
+	line-height: 130%;
+	letter-spacing: -0.03em;
+	color: $black-text;
 }
 
 span {
-    font-family: "Roboto", sans-serif;
-    font-weight: 400;
-    font-size: 11px;
-    letter-spacing: 0.02em;
-    color: $grey-color;
+	font-family: 'Roboto', sans-serif;
+	font-weight: 400;
+	font-size: 11px;
+	line-height: 130%;
+	letter-spacing: 0.02em;
+	color: $grey-text;
 }
 
 .wrapper {
@@ -249,5 +265,5 @@ span {
 }
 
 #root {
-    height: 100%;
+	height: 100%;
 }

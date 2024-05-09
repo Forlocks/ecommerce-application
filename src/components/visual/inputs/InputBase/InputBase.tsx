@@ -8,17 +8,17 @@ class Input extends Component<InputProps> {
     } = this.props;
 
     return (
-      <div className="input-wrapper">
-        {label && <label htmlFor={name}>{label}</label>}
-        <input
-          name={name}
-          type={type}
-          placeholder={placeholder}
-          value={value}
-          onChange={onChange}
-        />
-        {error && <div className="error">{error}</div>}
-      </div>
+			<div className="input">
+				{label && <label htmlFor={name}>{label}</label>}
+				<input
+					name={name}
+					type={type}
+					placeholder={placeholder}
+					value={value}
+					onChange={onChange}
+				/>
+				{error && <div className="error">{error}</div>}
+			</div>
     );
   }
 }

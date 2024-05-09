@@ -14,8 +14,19 @@
   grid-column: span 2;
 }
 
+.form_container {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 32px 32px 32px;
+  gap: 16px;
+}
+
 .image_container-big {
   grid-column: span 2;
+}
+
+.image_container-big {
+  padding: 24px 32px 32px 32px;
 }
 
 .image_container-big img {
