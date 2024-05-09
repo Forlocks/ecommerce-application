@@ -54,7 +54,7 @@
     "webpack-dev-server": "^5.0.2"
   },
   "lint-staged": {
-    "*.ts": [
+    "*.ts?(x)": [
       "eslint \"src/**/*.{tsx,ts}\" --fix",
       "prettier \"src/**/*.{tsx,ts}\" --write"
     ]
