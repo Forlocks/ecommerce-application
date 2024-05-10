@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 module.exports = (env) => {
   const isDev = env.dev === true;
@@ -35,6 +36,9 @@ module.exports = (env) => {
     },
     resolve: {
       extensions: ['.tsx', '.ts', '.js'],
+      alias: {
+        'node-fetch': "isomorphic-fetch",
+      }
     },
     plugins: [
       new HtmlWebpackPlugin({
@@ -57,7 +61,8 @@ module.exports = (env) => {
           }
         ],
       }),
-      new CleanWebpackPlugin({cleanStaleWebpackAssets: false})
+      new CleanWebpackPlugin({cleanStaleWebpackAssets: false}),
+      new Dotenv()
     ],
     devServer: isDev ? {
       open: true,
