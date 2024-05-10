@@ -1,9 +1,7 @@
 import React from 'react';
-import { IInputProps } from '../InputBase/IInputBase';
-import { Input } from '../InputBase/InputBase';
+import { IInputBase } from '../InputBase/IInputBase';
+import { InputBase } from '../InputBase/InputBase';
 
-interface EmailInputProps extends IInputProps {}
-
-const EmailInput: React.FC<EmailInputProps> = (props) => <Input {...props} type="email" />;
-
-export { EmailInput };
+export const EmailInput: React.FC<IInputBase> = function (props) {
+  return <InputBase {...props} type="email" />;
+};
