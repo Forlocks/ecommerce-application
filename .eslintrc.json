@@ -22,8 +22,9 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    "func-names": "off",
     "semi": "error",
-    "no-console": "warn",
+    "no-console": "off",
     "no-case-declarations": "off",
     "no-plusplus": "off",
     "eol-last": "off",
