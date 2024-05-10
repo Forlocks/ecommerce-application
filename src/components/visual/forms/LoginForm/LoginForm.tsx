@@ -1,10 +1,10 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react';
 import { EmailInput } from '../../inputs/EmailInput/EmailInput';
-import { LoginFormState } from './ILoginForm';
+import { ILoginFormState } from './ILoginForm';
 import { PasswordInput } from '../../inputs/PasswordInput/PasswordInput';
 
-class LoginForm extends Component<object, LoginFormState> {
-  state: LoginFormState = {
+class LoginForm extends Component<object, ILoginFormState> {
+  state: ILoginFormState = {
     email: '',
     emailError: '',
     password: '',
@@ -91,17 +91,20 @@ class LoginForm extends Component<object, LoginFormState> {
 					placeholder="Enter your password"
 					value={this.state.password}
 					onChange={this.handlePasswordChange}
-          showPassword={this.state.showPassword}
-          togglePasswordVisibility={this.togglePasswordVisibility}
+					showPassword={this.state.showPassword}
+					togglePasswordVisibility={this.togglePasswordVisibility}
 					error={this.state.passwordError}
 				/>
-        <div className="login-buttons">
-				<button type="submit">Submit</button>
-        <div className="link">
-          <span> Don't have an account?
-          <a href="/">Register now</a></span>
-</div>
-</div>
+				<div className="login-buttons">
+					<button type="submit">Submit</button>
+					<div className="link">
+						<span>
+							{' '}
+							Don't have an account?
+							<a href="/">Register now</a>
+						</span>
+					</div>
+				</div>
 			</form>
     );
   }

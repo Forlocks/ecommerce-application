@@ -179,7 +179,7 @@ html {
   margin-top: 8px;
   font-family: "Roboto", sans-serif;
   font-size: 11px;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: -0.225px;
   color: #ff6464;
 }
@@ -206,9 +206,16 @@ html {
   padding: 24px 32px 32px 32px;
   gap: 16px;
 }
+.form_container span {
+  max-width: 440px;
+}
 
 .image_container-big {
   grid-column: span 2;
+}
+
+.image_container-big {
+  padding: 24px 32px 32px 32px;
 }
 
 .image_container-big img {
@@ -241,7 +248,17 @@ html {
 form {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
+}
+
+button {
+  align-self: flex-start;
+}
+
+.login-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 @font-face {
@@ -354,4 +371,4 @@ span {
 
 #root {
   height: 100%;
-}/*# sourceMappingURL=index.css.map */
+}

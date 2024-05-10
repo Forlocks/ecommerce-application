@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react';
 
-interface InputProps {
+interface IInputProps {
 	label?: string;
 	type?: string;
 	error?: string;
@@ -10,4 +10,4 @@ interface InputProps {
 	name: string;
 }
 
-export { InputProps };
+export { IInputProps };

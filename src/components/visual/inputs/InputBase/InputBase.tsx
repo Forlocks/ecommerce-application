@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { InputProps } from './IInputBase';
+import { IInputProps } from './IInputBase';
 
-class Input extends Component<InputProps> {
+class Input extends Component<IInputProps> {
   render() {
     const {
       label, type, placeholder, value, onChange, name, error,

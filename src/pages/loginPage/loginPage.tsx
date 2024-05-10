@@ -7,7 +7,7 @@ const LoginPage: React.FC = () => (
 			<h2>Welcome Back Please Sign In</h2>
 			<span>
 				Welcome to our boutique of elegance, where unique designer
-                vases await to add an artistic
+                 vases await to add an artistic
 				touch to your cherished spaces.
                  Sign in to explore our exclusive collection and bring the
 				essence of style into your home

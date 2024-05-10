@@ -146,9 +146,9 @@ $white-color: #f3f3f3;
 $grey-color: #979292;
 $green-color: #e3fd16;
 
-@import './components/visual/inputs/inputs.scss';
-@import './pages/loginPage/loginPage.scss';
-@import './components/visual/forms/forms.scss';
+@import './components/visual/inputs/inputs';
+@import './pages/loginPage/loginPage';
+@import './components/visual/forms/forms';
 
 // ------ fonts --------
 @font-face {

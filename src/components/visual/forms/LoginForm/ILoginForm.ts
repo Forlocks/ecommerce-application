@@ -1,4 +1,4 @@
-interface LoginFormState {
+interface ILoginFormState {
 	email: string;
 	emailError: string;
 	password: string;
@@ -6,4 +6,4 @@ interface LoginFormState {
 	showPassword: boolean;
 }
 
-export { LoginFormState };
+export { ILoginFormState };
