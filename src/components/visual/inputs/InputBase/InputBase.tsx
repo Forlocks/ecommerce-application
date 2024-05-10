@@ -2,12 +2,10 @@ import React, { Component } from 'react';
 import { IInputProps } from './IInputBase';
 
 class Input extends Component<IInputProps> {
-  render() {
-    const {
-      label, type, placeholder, value, onChange, name, error,
-    } = this.props;
+	render() {
+		const { label, type, placeholder, value, onChange, name, error } = this.props;
 
-    return (
+		return (
 			<div className="input">
 				{label && <label htmlFor={name}>{label}</label>}
 				<input
@@ -19,8 +17,8 @@ class Input extends Component<IInputProps> {
 				/>
 				{error && <div className="error">{error}</div>}
 			</div>
-    );
-  }
+		);
+	}
 }
 
 export { Input };
