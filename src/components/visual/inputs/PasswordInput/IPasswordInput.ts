@@ -1,8 +1,6 @@
-import { IInputProps } from '../InputBase/IInputBase';
+import { IInputBase } from '../InputBase/IInputBase';
 
-interface IPasswordInputProps extends IInputProps {
-	showPassword: boolean;
-	togglePasswordVisibility: () => void;
+export interface IPasswordInput extends IInputBase {
+  showPassword: boolean;
+  togglePasswordVisibility: () => void;
 }
-
-export { IPasswordInputProps };
