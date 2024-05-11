@@ -5,7 +5,7 @@ import './index.scss';
 import { ErrorPage } from './pages/ErrorPage/ErrorPage';
 import { MainPage } from './pages/MainPage/MainPage';
 import { RegistrationPage } from './pages/RegistrationPage/RegistrationPage';
-import { LoginPage } from './pages/LoginPage/LoginPage';
+import { LoginPage } from './pages/loginPage/loginPage';
 
 const root = document.createElement('div');
 root.setAttribute('id', 'root');
