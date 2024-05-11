@@ -2,6 +2,7 @@ import React, { ChangeEvent, Component, FormEvent } from 'react';
 import { ILoginForm } from './ILoginForm';
 import { EmailInput } from '../../inputs/EmailInput/EmailInput';
 import { PasswordInput } from '../../inputs/PasswordInput/PasswordInput';
+import { LargeButton } from '../../buttons/LargeButton/LargeButton';
 
 export class LoginForm extends Component<object, ILoginForm> {
   state: ILoginForm = {
@@ -96,12 +97,12 @@ export class LoginForm extends Component<object, ILoginForm> {
           error={this.state.passwordError}
         />
         <div className="login-buttons">
-          <button type="submit">Submit</button>
+          <LargeButton>login</LargeButton>
           <div className="link">
             <span>
               {' '}
               Don't have an account?
-              <a href="/">Register now</a>
+              <a href="/"> Register now</a>
             </span>
           </div>
         </div>

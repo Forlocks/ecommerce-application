@@ -1,6 +1,10 @@
 import React from 'react';
 import { InputBase } from '../InputBase/InputBase';
 import { IPasswordInput } from './IPasswordInput';
+import { SmallButton } from '../../buttons/SmallButton/SmallButton';
+
+const hideEyeIcon = <img src="./assets/icons/eye-hide.svg" alt="Big image" />;
+const showEyeIcon = <img src="./assets/icons/eye-open.svg" alt="Big image" />;
 
 export const PasswordInput: React.FC<IPasswordInput> = function ({
   showPassword,
@@ -8,15 +12,13 @@ export const PasswordInput: React.FC<IPasswordInput> = function ({
   ...props
 }) {
   return (
-    <div style={{ position: 'relative' }}>
+    <div className="password">
       <InputBase {...props} type={showPassword ? 'text' : 'password'} />
-      <button
+      <SmallButton
         onClick={togglePasswordVisibility}
-        type="button"
-        style={{ position: 'absolute', right: 0, top: 0 }}
-      >
-        {showPassword ? 'hide' : 'show'}
-      </button>
+        icon={showPassword ? hideEyeIcon : showEyeIcon}
+        style={{ position: 'absolute', right: 16, top: 33 }}
+      />
     </div>
   );
 };

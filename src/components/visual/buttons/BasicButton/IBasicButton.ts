@@ -1,6 +1,5 @@
-import { ReactNode } from 'react';
+import { ButtonHTMLAttributes, ReactNode } from 'react';
 
-export interface IBasicButtonProps {
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
-  children: ReactNode;
+export interface IBasicButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  children?: ReactNode;
 }
