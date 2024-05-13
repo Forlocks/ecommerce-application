@@ -12,7 +12,7 @@
   padding: 0 48px;
 
   h2 {
-	white-space: nowrap;
+    white-space: nowrap;
   }
 }
 
@@ -50,8 +50,8 @@
 }
 
 .image_container-small img {
-	width: 100%;
-	padding: 24px 32px 96px 32px;
+  width: 100%;
+  padding: 24px 32px 96px 32px;
 }
 
 .logo-main {
@@ -66,29 +66,46 @@
   white-space: nowrap;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) and (min-width: 769px) {
   .login_page {
+    height: 100%;
     grid-template-columns: repeat(4, 1fr);
-	grid-template-rows: auto auto;
-	
+    padding: 48px;
   }
 
   .image_container-big {
-	padding: 0;
+    align-self: flex-start;
+    padding: 0;
   }
 
   .image_container-small {
-    grid-row-start: 2;
-    grid-column-start: 4;
-	padding: 0;
-	align-self: flex-start;
+    display: none;
   }
   .form_container {
-	padding: 0;
-    grid-row: 1 / 3;
+    align-self: flex-start;
+    padding: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .login_page {
+    grid-template-columns: 1fr;
+    padding: 24px 16px 48px 16px;
+    row-gap: 48px;
   }
 
-  .image_container-small img {
+  .form_container {
+    order: 2;
     width: 100%;
+    padding: 0;
+  }
+
+  .image_container-big {
+    order: 1;
+    padding: 0;
+  }
+
+  .image_container-small {
+    display: none;
   }
 }
