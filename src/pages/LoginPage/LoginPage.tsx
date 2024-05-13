@@ -1,12 +1,18 @@
 import React from 'react';
 import './LoginPage.scss';
 import { LoginForm } from '../../components/visual/forms/LoginForm/LoginForm';
+import { Logo } from '../../components/visual/logo/Logo';
 
 export const LoginPage: React.FC = function () {
   return (
     <div className="login_page">
       <div className="form_container">
-        <h2>Welcome Back Please Sign In</h2>
+        <Logo className="logo-main" />
+        <h2>
+          Welcome Back
+          <br />
+          Please Sign In
+        </h2>
         <span>
           Welcome to our boutique of elegance, where unique designer vases await to add an artistic
           touch to your cherished spaces. Sign in to explore our exclusive collection and bring the

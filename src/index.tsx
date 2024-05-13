@@ -6,6 +6,7 @@ import { ErrorPage } from './pages/ErrorPage/ErrorPage';
 import { MainPage } from './pages/MainPage/MainPage';
 import { RegistrationPage } from './pages/RegistrationPage/RegistrationPage';
 import { LoginPage } from './pages/LoginPage/LoginPage';
+import { Layout } from './components/visual/layout/Layout';
 
 const root = document.createElement('div');
 root.setAttribute('id', 'root');
@@ -14,16 +15,28 @@ document.body.append(root);
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <MainPage />,
+    element: (
+      <Layout>
+        <MainPage />
+      </Layout>
+    ),
     errorElement: <ErrorPage />,
   },
   {
     path: '/registration',
-    element: <RegistrationPage />,
+    element: (
+      <Layout>
+        <RegistrationPage />
+      </Layout>
+    ),
   },
   {
     path: '/login',
-    element: <LoginPage />,
+    element: (
+      <Layout>
+        <LoginPage />
+      </Layout>
+    ),
   },
 ]);
 
