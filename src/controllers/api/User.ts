@@ -17,8 +17,6 @@ function errorHandler(error: Error) {
 // ----------------------ERROR HANDLER END----------------------
 
 export class User {
-  public isLogin: boolean = false;
-
   ctpClientCredentialFlow = new ClientBuilder()
     .withClientCredentialsFlow(authMiddlewareOptions)
     .withHttpMiddleware(httpMiddlewareOptions)
@@ -30,6 +28,10 @@ export class User {
     .build();
 
   ctpClientFlow = this.ctpClientCredentialFlow;
+
+  constructor() {
+    if (!localStorage.getItem('userState')) this.setUserState('false');
+  }
 
   createApiPasswordAuthClient(customerData: CustomerSignin) {
     const passwordAuthMiddlewareOptions: PasswordAuthMiddlewareOptions = {
@@ -74,7 +76,7 @@ export class User {
           const apiRoot = this.createApiRoot(this.ctpClientFlow);
           try {
             await apiRoot.me().login().post({ body: customerData }).execute();
-            this.isLogin = true;
+            this.setUserState('true');
           } catch (err) {
             responseObj.password = 'Invalid password.';
           }
@@ -87,7 +89,7 @@ export class User {
   }
 
   public async logout() {
-    this.isLogin = false;
+    this.setUserState('false');
     this.ctpClientFlow = this.ctpClientCredentialFlow;
   }
 
@@ -118,6 +120,10 @@ export class User {
         },
       })
       .execute();
+  }
+
+  setUserState(status: string) {
+    localStorage.setItem('userState', status);
   }
 }
 
