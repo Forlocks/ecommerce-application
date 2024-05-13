@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, NavLink } from 'react-router-dom';
-import { Logo } from '../logo/logo';
+import { Logo } from '../logo/Logo';
 
 export const Header: React.FC = () => {
   const location = useLocation();
@@ -9,7 +9,7 @@ export const Header: React.FC = () => {
   return (
     <header className="header">
       <NavLink to="/">
-        <Logo className="logo-class" />
+        <Logo className="logo-header" />
       </NavLink>
       <nav>
         <ul>

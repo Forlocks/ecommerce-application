@@ -15,10 +15,7 @@
   align-items: center;
   padding: 12px 48px;
   background-color: $green-color;
-
-  .navLink {
-    text-decoration: none;
-  }
+  text-decoration: none;
 
   nav {
     display: flex;
@@ -37,6 +34,10 @@
         flex-grow: 1;
         justify-content: flex-end;
 
+        .active {
+            text-decoration: underline;
+          }
+
         &:hover {
           text-decoration: underline;
         }
@@ -45,10 +46,26 @@
   }
 }
 
-.active {
-  text-decoration: underline;
-}
+
 
 #register-link {
   flex-grow: 0;
 }
+
+.logo-header {
+  display: flex;
+  flex-direction: row;
+  white-space: nowrap;
+  gap: 12px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: $black-text;
+  .active {
+    text-decoration: none;
+}
+  
+}
+
