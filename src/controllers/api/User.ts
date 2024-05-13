@@ -60,14 +60,30 @@ export class User {
   }
 
   public async login(customerData: CustomerSignin) {
-    this.createApiPasswordAuthClient(customerData);
-    const apiRoot = this.createApiRoot(this.ctpClientFlow);
-    try {
-      await apiRoot.me().login().post({ body: customerData }).execute();
-      this.isLogin = true;
-    } catch (err) {
-      errorHandler(err as Error);
-    }
+    const responseObj = {
+      email: 'ok',
+      password: 'ok',
+    };
+
+    await this.returnUserByEmail(customerData.email)
+      .then(async ({ body }) => {
+        if (body.results.length === 0) {
+          responseObj.email = 'This email address has not been registered.';
+        } else {
+          this.createApiPasswordAuthClient(customerData);
+          const apiRoot = this.createApiRoot(this.ctpClientFlow);
+          try {
+            await apiRoot.me().login().post({ body: customerData }).execute();
+            this.isLogin = true;
+          } catch (err) {
+            responseObj.password = 'Invalid password.';
+          }
+        }
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
+    return responseObj;
   }
 
   public async logout() {
@@ -90,6 +106,18 @@ export class User {
     } catch (error) {
       errorHandler(error as Error);
     }
+  }
+
+  returnUserByEmail(customerEmail: string) {
+    const apiRoot = this.createApiRoot(this.ctpClientFlow);
+    return apiRoot
+      .customers()
+      .get({
+        queryArgs: {
+          where: `email="${customerEmail}"`,
+        },
+      })
+      .execute();
   }
 }
 
