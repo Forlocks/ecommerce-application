@@ -1,0 +1,54 @@
+@import '../variables';
+
+.header {
+  height: 48px;
+  display: flex;
+  gap: 48px;
+  font-family: 'Craftwork Grotesk', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 150%;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: $black-text;
+  white-space: nowrap;
+  align-items: center;
+  padding: 12px 48px;
+  background-color: $green-color;
+
+  .navLink {
+    text-decoration: none;
+  }
+
+  nav {
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-end;
+
+    ul {
+      list-style: none;
+      display: flex;
+      gap: 48px;
+      flex-grow: 1;
+      justify-content: space-between;
+
+      li {
+        display: flex;
+        flex-grow: 1;
+        justify-content: flex-end;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+.active {
+  text-decoration: underline;
+}
+
+#register-link {
+  flex-grow: 0;
+}
