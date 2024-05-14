@@ -8,7 +8,7 @@ import {
   anonymousMiddlewareOptions,
   authMiddlewareOptions,
   httpMiddlewareOptions,
-} from './middlewareOptions';
+} from './MiddlewareOptions';
 
 // ----------------------ERROR HANDLER START--------------------
 function errorHandler(error: Error) {
@@ -70,7 +70,7 @@ export class User {
       email: 'ok',
       password: 'ok',
     };
-
+    this.ctpClientFlow = this.ctpClientCredentialFlow;
     await this.returnUserByEmail(customerData.email)
       .then(async ({ body }) => {
         if (body.results.length === 0) {
