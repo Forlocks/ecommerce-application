@@ -1,8 +1,11 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react';
+import { NavLink } from 'react-router-dom';
 import { ILoginForm } from './ILoginForm';
 import { EmailInput } from '../../inputs/EmailInput/EmailInput';
 import { PasswordInput } from '../../inputs/PasswordInput/PasswordInput';
 import { LargeButton } from '../../buttons/LargeButton/LargeButton';
+import { user } from '../../../../index';
+import '../forms.scss';
 
 export class LoginForm extends Component<object, ILoginForm> {
   state: ILoginForm = {
@@ -11,6 +14,7 @@ export class LoginForm extends Component<object, ILoginForm> {
     password: '',
     passwordError: '',
     showPassword: false,
+    loginButtonClicked: false,
   };
 
   togglePasswordVisibility = () => {
@@ -39,6 +43,24 @@ export class LoginForm extends Component<object, ILoginForm> {
 
   handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
+
+    if (this.state.loginButtonClicked) {
+      const userData = {
+        email: this.state.email,
+        password: this.state.password,
+      };
+
+      user.login(userData).then((result) => {
+        if (result.email === 'ok' && result.password === 'ok') {
+          // СЮДА НУЖЕН ХУК Navigate, который перенаправляет на '/'
+        } else {
+          this.setState({
+            emailError: result.email === 'ok' ? '' : result.email,
+            passwordError: result.password === 'ok' ? '' : result.password,
+          });
+        }
+      });
+    }
   };
 
   validateEmail = (email: string): string => {
@@ -75,6 +97,10 @@ export class LoginForm extends Component<object, ILoginForm> {
     return '';
   };
 
+  handleLoginButtonClick = () => {
+    this.setState({ loginButtonClicked: true });
+  };
+
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
@@ -97,12 +123,23 @@ export class LoginForm extends Component<object, ILoginForm> {
           error={this.state.passwordError}
         />
         <div className="login-buttons">
-          <LargeButton>login</LargeButton>
+          {this.state.email !== '' &&
+          this.state.password !== '' &&
+          this.state.emailError === '' &&
+          this.state.passwordError === '' ? (
+            <LargeButton
+              type="submit"
+              onClick={this.handleLoginButtonClick}
+              className="button-appear"
+            >
+              Login
+            </LargeButton>
+          ) : null}
           <div className="link">
             <span>
               {' '}
-              Don't have an account?
-              <a href="/"> Register now</a>
+              Don't have an account?&nbsp;
+              <NavLink to="/registration">Register now</NavLink>
             </span>
           </div>
         </div>
