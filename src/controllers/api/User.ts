@@ -30,7 +30,11 @@ export class User {
   ctpClientFlow = this.ctpClientCredentialFlow;
 
   constructor() {
-    if (!localStorage.getItem('userState')) this.setUserState('false');
+    const userState = localStorage.getItem('userState');
+
+    if (userState === null) {
+      localStorage.setItem('userState', 'false');
+    }
   }
 
   createApiPasswordAuthClient(customerData: CustomerSignin) {
@@ -126,5 +130,3 @@ export class User {
     localStorage.setItem('userState', status);
   }
 }
-
-export const user = new User();

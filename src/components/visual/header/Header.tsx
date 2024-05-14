@@ -52,14 +52,35 @@ export const Header: React.FC = () => {
                   Cart
                 </NavLink>
               </li>
-              <li>
-                <NavLink
-                  to="/login"
-                  className={({ isActive }) => (isActive ? 'active' : undefined)}
-                >
-                  Log out
-                </NavLink>
-              </li>
+              {localStorage.getItem('userState') === 'true' ? (
+                <li>
+                  <NavLink
+                    to="/login"
+                    className={({ isActive }) => (isActive ? 'active' : undefined)}
+                  >
+                    Log out
+                  </NavLink>
+                </li>
+              ) : (
+                <>
+                  <li>
+                    <NavLink
+                      to="/login"
+                      className={({ isActive }) => (isActive ? 'active' : undefined)}
+                    >
+                      Log In
+                    </NavLink>
+                  </li>
+                  <li id="register-link">
+                    <NavLink
+                      to="/registration"
+                      className={({ isActive }) => (isActive ? 'active' : undefined)}
+                    >
+                      Register
+                    </NavLink>
+                  </li>
+                </>
+              )}
             </>
           )}
         </ul>
