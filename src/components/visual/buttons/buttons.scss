@@ -10,6 +10,7 @@ $green-color: #e3fd16;
 
 .button {
   cursor: pointer;
+
   .button__content {
     white-space: nowrap;
   }
@@ -37,6 +38,15 @@ $green-color: #e3fd16;
 
     &:hover svg {
       transform: scaleX(1.1);
+    }
+
+    &:disabled {
+      color: $grey-color;
+      cursor: not-allowed;
+
+      .button__arrow {
+        display: none;
+      }
     }
   }
 

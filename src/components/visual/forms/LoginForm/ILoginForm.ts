@@ -4,5 +4,4 @@ export interface ILoginForm {
   password: string;
   passwordError: string;
   showPassword: boolean;
-  loginButtonClicked: boolean;
 }
