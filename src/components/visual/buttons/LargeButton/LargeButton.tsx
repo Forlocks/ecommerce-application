@@ -2,8 +2,8 @@ import React, { FC } from 'react';
 import { BasicButton } from '../BasicButton/BasicButton';
 import { ILargeButtonProps } from './ILargeButton';
 
-export const LargeButton: FC<ILargeButtonProps> = ({ children, ...props }) => (
-  <BasicButton {...props} className="button button--large">
+export const LargeButton: FC<ILargeButtonProps> = ({ children, disabled, ...props }) => (
+  <BasicButton {...props} className="button button--large" disabled={disabled}>
     <div className="button__content">
       {children}
       <div className="button__arrow">

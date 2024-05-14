@@ -1,149 +1,97 @@
-import React, { ChangeEvent, Component, FormEvent } from 'react';
-import { NavLink } from 'react-router-dom';
-import { ILoginForm } from './ILoginForm';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
+import { useNavigate, NavLink } from 'react-router-dom';
+import { user } from '../../../..';
+import { LargeButton } from '../../buttons/LargeButton/LargeButton';
 import { EmailInput } from '../../inputs/EmailInput/EmailInput';
 import { PasswordInput } from '../../inputs/PasswordInput/PasswordInput';
-import { LargeButton } from '../../buttons/LargeButton/LargeButton';
-import { user } from '../../../../index';
-import '../forms.scss';
+import { ILoginForm } from './ILoginForm';
+import { validateEmail, validatePassword } from '../../../non-visual/validators/validators';
 
-export class LoginForm extends Component<object, ILoginForm> {
-  state: ILoginForm = {
+export const LoginForm: React.FC = () => {
+  const [state, setState] = useState<ILoginForm>({
     email: '',
     emailError: '',
     password: '',
     passwordError: '',
     showPassword: false,
-    loginButtonClicked: false,
+  });
+
+  const navigate = useNavigate();
+
+  const isButtonDisabled =
+    state.email === '' ||
+    state.password === '' ||
+    state.emailError !== '' ||
+    state.passwordError !== '';
+
+  const togglePasswordVisibility = () => {
+    setState((prevState) => ({ ...prevState, showPassword: !prevState.showPassword }));
   };
 
-  togglePasswordVisibility = () => {
-    this.setState((prevState) => ({
-      showPassword: !prevState.showPassword,
-    }));
-  };
-
-  handleEmailChange = (event: ChangeEvent<HTMLInputElement>): void => {
+  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newEmail = event.target.value.trim();
-    const emailError = this.validateEmail(newEmail);
-    this.setState({
-      email: newEmail,
-      emailError,
-    });
+    const emailError = validateEmail(newEmail);
+    setState((prevState) => ({ ...prevState, email: newEmail, emailError }));
   };
 
-  handlePasswordChange = (event: ChangeEvent<HTMLInputElement>): void => {
+  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newPassword = event.target.value.trim();
-    const passwordError = this.validatePassword(newPassword);
-    this.setState({
-      password: newPassword,
-      passwordError,
+    const passwordError = validatePassword(newPassword);
+    setState((prevState) => ({ ...prevState, password: newPassword, passwordError }));
+  };
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
+    event.preventDefault();
+    const { email, password } = state;
+
+    const userData = {
+      email,
+      password,
+    };
+
+    user.login(userData).then((result) => {
+      if (result.email === 'ok' && result.password === 'ok') {
+        navigate('/');
+      } else {
+        setState((prevState) => ({
+          ...prevState,
+          emailError: result.email === 'ok' ? '' : result.email,
+          passwordError: result.password === 'ok' ? '' : result.password,
+        }));
+      }
     });
   };
 
-  handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
+  return (
+    <form onSubmit={handleSubmit}>
+      <EmailInput
+        label="Email"
+        name="email"
+        placeholder="Enter your email"
+        value={state.email}
+        onChange={handleEmailChange}
+        error={state.emailError}
+      />
+      <PasswordInput
+        label="Password"
+        name="password"
+        placeholder="Enter your password"
+        value={state.password}
+        onChange={handlePasswordChange}
+        showPassword={state.showPassword}
+        togglePasswordVisibility={togglePasswordVisibility}
+        error={state.passwordError}
+      />
+      <div className="login-buttons">
+        <LargeButton disabled={isButtonDisabled}>Login</LargeButton>
 
-    if (this.state.loginButtonClicked) {
-      const userData = {
-        email: this.state.email,
-        password: this.state.password,
-      };
-
-      user.login(userData).then((result) => {
-        if (result.email === 'ok' && result.password === 'ok') {
-          // СЮДА НУЖЕН ХУК Navigate, который перенаправляет на '/'
-        } else {
-          this.setState({
-            emailError: result.email === 'ok' ? '' : result.email,
-            passwordError: result.password === 'ok' ? '' : result.password,
-          });
-        }
-      });
-    }
-  };
-
-  validateEmail = (email: string): string => {
-    const trimmedEmail = email.trim();
-    if (!trimmedEmail) {
-      return 'email cannot be empty';
-    }
-    if (!trimmedEmail.includes('@')) {
-      return 'email must contain an "@" symbol';
-    }
-    if (!/^\S+@\S+\.\S+$/.test(trimmedEmail)) {
-      return 'email must include a domain name (e.g., example.com)';
-    }
-    return '';
-  };
-
-  validatePassword = (password: string): string => {
-    const trimmedPassword = password.trim();
-    if (!trimmedPassword) {
-      return 'password cannot be empty';
-    }
-    if (trimmedPassword.length < 8) {
-      return 'password must be at least 8 characters long';
-    }
-    if (!/[A-Z]/.test(trimmedPassword)) {
-      return 'password must contain at least one uppercase letter (A-Z)';
-    }
-    if (!/[a-z]/.test(trimmedPassword)) {
-      return 'password must contain at least one lowercase letter (a-z)';
-    }
-    if (!/[0-9]/.test(trimmedPassword)) {
-      return 'password must contain at least one digit (0-9)';
-    }
-    return '';
-  };
-
-  handleLoginButtonClick = () => {
-    this.setState({ loginButtonClicked: true });
-  };
-
-  render() {
-    return (
-      <form onSubmit={this.handleSubmit}>
-        <EmailInput
-          label="Email"
-          name="email"
-          placeholder="Enter your email"
-          value={this.state.email}
-          onChange={this.handleEmailChange}
-          error={this.state.emailError}
-        />
-        <PasswordInput
-          label="Password"
-          name="password"
-          placeholder="Enter your password"
-          value={this.state.password}
-          onChange={this.handlePasswordChange}
-          showPassword={this.state.showPassword}
-          togglePasswordVisibility={this.togglePasswordVisibility}
-          error={this.state.passwordError}
-        />
-        <div className="login-buttons">
-          {this.state.email !== '' &&
-          this.state.password !== '' &&
-          this.state.emailError === '' &&
-          this.state.passwordError === '' ? (
-            <LargeButton
-              type="submit"
-              onClick={this.handleLoginButtonClick}
-              className="button-appear"
-            >
-              Login
-            </LargeButton>
-          ) : null}
-          <div className="link">
-            <span>
-              {' '}
-              Don't have an account?&nbsp;
-              <NavLink to="/registration">Register now</NavLink>
-            </span>
-          </div>
+        <div className="link">
+          <span>
+            Don't have an account?&nbsp;
+            <NavLink to="/registration">Register now</NavLink>
+          </span>
         </div>
-      </form>
-    );
-  }
-}
+      </div>
+    </form>
+  );
+};
