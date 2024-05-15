@@ -8,7 +8,7 @@ import {
   anonymousMiddlewareOptions,
   authMiddlewareOptions,
   httpMiddlewareOptions,
-} from './MiddlewareOptions';
+} from './middlewareOptions';
 
 // ----------------------ERROR HANDLER START--------------------
 function errorHandler(error: Error) {
