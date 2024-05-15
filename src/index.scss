@@ -130,6 +130,7 @@ a {
 }
 html {
 	scroll-behavior: smooth;
+	overflow-x: hidden;
 }
 
 /*
@@ -185,9 +186,10 @@ $green-color: #e3fd16;
 body {
   display: flex;
 	position: relative;
-	height: 100vh;
+	min-height: 100vh;
 	font-size: 16px;
-	background-color: $white-color;	
+	background-color: $white-color;
+	overflow-x: hidden;
 }
 
 h1 {
@@ -240,24 +242,24 @@ p {
 }
 
 a {
-    color: inherit;
-    text-decoration: none;
-    position: relative;
-  }
+  color: inherit;
+  text-decoration: none;
+  position: relative;
+}
 
-  a::before {
-    content: '';
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
-    height: 100%;
-    background-color: $green-color ;
-    z-index: -1;
-  }
+a::before {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: $green-color ;
+  z-index: -1;
+}
 
-  a:hover {
-   color: $black-text;
-  }
+a:hover {
+  color: $black-text;
+}
 
 span {
 	font-family: 'Roboto Regular', sans-serif;
@@ -289,15 +291,15 @@ span {
 }
 
 #root {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 	height: 100%;
 }
 
 @media (max-width: 1024px) {
     body {
-		height: auto;
-        font-size: 12px;
+			height: auto;
+      font-size: 12px;
     }
 }
