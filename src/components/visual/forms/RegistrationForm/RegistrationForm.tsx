@@ -1,11 +1,17 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { user } from '../../../..';
-import { validateEmail, validatePassword } from '../../../non-visual/validators/validators';
+import {
+  validateDateOfBirth,
+  validateEmail,
+  validateName,
+  validatePassword,
+} from '../../../non-visual/validators/validators';
 import { LargeButton } from '../../buttons/LargeButton/LargeButton';
 import { EmailAndPasswordFields } from '../../fields/EmailAndPasswordFields/EmailAndPasswordFields';
 import { Checkbox } from '../../checkbox/Checkbox';
 import { IRegistrationForm } from './IRegistrationForm';
+import { NameAndDateFields } from '../../fields/NameAndDateFields/NameAndDateFields';
 
 export const RegistrationForm: React.FC = () => {
   const [state, setState] = useState<IRegistrationForm>({
@@ -14,6 +20,12 @@ export const RegistrationForm: React.FC = () => {
     password: '',
     passwordError: '',
     showPassword: false,
+    firstName: '',
+    firstNameError: '',
+    lastName: '',
+    dateOfBirth: '',
+    dateOfBirthError: '',
+    lastNameError: '',
     isDefaultShippingAddress: false,
     isSameAddresses: false,
     isDefaultBillingAddress: false,
@@ -41,6 +53,28 @@ export const RegistrationForm: React.FC = () => {
     const newPassword = event.target.value.trim();
     const passwordError = validatePassword(newPassword);
     setState((prevState) => ({ ...prevState, password: newPassword, passwordError }));
+  };
+
+  const handleFirstNameChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newFirstName = event.target.value.trim();
+    const firstNameError = validateName(newFirstName);
+    setState((prevState) => ({ ...prevState, firstName: newFirstName, firstNameError }));
+  };
+
+  const handleLastNameChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newLastName = event.target.value.trim();
+    const lastNameError = validateName(newLastName);
+    setState((prevState) => ({ ...prevState, lastName: newLastName, lastNameError }));
+  };
+
+  const handleDateOfBirth = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newDateOfBirth = event.target.value;
+    const dateOfBirthError = validateDateOfBirth(newDateOfBirth);
+    setState((prevState) => ({
+      ...prevState,
+      dateOfBirth: newDateOfBirth,
+      dateOfBirthError,
+    }));
   };
 
   const handleCheckboxChangeDefaultShippingAddress = (checked: boolean) => {
@@ -99,6 +133,21 @@ export const RegistrationForm: React.FC = () => {
           onPasswordChange={handlePasswordChange}
           showPassword={state.showPassword}
           togglePasswordVisibility={togglePasswordVisibility}
+        />
+      </div>
+
+      <span>Provide Your Name and Date of Birth</span>
+      <div className="fields-container">
+        <NameAndDateFields
+          firstName={state.firstName}
+          firstNameError={state.firstNameError}
+          onFirstNameChange={handleFirstNameChange}
+          lastName={state.lastName}
+          lastNameError={state.lastNameError}
+          onLastNameChange={handleLastNameChange}
+          dateOfBirth={state.dateOfBirth}
+          dateOfBirthError={state.dateOfBirthError}
+          onDateOfBirthChange={handleDateOfBirth}
         />
       </div>
 
