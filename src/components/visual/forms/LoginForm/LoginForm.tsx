@@ -2,10 +2,9 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { user } from '../../../..';
 import { LargeButton } from '../../buttons/LargeButton/LargeButton';
-import { EmailInput } from '../../inputs/EmailInput/EmailInput';
-import { PasswordInput } from '../../inputs/PasswordInput/PasswordInput';
 import { ILoginForm } from './ILoginForm';
 import { validateEmail, validatePassword } from '../../../non-visual/validators/validators';
+import { EmailAndPasswordFields } from '../../fields/EmailAndPasswordFields/EmailAndPasswordFields';
 
 export const LoginForm: React.FC = () => {
   const [state, setState] = useState<ILoginForm>({
@@ -64,23 +63,15 @@ export const LoginForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <EmailInput
-        label="Email"
-        name="email"
-        placeholder="Enter your email"
-        value={state.email}
-        onChange={handleEmailChange}
-        error={state.emailError}
-      />
-      <PasswordInput
-        label="Password"
-        name="password"
-        placeholder="Enter your password"
-        value={state.password}
-        onChange={handlePasswordChange}
+      <EmailAndPasswordFields
+        email={state.email}
+        emailError={state.emailError}
+        onEmailChange={handleEmailChange}
+        password={state.password}
+        passwordError={state.passwordError}
+        onPasswordChange={handlePasswordChange}
         showPassword={state.showPassword}
         togglePasswordVisibility={togglePasswordVisibility}
-        error={state.passwordError}
       />
       <div className="login-buttons">
         <LargeButton disabled={isButtonDisabled}>Login</LargeButton>
