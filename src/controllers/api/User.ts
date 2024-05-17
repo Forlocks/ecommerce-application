@@ -9,6 +9,7 @@ import {
   authMiddlewareOptions,
   httpMiddlewareOptions,
 } from './middlewareOptions';
+import { userTokenCache } from '../..';
 
 // ----------------------ERROR HANDLER START--------------------
 function errorHandler(error: Error) {
@@ -51,6 +52,7 @@ export class User {
       },
       scopes: [`manage_my_profile:${process.env.CTP_PROJECT_KEY}`], // скорее всего убрать
       fetch,
+      tokenCache: userTokenCache,
     };
 
     this.ctpClientFlow = new ClientBuilder()
@@ -81,6 +83,7 @@ export class User {
           try {
             await apiRoot.me().login().post({ body: customerData }).execute();
             this.setUserState('true');
+            console.log(userTokenCache.get());
           } catch (err) {
             responseObj.password = 'Invalid password.';
           }
