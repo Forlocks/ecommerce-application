@@ -1,4 +1,11 @@
-import { Client, ClientBuilder, PasswordAuthMiddlewareOptions } from '@commercetools/sdk-client-v2';
+import {
+  Client,
+  ClientBuilder,
+  ExistingTokenMiddlewareOptions,
+  PasswordAuthMiddlewareOptions,
+  RefreshAuthMiddlewareOptions,
+  TokenStore,
+} from '@commercetools/sdk-client-v2';
 import {
   CustomerSignin,
   MyCustomerDraft,
@@ -31,10 +38,42 @@ export class User {
   ctpClientFlow = this.ctpClientCredentialFlow;
 
   constructor() {
-    const userState = localStorage.getItem('userState');
+    this.setStartUserState();
+    this.regainApiPasswordAuthClient();
+  }
 
+  setStartUserState() {
+    const userState = localStorage.getItem('userState');
     if (userState === null) {
       localStorage.setItem('userState', 'false');
+    }
+  }
+
+  regainApiPasswordAuthClient() {
+    if (localStorage.getItem('userState') === 'true') {
+      const refreshTokenStr = localStorage.getItem('userTokenStorage');
+      if (refreshTokenStr) {
+        const authorization: string = `Bearer ${JSON.parse(refreshTokenStr).token}`;
+        const existingTokenMiddlewareOptions: ExistingTokenMiddlewareOptions = {
+          force: true,
+        };
+        const refreshAuthMiddlewareOptions: RefreshAuthMiddlewareOptions = {
+          host: process.env.CTP_AUTH_URL ?? '',
+          projectKey: process.env.CTP_PROJECT_KEY ?? '',
+          credentials: {
+            clientId: process.env.CTP_CLIENT_ID ?? '',
+            clientSecret: process.env.CTP_CLIENT_SECRET ?? '',
+          },
+          refreshToken: JSON.parse(refreshTokenStr).refreshToken,
+          tokenCache: userTokenCache,
+          fetch,
+        };
+        this.ctpClientFlow = new ClientBuilder()
+          .withRefreshTokenFlow(refreshAuthMiddlewareOptions)
+          .withExistingTokenFlow(authorization, existingTokenMiddlewareOptions)
+          .withHttpMiddleware(httpMiddlewareOptions)
+          .build();
+      }
     }
   }
 
@@ -50,7 +89,7 @@ export class User {
           password: customerData.password,
         },
       },
-      scopes: [`manage_my_profile:${process.env.CTP_PROJECT_KEY}`], // скорее всего убрать
+      scopes: [`manage_my_profile:${process.env.CTP_PROJECT_KEY}`],
       fetch,
       tokenCache: userTokenCache,
     };
@@ -83,7 +122,7 @@ export class User {
           try {
             await apiRoot.me().login().post({ body: customerData }).execute();
             this.setUserState('true');
-            console.log(userTokenCache.get());
+            this.setUserToken(userTokenCache.get());
           } catch (err) {
             responseObj.password = 'Invalid password.';
           }
@@ -132,4 +171,13 @@ export class User {
   setUserState(status: string) {
     localStorage.setItem('userState', status);
   }
+
+  setUserToken(userToken: TokenStore) {
+    localStorage.setItem('userTokenStorage', JSON.stringify(userToken));
+  }
+
+  // getCustomer() {
+  //   const apiRoot = this.createApiRoot(this.ctpClientFlow);
+  //   return apiRoot.me().get().execute();
+  // }
 }
