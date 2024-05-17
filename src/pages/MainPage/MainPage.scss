@@ -69,12 +69,11 @@
   display: grid;
   height: 480px;
   .arrivals-info {
-    // Стили для текста информации
+    display: flex;
   }
 
-  // Ссылка на страницу с товаром
   .arrivals-link {
-    // Стили для ссылки
+    display: flex;
   }
 }
 
@@ -98,10 +97,8 @@
     grid-column: 2 / span 3;
     padding: 0;
     margin-top: -48px;
-margin-right: -96px;
-    
+    margin-right: -96px;
   }
-
 }
 
 @media (max-width: 768px) {
@@ -111,8 +108,7 @@ margin-right: -96px;
     padding: 24px 16px 32px 16px;
     row-gap: 48px;
   }
-  .hero-title
-  {
+  .hero-title {
     position: static;
     grid-column: 1;
     order: 2;
@@ -120,7 +116,6 @@ margin-right: -96px;
     padding: 0;
   }
   .hero-small-image {
- 
     display: none;
   }
 
