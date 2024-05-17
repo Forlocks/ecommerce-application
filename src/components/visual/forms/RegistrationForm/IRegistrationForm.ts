@@ -10,6 +10,14 @@ export interface IRegistrationForm {
   dateOfBirth: string;
   dateOfBirthError: string;
   showPassword: boolean;
+  country: string;
+  countryError: string;
+  city: string;
+  cityError: string;
+  street: string;
+  streetError: string;
+  postCode: string;
+  postCodeError: string;
   isDefaultShippingAddress: boolean;
   isSameAddresses: boolean;
   isDefaultBillingAddress: boolean;

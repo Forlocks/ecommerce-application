@@ -2,13 +2,18 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { user } from '../../../..';
 import {
-  validateDateOfBirth,
   validateEmail,
-  validateName,
   validatePassword,
+  validateCountry,
+  validateCity,
+  validateStreet,
+  validatePostCode,
+  validateDateOfBirth,
+  validateName,
 } from '../../../non-visual/validators/validators';
 import { LargeButton } from '../../buttons/LargeButton/LargeButton';
 import { EmailAndPasswordFields } from '../../fields/EmailAndPasswordFields/EmailAndPasswordFields';
+import { AdressFields } from '../../fields/AdressFields/AdressFields';
 import { Checkbox } from '../../checkbox/Checkbox';
 import { IRegistrationForm } from './IRegistrationForm';
 import { NameAndDateFields } from '../../fields/NameAndDateFields/NameAndDateFields';
@@ -20,11 +25,19 @@ export const RegistrationForm: React.FC = () => {
     password: '',
     passwordError: '',
     showPassword: false,
+    country: '',
+    countryError: '',
+    city: '',
+    cityError: '',
+    street: '',
+    streetError: '',
+    postCode: '',
+    postCodeError: '',
     firstName: '',
     firstNameError: '',
-    lastName: '',
     dateOfBirth: '',
     dateOfBirthError: '',
+    lastName: '',
     lastNameError: '',
     isDefaultShippingAddress: false,
     isSameAddresses: false,
@@ -54,6 +67,29 @@ export const RegistrationForm: React.FC = () => {
     const passwordError = validatePassword(newPassword);
     setState((prevState) => ({ ...prevState, password: newPassword, passwordError }));
   };
+
+  const handleCountryChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newCountry = event.target.value;
+    const countryError = validateCountry(newCountry);
+    setState((prevState) => ({ ...prevState, country: newCountry, countryError }));
+  };
+
+  const handleCityChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newCity = event.target.value;
+    const cityError = validateCity(newCity);
+    setState((prevState) => ({ ...prevState, city: newCity, cityError }));
+  };
+
+  const handleStreetChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newStreet = event.target.value;
+    const streetError = validateStreet(newStreet);
+    setState((prevState) => ({ ...prevState, street: newStreet, streetError }));
+  };
+
+  const handlePostCodeChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newPostCode = event.target.value;
+    const postCodeError = validatePostCode(newPostCode);
+    setState((prevState) => ({ ...prevState, postCode: newPostCode, postCodeError }));
 
   const handleFirstNameChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newFirstName = event.target.value.trim();
@@ -135,7 +171,7 @@ export const RegistrationForm: React.FC = () => {
           togglePasswordVisibility={togglePasswordVisibility}
         />
       </div>
-
+      
       <span>Provide Your Name and Date of Birth</span>
       <div className="fields-container">
         <NameAndDateFields
@@ -151,13 +187,30 @@ export const RegistrationForm: React.FC = () => {
         />
       </div>
 
+      <span>Shipping adress</span>
+      <div className="fields-container">
+        <AdressFields
+          country={state.country}
+          countryError={state.countryError}
+          onCountryChange={handleCountryChange}
+          city={state.city}
+          cityError={state.cityError}
+          onCityChange={handleCityChange}
+          street={state.street}
+          streetError={state.streetError}
+          onStreetChange={handleStreetChange}
+          postCode={state.postCode}
+          postCodeError={state.postCodeError}
+          onPostCodeChange={handlePostCodeChange}
+      />
+
       <Checkbox
         id="default-shiping-address"
         checked={state.isDefaultShippingAddress}
         onChange={handleCheckboxChangeDefaultShippingAddress}
         label="set as default shipping address"
       />
-
+        
       <Checkbox
         id="same-address"
         checked={state.isSameAddresses}
@@ -165,6 +218,24 @@ export const RegistrationForm: React.FC = () => {
         label="shipping and billing addresses coincide"
       />
 
+      <span>Billing adress</span>
+      <div className="fields-container">
+        <AdressFields
+          country={state.country}
+          countryError={state.countryError}
+          onCountryChange={handleCountryChange}
+          city={state.city}
+          cityError={state.cityError}
+          onCityChange={handleCityChange}
+          street={state.street}
+          streetError={state.streetError}
+          onStreetChange={handleStreetChange}
+          postCode={state.postCode}
+          postCodeError={state.postCodeError}
+          onPostCodeChange={handlePostCodeChange}
+        />
+      </div>
+        
       <Checkbox
         id="default-billing-address"
         checked={state.isDefaultBillingAddress}
