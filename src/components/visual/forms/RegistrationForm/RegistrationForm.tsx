@@ -8,12 +8,15 @@ import {
   validateCity,
   validateStreet,
   validatePostCode,
+  validateDateOfBirth,
+  validateName,
 } from '../../../non-visual/validators/validators';
 import { LargeButton } from '../../buttons/LargeButton/LargeButton';
 import { EmailAndPasswordFields } from '../../fields/EmailAndPasswordFields/EmailAndPasswordFields';
 import { AdressFields } from '../../fields/AdressFields/AdressFields';
 import { Checkbox } from '../../checkbox/Checkbox';
 import { IRegistrationForm } from './IRegistrationForm';
+import { NameAndDateFields } from '../../fields/NameAndDateFields/NameAndDateFields';
 
 export const RegistrationForm: React.FC = () => {
   const [state, setState] = useState<IRegistrationForm>({
@@ -30,6 +33,12 @@ export const RegistrationForm: React.FC = () => {
     streetError: '',
     postCode: '',
     postCodeError: '',
+    firstName: '',
+    firstNameError: '',
+    dateOfBirth: '',
+    dateOfBirthError: '',
+    lastName: '',
+    lastNameError: '',
     isDefaultShippingAddress: false,
     isSameAddresses: false,
     isDefaultBillingAddress: false,
@@ -81,6 +90,27 @@ export const RegistrationForm: React.FC = () => {
     const newPostCode = event.target.value;
     const postCodeError = validatePostCode(newPostCode);
     setState((prevState) => ({ ...prevState, postCode: newPostCode, postCodeError }));
+
+  const handleFirstNameChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newFirstName = event.target.value.trim();
+    const firstNameError = validateName(newFirstName);
+    setState((prevState) => ({ ...prevState, firstName: newFirstName, firstNameError }));
+  };
+
+  const handleLastNameChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newLastName = event.target.value.trim();
+    const lastNameError = validateName(newLastName);
+    setState((prevState) => ({ ...prevState, lastName: newLastName, lastNameError }));
+  };
+
+  const handleDateOfBirth = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newDateOfBirth = event.target.value;
+    const dateOfBirthError = validateDateOfBirth(newDateOfBirth);
+    setState((prevState) => ({
+      ...prevState,
+      dateOfBirth: newDateOfBirth,
+      dateOfBirthError,
+    }));
   };
 
   const handleCheckboxChangeDefaultShippingAddress = (checked: boolean) => {
@@ -141,6 +171,21 @@ export const RegistrationForm: React.FC = () => {
           togglePasswordVisibility={togglePasswordVisibility}
         />
       </div>
+      
+      <span>Provide Your Name and Date of Birth</span>
+      <div className="fields-container">
+        <NameAndDateFields
+          firstName={state.firstName}
+          firstNameError={state.firstNameError}
+          onFirstNameChange={handleFirstNameChange}
+          lastName={state.lastName}
+          lastNameError={state.lastNameError}
+          onLastNameChange={handleLastNameChange}
+          dateOfBirth={state.dateOfBirth}
+          dateOfBirthError={state.dateOfBirthError}
+          onDateOfBirthChange={handleDateOfBirth}
+        />
+      </div>
 
       <span>Shipping adress</span>
       <div className="fields-container">
@@ -157,14 +202,20 @@ export const RegistrationForm: React.FC = () => {
           postCode={state.postCode}
           postCodeError={state.postCodeError}
           onPostCodeChange={handlePostCodeChange}
-        />
-      </div>
+      />
 
       <Checkbox
         id="default-shiping-address"
         checked={state.isDefaultShippingAddress}
         onChange={handleCheckboxChangeDefaultShippingAddress}
         label="set as default shipping address"
+      />
+        
+      <Checkbox
+        id="same-address"
+        checked={state.isSameAddresses}
+        onChange={handleCheckboxChangeSameAddresses}
+        label="shipping and billing addresses coincide"
       />
 
       <span>Billing adress</span>
@@ -184,14 +235,7 @@ export const RegistrationForm: React.FC = () => {
           onPostCodeChange={handlePostCodeChange}
         />
       </div>
-
-      <Checkbox
-        id="same-address"
-        checked={state.isSameAddresses}
-        onChange={handleCheckboxChangeSameAddresses}
-        label="shipping and billing addresses coincide"
-      />
-
+        
       <Checkbox
         id="default-billing-address"
         checked={state.isDefaultBillingAddress}

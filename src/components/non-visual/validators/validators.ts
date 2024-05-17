@@ -68,6 +68,31 @@ export const validatePostCode = (postCode: string): string => {
   if (!/^\d{5}(-\d{4})?$/.test(trimmedPostCode)) {
     return 'United States post code must be in the numeric format XXXXX or XXXXX-YYYY';
   }
+};
+
+export const validateName = (name: string): string => {
+  const trimmedName = name.trim();
+  if (!trimmedName) return 'this field cannot be empty';
+  if (!/^[A-Za-z\s]*$/.test(trimmedName)) {
+    return 'this field must not contain special characters or numbers';
+  }
+  return '';
+};
+
+export const validateDateOfBirth = (date: string): string => {
+  if (!date) return 'date of birth cannot be empty';
+  const dateOfBirthString = date;
+  const dateOfBirthObj = new Date(dateOfBirthString);
+  const todayDate = new Date();
+  let age = todayDate.getFullYear() - dateOfBirthObj.getFullYear();
+  if (
+    todayDate.getMonth() < dateOfBirthObj.getMonth() ||
+    (todayDate.getMonth() === dateOfBirthObj.getMonth() &&
+      todayDate.getDate() < dateOfBirthObj.getDate())
+  ) {
+    age--;
+  }
+  if (age < 13) return 'You must be 13 years old or older';
 
   return '';
 };

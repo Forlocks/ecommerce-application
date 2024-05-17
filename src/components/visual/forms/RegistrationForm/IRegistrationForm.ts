@@ -3,6 +3,12 @@ export interface IRegistrationForm {
   emailError: string;
   password: string;
   passwordError: string;
+  firstName: string;
+  firstNameError: string;
+  lastName: string;
+  lastNameError: string;
+  dateOfBirth: string;
+  dateOfBirthError: string;
   showPassword: boolean;
   country: string;
   countryError: string;
