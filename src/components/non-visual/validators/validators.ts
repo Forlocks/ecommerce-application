@@ -31,3 +31,43 @@ export const validatePassword = (password: string): string => {
   }
   return '';
 };
+
+export const validateCountry = (country: string): string => {
+  const trimmedCountry = country.trim();
+  if (!trimmedCountry) return 'country cannot be empty';
+
+  if (trimmedCountry !== 'United States') {
+    return 'country must be from the autocomplete field list';
+  }
+
+  return '';
+};
+
+export const validateCity = (city: string): string => {
+  const trimmedCity = city.trim();
+  if (!trimmedCity) return 'city cannot be empty';
+
+  if (!/^[A-Za-z\s]*$/.test(trimmedCity)) {
+    return 'city must not contain special characters or numbers';
+  }
+
+  return '';
+};
+
+export const validateStreet = (street: string): string => {
+  const trimmedStreet = street.trim();
+  if (!trimmedStreet) return 'street cannot be empty';
+
+  return '';
+};
+
+export const validatePostCode = (postCode: string): string => {
+  const trimmedPostCode = postCode.trim();
+  if (!trimmedPostCode) return 'post code cannot be empty';
+
+  if (!/^\d{5}(-\d{4})?$/.test(trimmedPostCode)) {
+    return 'United States post code must be in the numeric format XXXXX or XXXXX-YYYY';
+  }
+
+  return '';
+};
