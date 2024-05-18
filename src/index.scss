@@ -1,245 +1,76 @@
 /*
-    Resetting default styles
-*/
-
-html,
-body,
-div,
-span,
-applet,
-object,
-iframe,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-blockquote,
-pre,
-a,
-abbr,
-acronym,
-address,
-big,
-cite,
-del,
-dfn,
-em,
-img,
-ins,
-kbd,
-q,
-s,
-samp,
-small,
-strike,
-sub,
-sup,
-tt,
-var,
-b,
-u,
-i,
-center,
-fieldset,
-form,
-label,
-legend,
-table,
-caption,
-tbody,
-tfoot,
-thead,
-tr,
-th,
-td,
-article,
-aside,
-canvas,
-details,
-embed,
-figure,
-figcaption,
-footer,
-header,
-hgroup,
-menu,
-nav,
-output,
-ruby,
-section,
-summary,
-time,
-mark,
-audio,
-video,
-ul,
-ol,
-li,
-button,
-input,
-label {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}
-
-article,
-aside,
-details,
-figcaption,
-figure,
-footer,
-header,
-hgroup,
-menu,
-nav,
-section {
-	display: block;
-}
-body {
-	line-height: 1;
-}
-
-blockquote,
-q {
-	quotes: none;
-}
-blockquote:before,
-blockquote:after,
-q:before,
-q:after {
-	content: '';
-	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-a {
-	text-decoration: none;
-}
-* {
-	box-sizing: border-box;
-	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-html {
-	scroll-behavior: smooth;
-	overflow-x: hidden;
-}
-
-/*
   Global settings
 */
 
-// ------ fonts colors --------
-$black-text: #121212;
-$grey-text: #606060;
-$red-text: #ff6464;
+// Import of global variables, mixins, and base styles
+@import './components/visual/grid-layout';
+@import './components/visual/variables';
+@import './components/visual/fonts';
+@import './components/visual/reset';
 
-// ------ background colors --------
-$white-color: #f3f3f3;
-$grey-color: #979292;
-$green-color: #e3fd16;
-
+// Import of global components
 @import './components/visual/inputs/inputs.scss';
 @import './components/visual/forms/forms.scss';
 @import './components/visual/buttons/buttons.scss';
 @import './components/visual/header/header.scss';
 @import './components/visual/checkbox/checkbox.scss';
 
-// ------ fonts --------
-@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
-
-@font-face {
-	font-family: 'Craftwork Grotesk Heavy';
-	font-style: normal;
-	font-weight: normal;
-	src: url('./assets/fonts/Craftwork_Grotesk/CraftworkGrotesk-Heavy.woff') format('woff');
-}
-
-@font-face {
-	font-family: 'Craftwork Grotesk Semi Bold';
-	font-style: normal;
-	font-weight: normal;
-	src: url('./assets/fonts/Craftwork_Grotesk/CraftworkGrotesk-SemiBold.woff') format('woff');
-}
-
-@font-face {
-	font-family: 'Craftwork Grotesk Medium';
-	font-style: normal;
-	font-weight: normal;
-	src: url('./assets/fonts/Craftwork_Grotesk/CraftworkGrotesk-Medium.woff') format('woff');
-}
-
-@font-face {
-	font-family: 'Roboto Regular';
-	font-style: normal;
-	font-weight: normal;
-	src: url('./assets/fonts/Roboto/Roboto-Regular.ttf');
-}
-
 body {
   display: flex;
-	position: relative;
-	min-height: 100vh;
-	font-size: 16px;
-	background-color: $white-color;
-	overflow-x: hidden;
+  position: relative;
+  min-height: 100vh;
+  font-size: 16px;
+  background-color: $white-color;
+  overflow-x: hidden;
 }
 
 h1 {
-	font-family: 'Craftwork Grotesk', sans-serif;
-	font-weight: 900;
-	font-size: 4em;
-	line-height: 130%;
-	letter-spacing: 0.01em;
-	color: $black-text;
+  font-family: 'Craftwork Grotesk', sans-serif;
+  font-weight: 900;
+  font-size: 4em;
+  line-height: 130%;
+  letter-spacing: 0.01em;
+  color: $black-text;
 }
 
 h2 {
-	font-family: 'Craftwork Grotesk', sans-serif;
-	font-weight: 500;
-	font-size: 3em;
-	line-height: 125%;
-	color: $black-text;
+  font-family: 'Craftwork Grotesk', sans-serif;
+  font-weight: 500;
+  font-size: 3em;
+  line-height: 125%;
+  color: $black-text;
 }
 
 h3 {
-	font-family: 'Craftwork Grotesk', sans-serif;
-	font-weight: 600;
-	font-size: 16px;
-	line-height: 150%;
-	letter-spacing: 0.01em;
-	color: $black-text;
+  font-family: 'Craftwork Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 150%;
+  letter-spacing: 0.01em;
+  color: $black-text;
 }
 
 h4 {
-	font-family: 'Roboto Regular', sans-serif;
-	font-weight: 500;
-	font-size: 15px;
-	letter-spacing: -0.01em;
+  font-family: 'Roboto Regular', sans-serif;
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: -0.01em;
 }
 
 h5 {
-	font-family: 'Roboto Regular', sans-serif;
-	font-weight: 400;
-	font-size: 12px;
-	letter-spacing: 0.02em;
+  font-family: 'Roboto Regular', sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.02em;
 }
 
 p {
-	font-family: 'Roboto Regular', sans-serif;
-	font-weight: 400;
-	font-size: 17px;
-	line-height: 130%;
-	letter-spacing: -0.03em;
-	color: $black-text;
+  font-family: 'Roboto Regular', sans-serif;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 130%;
+  letter-spacing: -0.03em;
+  color: $black-text;
 }
 
 a {
@@ -254,7 +85,7 @@ a::before {
   bottom: 0px;
   width: 100%;
   height: 100%;
-  background-color: $green-color ;
+  background-color: $green-color;
   z-index: -1;
 }
 
@@ -263,44 +94,43 @@ a:hover {
 }
 
 span {
-	font-family: 'Roboto Regular', sans-serif;
-	font-weight: 400;
-	font-size: 11px;
-	line-height: 130%;
-	letter-spacing: 0.02em;
-	color: $grey-text;
+  font-family: 'Roboto Regular', sans-serif;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 130%;
+  letter-spacing: 0.02em;
+  color: $grey-text;
 }
 
 .wrapper {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	height: 100vh;
-	background-color: rgb(0, 0, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(0, 0, 0);
 }
 
 .black-container {
-	display: none;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-	z-index: 1;
-	width: 100%;
-	height: 100vh;
-	background-color: rgba(0, 0, 0, 0.75);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75);
 }
 
 #root {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-	height: 100%;
 }
 
 @media (max-width: 1024px) {
-    body {
-			height: auto;
-      font-size: 12px;
-    }
+  body {
+    height: auto;
+    font-size: 12px;
+  }
 }

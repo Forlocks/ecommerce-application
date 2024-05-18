@@ -5,7 +5,7 @@ import { RegistrationForm } from '../../components/visual/forms/RegistrationForm
 export const RegistrationPage: React.FC = function () {
   return (
     <div className="login_page">
-      <div className="form_container">
+      <div className="content_container">
         <Logo className="logo-main" />
         <h2>Please register</h2>
         <span>
@@ -15,7 +15,7 @@ export const RegistrationPage: React.FC = function () {
         <RegistrationForm />
       </div>
       <div className="image_container-small">
-        <img src="./assets/images/RegistrationPage_small.png" alt="Small image" />
+        <img src="./assets/images/RegistrationPage_small.webp" alt="Small image" />
       </div>
     </div>
   );

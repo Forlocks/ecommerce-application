@@ -1,0 +1,30 @@
+// ------ fonts --------
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
+
+@font-face {
+	font-family: 'Craftwork Grotesk Heavy';
+	font-style: normal;
+	font-weight: normal;
+	src: url('./assets/fonts/Craftwork_Grotesk/CraftworkGrotesk-Heavy.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'Craftwork Grotesk Semi Bold';
+	font-style: normal;
+	font-weight: normal;
+	src: url('./assets/fonts/Craftwork_Grotesk/CraftworkGrotesk-SemiBold.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'Craftwork Grotesk Medium';
+	font-style: normal;
+	font-weight: normal;
+	src: url('./assets/fonts/Craftwork_Grotesk/CraftworkGrotesk-Medium.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'Roboto Regular';
+	font-style: normal;
+	font-weight: normal;
+	src: url('./assets/fonts/Roboto/Roboto-Regular.ttf');
+}

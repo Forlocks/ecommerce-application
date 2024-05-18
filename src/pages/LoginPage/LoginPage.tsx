@@ -6,7 +6,7 @@ import { Logo } from '../../components/visual/logo/Logo';
 export const LoginPage: React.FC = function () {
   return (
     <div className="login_page">
-      <div className="form_container">
+      <div className="content_container">
         <Logo className="logo-main" />
         <h2>
           Welcome Back
@@ -21,10 +21,10 @@ export const LoginPage: React.FC = function () {
         <LoginForm />
       </div>
       <div className="image_container-big">
-        <img src="./assets/images/loginPage_big.png" alt="Big image" />
+        <img src="./assets/images/loginPage_big.webp" alt="Big image" />
       </div>
       <div className="image_container-small">
-        <img src="./assets/images/loginPage_small.png" alt="Small image" />
+        <img src="./assets/images/loginPage_small.webp" alt="Small image" />
       </div>
     </div>
   );
