@@ -68,6 +68,8 @@ export const validatePostCode = (postCode: string): string => {
   if (!/^\d{5}(-\d{4})?$/.test(trimmedPostCode)) {
     return 'United States post code must be in the numeric format XXXXX or XXXXX-YYYY';
   }
+
+  return '';
 };
 
 export const validateName = (name: string): string => {

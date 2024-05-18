@@ -90,6 +90,7 @@ export const RegistrationForm: React.FC = () => {
     const newPostCode = event.target.value;
     const postCodeError = validatePostCode(newPostCode);
     setState((prevState) => ({ ...prevState, postCode: newPostCode, postCodeError }));
+  };
 
   const handleFirstNameChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newFirstName = event.target.value.trim();
@@ -171,7 +172,7 @@ export const RegistrationForm: React.FC = () => {
           togglePasswordVisibility={togglePasswordVisibility}
         />
       </div>
-      
+
       <span>Provide Your Name and Date of Birth</span>
       <div className="fields-container">
         <NameAndDateFields
@@ -202,7 +203,8 @@ export const RegistrationForm: React.FC = () => {
           postCode={state.postCode}
           postCodeError={state.postCodeError}
           onPostCodeChange={handlePostCodeChange}
-      />
+        />
+      </div>
 
       <Checkbox
         id="default-shiping-address"
@@ -210,7 +212,7 @@ export const RegistrationForm: React.FC = () => {
         onChange={handleCheckboxChangeDefaultShippingAddress}
         label="set as default shipping address"
       />
-        
+
       <Checkbox
         id="same-address"
         checked={state.isSameAddresses}
@@ -235,7 +237,7 @@ export const RegistrationForm: React.FC = () => {
           onPostCodeChange={handlePostCodeChange}
         />
       </div>
-        
+
       <Checkbox
         id="default-billing-address"
         checked={state.isDefaultBillingAddress}
