@@ -18,12 +18,6 @@ import {
 } from './middlewareOptions';
 import { userTokenCache } from '../..';
 
-// ----------------------ERROR HANDLER START--------------------
-function errorHandler(error: Error) {
-  console.error(error.message);
-}
-// ----------------------ERROR HANDLER END----------------------
-
 export class User {
   ctpClientCredentialFlow = new ClientBuilder()
     .withClientCredentialsFlow(authMiddlewareOptions)
@@ -141,7 +135,9 @@ export class User {
 
   public async registration(customerData: MyCustomerDraft) {
     const apiRoot = this.createApiRoot(this.ctpClientFlow);
-
+    const responseObj = {
+      email: 'ok',
+    };
     try {
       await apiRoot
         .me()
@@ -152,8 +148,10 @@ export class User {
         .execute();
       this.login({ email: customerData.email, password: customerData.password });
     } catch (error) {
-      errorHandler(error as Error);
+      // errorHandler(error as Error);
+      responseObj.email = (error as Error).message;
     }
+    return responseObj;
   }
 
   returnUserByEmail(customerEmail: string) {

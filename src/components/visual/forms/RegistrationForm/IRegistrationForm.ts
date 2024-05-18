@@ -18,6 +18,14 @@ export interface IRegistrationForm {
   streetError: string;
   postCode: string;
   postCodeError: string;
+  countryBilling: string;
+  countryErrorBilling: string;
+  cityBilling: string;
+  cityErrorBilling: string;
+  streetBilling: string;
+  streetErrorBilling: string;
+  postCodeBilling: string;
+  postCodeErrorBilling: string;
   isDefaultShippingAddress: boolean;
   isSameAddresses: boolean;
   isDefaultBillingAddress: boolean;

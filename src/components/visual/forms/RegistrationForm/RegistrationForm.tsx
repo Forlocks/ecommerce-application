@@ -33,6 +33,14 @@ export const RegistrationForm: React.FC = () => {
     streetError: '',
     postCode: '',
     postCodeError: '',
+    countryBilling: '',
+    countryErrorBilling: '',
+    cityBilling: '',
+    cityErrorBilling: '',
+    streetBilling: '',
+    streetErrorBilling: '',
+    postCodeBilling: '',
+    postCodeErrorBilling: '',
     firstName: '',
     firstNameError: '',
     dateOfBirth: '',
@@ -50,7 +58,29 @@ export const RegistrationForm: React.FC = () => {
     state.email === '' ||
     state.password === '' ||
     state.emailError !== '' ||
-    state.passwordError !== '';
+    state.passwordError !== '' ||
+    state.country === '' ||
+    state.countryError !== '' ||
+    state.city === '' ||
+    state.cityError !== '' ||
+    state.street === '' ||
+    state.streetError !== '' ||
+    state.postCode === '' ||
+    state.postCodeError !== '' ||
+    state.firstName === '' ||
+    state.firstNameError !== '' ||
+    state.lastName === '' ||
+    state.lastNameError !== '' ||
+    state.dateOfBirth === '' ||
+    state.dateOfBirthError !== '' ||
+    state.countryBilling === '' ||
+    state.countryErrorBilling !== '' ||
+    state.cityBilling === '' ||
+    state.cityErrorBilling !== '' ||
+    state.streetBilling === '' ||
+    state.streetErrorBilling !== '' ||
+    state.postCodeBilling === '' ||
+    state.postCodeErrorBilling !== '';
 
   const togglePasswordVisibility = () => {
     setState((prevState) => ({ ...prevState, showPassword: !prevState.showPassword }));
@@ -68,28 +98,60 @@ export const RegistrationForm: React.FC = () => {
     setState((prevState) => ({ ...prevState, password: newPassword, passwordError }));
   };
 
-  const handleCountryChange = (event: ChangeEvent<HTMLInputElement>): void => {
+  const handleCountryChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    targetCountry: string,
+    targetCountryError: string,
+  ): void => {
     const newCountry = event.target.value;
     const countryError = validateCountry(newCountry);
-    setState((prevState) => ({ ...prevState, country: newCountry, countryError }));
+    setState((prevState) => ({
+      ...prevState,
+      [targetCountry]: newCountry,
+      [targetCountryError]: countryError,
+    }));
   };
 
-  const handleCityChange = (event: ChangeEvent<HTMLInputElement>): void => {
+  const handleCityChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    targetCity: string,
+    targetCityError: string,
+  ): void => {
     const newCity = event.target.value;
     const cityError = validateCity(newCity);
-    setState((prevState) => ({ ...prevState, city: newCity, cityError }));
+    setState((prevState) => ({
+      ...prevState,
+      [targetCity]: newCity,
+      [targetCityError]: cityError,
+    }));
   };
 
-  const handleStreetChange = (event: ChangeEvent<HTMLInputElement>): void => {
+  const handleStreetChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    targetStreet: string,
+    targetStreetError: string,
+  ): void => {
     const newStreet = event.target.value;
     const streetError = validateStreet(newStreet);
-    setState((prevState) => ({ ...prevState, street: newStreet, streetError }));
+    setState((prevState) => ({
+      ...prevState,
+      [targetStreet]: newStreet,
+      [targetStreetError]: streetError,
+    }));
   };
 
-  const handlePostCodeChange = (event: ChangeEvent<HTMLInputElement>): void => {
+  const handlePostCodeChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    targetPostCode: string,
+    targetPostCodeError: string,
+  ): void => {
     const newPostCode = event.target.value;
     const postCodeError = validatePostCode(newPostCode);
-    setState((prevState) => ({ ...prevState, postCode: newPostCode, postCodeError }));
+    setState((prevState) => ({
+      ...prevState,
+      [targetPostCode]: newPostCode,
+      [targetPostCodeError]: postCodeError,
+    }));
   };
 
   const handleFirstNameChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -129,29 +191,91 @@ export const RegistrationForm: React.FC = () => {
   };
 
   const handleCheckboxChangeSameAddresses = (checked: boolean) => {
-    setState({
-      ...state,
-      isSameAddresses: checked,
+    setState((prevState) => {
+      if (checked) {
+        return {
+          ...prevState,
+          isSameAddresses: checked,
+          countryBilling: prevState.country,
+          countryErrorBilling: prevState.countryError,
+          cityBilling: prevState.city,
+          cityErrorBilling: prevState.cityError,
+          streetBilling: prevState.street,
+          streetErrorBilling: prevState.streetError,
+          postCodeBilling: prevState.postCode,
+          postCodeErrorBilling: prevState.postCodeError,
+        };
+      }
+      return {
+        ...prevState,
+        isSameAddresses: checked,
+        countryBilling: '',
+        countryErrorBilling: '',
+        cityBilling: '',
+        cityErrorBilling: '',
+        streetBilling: '',
+        streetErrorBilling: '',
+        postCodeBilling: '',
+        postCodeErrorBilling: '',
+      };
     });
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    const { email, password } = state;
+    const {
+      email,
+      password,
+      city,
+      street,
+      postCode,
+      firstName,
+      lastName,
+      dateOfBirth,
+      cityBilling,
+      streetBilling,
+      postCodeBilling,
+      isDefaultShippingAddress,
+      isSameAddresses,
+      isDefaultBillingAddress,
+    } = state;
 
     const userData = {
       email,
+      firstName,
+      lastName,
       password,
+      dateOfBirth,
+      addresses: [
+        {
+          country: 'US',
+          city,
+          street,
+          postCode,
+        },
+        {
+          country: 'US',
+          city: cityBilling,
+          street: streetBilling,
+          postCode: postCodeBilling,
+        },
+      ],
+      shippingAddresses: [0],
+      billingAddresses: isSameAddresses ? [0] : [1],
+      defaultShippingAddress: isDefaultShippingAddress ? 0 : undefined,
+      defaultBillingAddress: isDefaultBillingAddress ? (isSameAddresses ? 0 : 1) : undefined,
     };
 
-    user.login(userData).then((result) => {
-      if (result.email === 'ok' && result.password === 'ok') {
+    if (isSameAddresses) userData.addresses.pop();
+
+    user.registration(userData).then((result) => {
+      if (result.email === 'ok') {
         navigate('/');
+        console.log('success registration');
       } else {
         setState((prevState) => ({
           ...prevState,
           emailError: result.email === 'ok' ? '' : result.email,
-          passwordError: result.password === 'ok' ? '' : result.password,
         }));
       }
     });
@@ -193,16 +317,16 @@ export const RegistrationForm: React.FC = () => {
         <AdressFields
           country={state.country}
           countryError={state.countryError}
-          onCountryChange={handleCountryChange}
+          onCountryChange={(event) => handleCountryChange(event, 'country', 'countryError')}
           city={state.city}
           cityError={state.cityError}
-          onCityChange={handleCityChange}
+          onCityChange={(event) => handleCityChange(event, 'city', 'cityError')}
           street={state.street}
           streetError={state.streetError}
-          onStreetChange={handleStreetChange}
+          onStreetChange={(event) => handleStreetChange(event, 'street', 'streetError')}
           postCode={state.postCode}
           postCodeError={state.postCodeError}
-          onPostCodeChange={handlePostCodeChange}
+          onPostCodeChange={(event) => handlePostCodeChange(event, 'postCode', 'postCodeError')}
         />
       </div>
 
@@ -220,23 +344,35 @@ export const RegistrationForm: React.FC = () => {
         label="shipping and billing addresses coincide"
       />
 
-      <span>Billing adress</span>
-      <div className="fields-container">
-        <AdressFields
-          country={state.country}
-          countryError={state.countryError}
-          onCountryChange={handleCountryChange}
-          city={state.city}
-          cityError={state.cityError}
-          onCityChange={handleCityChange}
-          street={state.street}
-          streetError={state.streetError}
-          onStreetChange={handleStreetChange}
-          postCode={state.postCode}
-          postCodeError={state.postCodeError}
-          onPostCodeChange={handlePostCodeChange}
-        />
-      </div>
+      {!state.isSameAddresses && (
+        <>
+          <span>Billing adress</span>
+          <div className="fields-container">
+            <AdressFields
+              country={state.countryBilling}
+              countryError={state.countryErrorBilling}
+              onCountryChange={(event) => {
+                handleCountryChange(event, 'countryBilling', 'countryErrorBilling');
+              }}
+              city={state.cityBilling}
+              cityError={state.cityErrorBilling}
+              onCityChange={(event) => {
+                handleCityChange(event, 'cityBilling', 'cityErrorBilling');
+              }}
+              street={state.streetBilling}
+              streetError={state.streetErrorBilling}
+              onStreetChange={(event) => {
+                handleStreetChange(event, 'streetBilling', 'streetErrorBilling');
+              }}
+              postCode={state.postCodeBilling}
+              postCodeError={state.postCodeErrorBilling}
+              onPostCodeChange={(event) => {
+                handlePostCodeChange(event, 'postCodeBilling', 'postCodeErrorBilling');
+              }}
+            />
+          </div>
+        </>
+      )}
 
       <Checkbox
         id="default-billing-address"
