@@ -223,21 +223,59 @@ export const RegistrationForm: React.FC = () => {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    const { email, password } = state;
+    const {
+      email,
+      password,
+      city,
+      street,
+      postCode,
+      firstName,
+      lastName,
+      dateOfBirth,
+      cityBilling,
+      streetBilling,
+      postCodeBilling,
+      isDefaultShippingAddress,
+      isSameAddresses,
+      isDefaultBillingAddress,
+    } = state;
 
     const userData = {
       email,
+      firstName,
+      lastName,
       password,
+      dateOfBirth,
+      addresses: [
+        {
+          country: 'US',
+          city,
+          street,
+          postCode,
+        },
+        {
+          country: 'US',
+          city: cityBilling,
+          street: streetBilling,
+          postCode: postCodeBilling,
+        },
+      ],
+      shippingAddresses: [0],
+      billingAddresses: isSameAddresses ? [0] : [1],
+      defaultShippingAddress: isDefaultShippingAddress ? 0 : undefined,
+      defaultBillingAddress: isDefaultBillingAddress ? (isSameAddresses ? 0 : 1) : undefined,
     };
 
-    user.login(userData).then((result) => {
-      if (result.email === 'ok' && result.password === 'ok') {
+    if (isSameAddresses) userData.addresses.pop();
+
+    user.registration(userData).then((result) => {
+      if (result.email === 'ok') {
         navigate('/');
+        console.log('success registration');
       } else {
         setState((prevState) => ({
           ...prevState,
           emailError: result.email === 'ok' ? '' : result.email,
-          passwordError: result.password === 'ok' ? '' : result.password,
         }));
       }
     });
@@ -319,7 +357,7 @@ export const RegistrationForm: React.FC = () => {
               city={state.cityBilling}
               cityError={state.cityErrorBilling}
               onCityChange={(event) => {
-                handleCityChange(event, 'cityBilling', 'cityBillingError');
+                handleCityChange(event, 'cityBilling', 'cityErrorBilling');
               }}
               street={state.streetBilling}
               streetError={state.streetErrorBilling}
