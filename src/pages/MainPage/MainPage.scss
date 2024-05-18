@@ -41,7 +41,7 @@
   position: absolute;
   align-self: flex-start;
   z-index: 1;
-  padding: 12%;
+  padding: 13%;
   padding-top: 45px;
   img {
     width: 100%;
@@ -54,7 +54,7 @@
   align-self: flex-end;
   align-self: self-end;
   width: 100%;
-  padding: 0% 16% 8% 16%;
+  padding: 0% 9% 8% 24%;
   z-index: 0;
   img {
     width: 100%;
@@ -81,7 +81,7 @@
   .main_page {
     height: 100%;
     grid-template-columns: repeat(4, 1fr);
-    padding: 48px;
+    padding: 24px;
   }
 
   .hero-section {
@@ -96,8 +96,6 @@
     align-self: flex-start;
     grid-column: 2 / span 3;
     padding: 0;
-    margin-top: -48px;
-    margin-right: -96px;
   }
 }
 
