@@ -191,9 +191,33 @@ export const RegistrationForm: React.FC = () => {
   };
 
   const handleCheckboxChangeSameAddresses = (checked: boolean) => {
-    setState({
-      ...state,
-      isSameAddresses: checked,
+    setState((prevState) => {
+      if (checked) {
+        return {
+          ...prevState,
+          isSameAddresses: checked,
+          countryBilling: prevState.country,
+          countryErrorBilling: prevState.countryError,
+          cityBilling: prevState.city,
+          cityErrorBilling: prevState.cityError,
+          streetBilling: prevState.street,
+          streetErrorBilling: prevState.streetError,
+          postCodeBilling: prevState.postCode,
+          postCodeErrorBilling: prevState.postCodeError,
+        };
+      }
+      return {
+        ...prevState,
+        isSameAddresses: checked,
+        countryBilling: '',
+        countryErrorBilling: '',
+        cityBilling: '',
+        cityErrorBilling: '',
+        streetBilling: '',
+        streetErrorBilling: '',
+        postCodeBilling: '',
+        postCodeErrorBilling: '',
+      };
     });
   };
 
@@ -282,31 +306,35 @@ export const RegistrationForm: React.FC = () => {
         label="shipping and billing addresses coincide"
       />
 
-      <span>Billing adress</span>
-      <div className="fields-container">
-        <AdressFields
-          country={state.countryBilling}
-          countryError={state.countryErrorBilling}
-          onCountryChange={(event) => {
-            handleCountryChange(event, 'countryBilling', 'countryErrorBilling');
-          }}
-          city={state.cityBilling}
-          cityError={state.cityErrorBilling}
-          onCityChange={(event) => {
-            handleCityChange(event, 'cityBilling', 'cityBillingError');
-          }}
-          street={state.streetBilling}
-          streetError={state.streetErrorBilling}
-          onStreetChange={(event) => {
-            handleStreetChange(event, 'streetBilling', 'streetErrorBilling');
-          }}
-          postCode={state.postCodeBilling}
-          postCodeError={state.postCodeErrorBilling}
-          onPostCodeChange={(event) => {
-            handlePostCodeChange(event, 'postCodeBilling', 'postCodeErrorBilling');
-          }}
-        />
-      </div>
+      {!state.isSameAddresses && (
+        <>
+          <span>Billing adress</span>
+          <div className="fields-container">
+            <AdressFields
+              country={state.countryBilling}
+              countryError={state.countryErrorBilling}
+              onCountryChange={(event) => {
+                handleCountryChange(event, 'countryBilling', 'countryErrorBilling');
+              }}
+              city={state.cityBilling}
+              cityError={state.cityErrorBilling}
+              onCityChange={(event) => {
+                handleCityChange(event, 'cityBilling', 'cityBillingError');
+              }}
+              street={state.streetBilling}
+              streetError={state.streetErrorBilling}
+              onStreetChange={(event) => {
+                handleStreetChange(event, 'streetBilling', 'streetErrorBilling');
+              }}
+              postCode={state.postCodeBilling}
+              postCodeError={state.postCodeErrorBilling}
+              onPostCodeChange={(event) => {
+                handlePostCodeChange(event, 'postCodeBilling', 'postCodeErrorBilling');
+              }}
+            />
+          </div>
+        </>
+      )}
 
       <Checkbox
         id="default-billing-address"
