@@ -270,6 +270,7 @@ export const RegistrationForm: React.FC = () => {
 
     user.registration(userData).then((result) => {
       if (result.email === 'ok') {
+        user.setUserState('true');
         navigate('/');
         console.log('success registration');
       } else {
@@ -282,113 +283,122 @@ export const RegistrationForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <span>Enter Your Email and Password</span>
-      <div className="fields-container">
-        <EmailAndPasswordFields
-          email={state.email}
-          emailError={state.emailError}
-          onEmailChange={handleEmailChange}
-          password={state.password}
-          passwordError={state.passwordError}
-          onPasswordChange={handlePasswordChange}
-          showPassword={state.showPassword}
-          togglePasswordVisibility={togglePasswordVisibility}
-        />
+    <form onSubmit={handleSubmit} className="registration-form">
+      <div className="user-container">
+        <span>
+          Welcome to our boutique of elegance, where unique designer vases await to add an artistic
+          touch to your cherished spaces.
+        </span>
+        <span>Enter Your Email and Password</span>
+        <div className="fields-container">
+          <EmailAndPasswordFields
+            email={state.email}
+            emailError={state.emailError}
+            onEmailChange={handleEmailChange}
+            password={state.password}
+            passwordError={state.passwordError}
+            onPasswordChange={handlePasswordChange}
+            showPassword={state.showPassword}
+            togglePasswordVisibility={togglePasswordVisibility}
+          />
+        </div>
+
+        <span>Provide Your Name and Date of Birth</span>
+        <div className="fields-container">
+          <NameAndDateFields
+            firstName={state.firstName}
+            firstNameError={state.firstNameError}
+            onFirstNameChange={handleFirstNameChange}
+            lastName={state.lastName}
+            lastNameError={state.lastNameError}
+            onLastNameChange={handleLastNameChange}
+            dateOfBirth={state.dateOfBirth}
+            dateOfBirthError={state.dateOfBirthError}
+            onDateOfBirthChange={handleDateOfBirth}
+          />
+        </div>
       </div>
+      <div className="adress-container">
+        <span>Shipping adress</span>
+        <div className="fields-container">
+          <AdressFields
+            prefix="shipping"
+            country={state.country}
+            countryError={state.countryError}
+            onCountryChange={(event) => handleCountryChange(event, 'country', 'countryError')}
+            city={state.city}
+            cityError={state.cityError}
+            onCityChange={(event) => handleCityChange(event, 'city', 'cityError')}
+            street={state.street}
+            streetError={state.streetError}
+            onStreetChange={(event) => handleStreetChange(event, 'street', 'streetError')}
+            postCode={state.postCode}
+            postCodeError={state.postCodeError}
+            onPostCodeChange={(event) => handlePostCodeChange(event, 'postCode', 'postCodeError')}
+          />
+        </div>
 
-      <span>Provide Your Name and Date of Birth</span>
-      <div className="fields-container">
-        <NameAndDateFields
-          firstName={state.firstName}
-          firstNameError={state.firstNameError}
-          onFirstNameChange={handleFirstNameChange}
-          lastName={state.lastName}
-          lastNameError={state.lastNameError}
-          onLastNameChange={handleLastNameChange}
-          dateOfBirth={state.dateOfBirth}
-          dateOfBirthError={state.dateOfBirthError}
-          onDateOfBirthChange={handleDateOfBirth}
+        <Checkbox
+          id="default-shiping-address"
+          checked={state.isDefaultShippingAddress}
+          onChange={handleCheckboxChangeDefaultShippingAddress}
+          label="set as default shipping address"
         />
-      </div>
 
-      <span>Shipping adress</span>
-      <div className="fields-container">
-        <AdressFields
-          country={state.country}
-          countryError={state.countryError}
-          onCountryChange={(event) => handleCountryChange(event, 'country', 'countryError')}
-          city={state.city}
-          cityError={state.cityError}
-          onCityChange={(event) => handleCityChange(event, 'city', 'cityError')}
-          street={state.street}
-          streetError={state.streetError}
-          onStreetChange={(event) => handleStreetChange(event, 'street', 'streetError')}
-          postCode={state.postCode}
-          postCodeError={state.postCodeError}
-          onPostCodeChange={(event) => handlePostCodeChange(event, 'postCode', 'postCodeError')}
+        <Checkbox
+          id="same-address"
+          checked={state.isSameAddresses}
+          onChange={handleCheckboxChangeSameAddresses}
+          label="shipping and billing addresses coincide"
         />
-      </div>
 
-      <Checkbox
-        id="default-shiping-address"
-        checked={state.isDefaultShippingAddress}
-        onChange={handleCheckboxChangeDefaultShippingAddress}
-        label="set as default shipping address"
-      />
+        {!state.isSameAddresses && (
+          <>
+            <span>Billing adress</span>
+            <div className="fields-container">
+              <AdressFields
+                prefix="billing"
+                country={state.countryBilling}
+                countryError={state.countryErrorBilling}
+                onCountryChange={(event) => {
+                  handleCountryChange(event, 'countryBilling', 'countryErrorBilling');
+                }}
+                city={state.cityBilling}
+                cityError={state.cityErrorBilling}
+                onCityChange={(event) => {
+                  handleCityChange(event, 'cityBilling', 'cityErrorBilling');
+                }}
+                street={state.streetBilling}
+                streetError={state.streetErrorBilling}
+                onStreetChange={(event) => {
+                  handleStreetChange(event, 'streetBilling', 'streetErrorBilling');
+                }}
+                postCode={state.postCodeBilling}
+                postCodeError={state.postCodeErrorBilling}
+                onPostCodeChange={(event) => {
+                  handlePostCodeChange(event, 'postCodeBilling', 'postCodeErrorBilling');
+                }}
+              />
+            </div>
+          </>
+        )}
 
-      <Checkbox
-        id="same-address"
-        checked={state.isSameAddresses}
-        onChange={handleCheckboxChangeSameAddresses}
-        label="shipping and billing addresses coincide"
-      />
+        <Checkbox
+          id="default-billing-address"
+          checked={state.isDefaultBillingAddress}
+          onChange={handleCheckboxChangeDefaultBillingAddress}
+          label="set as default billing address"
+        />
 
-      {!state.isSameAddresses && (
-        <>
-          <span>Billing adress</span>
-          <div className="fields-container">
-            <AdressFields
-              country={state.countryBilling}
-              countryError={state.countryErrorBilling}
-              onCountryChange={(event) => {
-                handleCountryChange(event, 'countryBilling', 'countryErrorBilling');
-              }}
-              city={state.cityBilling}
-              cityError={state.cityErrorBilling}
-              onCityChange={(event) => {
-                handleCityChange(event, 'cityBilling', 'cityErrorBilling');
-              }}
-              street={state.streetBilling}
-              streetError={state.streetErrorBilling}
-              onStreetChange={(event) => {
-                handleStreetChange(event, 'streetBilling', 'streetErrorBilling');
-              }}
-              postCode={state.postCodeBilling}
-              postCodeError={state.postCodeErrorBilling}
-              onPostCodeChange={(event) => {
-                handlePostCodeChange(event, 'postCodeBilling', 'postCodeErrorBilling');
-              }}
-            />
+        <div className="login-buttons">
+          <LargeButton disabled={isButtonDisabled}>Register</LargeButton>
+
+          <div className="link">
+            <span>
+              Already have an account?&nbsp;
+              <NavLink to="/login">Log in</NavLink>
+            </span>
           </div>
-        </>
-      )}
-
-      <Checkbox
-        id="default-billing-address"
-        checked={state.isDefaultBillingAddress}
-        onChange={handleCheckboxChangeDefaultBillingAddress}
-        label="set as default billing address"
-      />
-
-      <div className="login-buttons">
-        <LargeButton disabled={isButtonDisabled}>Register</LargeButton>
-
-        <div className="link">
-          <span>
-            Already have an account?&nbsp;
-            <NavLink to="/login">Log in</NavLink>
-          </span>
         </div>
       </div>
     </form>

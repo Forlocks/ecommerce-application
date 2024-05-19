@@ -115,7 +115,6 @@ export class User {
           const apiRoot = this.createApiRoot(this.ctpClientFlow);
           try {
             await apiRoot.me().login().post({ body: customerData }).execute();
-            this.setUserState('true');
             this.setUserToken(userTokenCache.get());
           } catch (err) {
             responseObj.password = 'Invalid password.';

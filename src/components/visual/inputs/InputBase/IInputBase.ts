@@ -1,6 +1,7 @@
 import { ChangeEvent } from 'react';
 
 export interface IInputBase {
+  id?: string;
   label?: string;
   type?: string;
   error?: string;

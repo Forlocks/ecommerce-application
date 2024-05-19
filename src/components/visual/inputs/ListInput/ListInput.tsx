@@ -9,10 +9,12 @@ export const ListInput: FC<IListInput> = ({
   name,
   error,
   options,
+  id,
 }) => (
   <div className="input">
-    {label && <label htmlFor={name}>{label}</label>}
+    {label && <label htmlFor={id || name}>{label}</label>}
     <input
+      id={id || name}
       list={`${name}-list`}
       name={name}
       type="text"

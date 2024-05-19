@@ -1,0 +1,144 @@
+@import '../../components/visual/variables';
+@import '../../components/visual/grid-layout';
+
+
+.registration_page {
+  @include grid-layout;
+  padding: 0 48px;
+  row-gap: 16px;
+  height: auto;
+  margin: auto;
+  h2 {
+    white-space: nowrap;
+  }
+}
+
+.registration_title {
+    grid-column: 1/span 2;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 0px 32px 0px 32px;
+    
+}
+
+.form_container {
+    grid-column: 1/span 4;
+    width: 100%;
+  }
+
+  
+.registration-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 24px;
+}
+ 
+.user-container,
+.adress-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 0px 32px 32px 32px;
+    span {
+        max-width: 440px;
+      }
+}
+
+.adress-container > :nth-child(5){
+    margin-top: 8px;
+}
+
+.adress-container > :nth-child(3),
+.adress-container > :nth-child(7) {
+    margin-top: -16px;
+}
+
+.country-city > * {
+    flex: 1;
+  }
+  
+  .street-post > :first-child {
+    flex-grow: 1;
+  }
+  
+  .street-post > :nth-child(2) {
+    width: 80px;
+    flex-shrink: 0;
+  }
+  
+  .country-city,
+  .street-post {
+    display: flex;
+    gap: 16px;
+  }
+
+  .name-date {
+    display: flex;
+  flex-direction: column;
+  gap: 16px;
+  }
+
+  .name-date > :nth-child(3){
+width: 160px;
+flex-shrink: 0;
+  }
+
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: opacity(50%);
+  }
+
+  .image-small {
+    grid-column: span 1;
+    align-self: flex-end;
+    img {
+        width: 100%;
+        padding: 24px 32px 96px 32px;
+      }
+  }
+
+  @media (max-width: 1024px) and (min-width: 769px) {
+    .image-small {
+        display: none;
+      }
+  }
+  
+
+  @media (max-width: 768px) {
+    .registration_page {
+      column-gap: 0;
+      padding: 24px 16px 32px 16px;
+    }
+
+    .registration_title {
+        order: 2;
+        grid-template-columns: 1fr;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .registration-form {
+            display: grid;
+        grid-template-columns: 1fr;
+        gap: 0px;
+    }
+
+    .form_container {
+        order: 3;
+    }
+
+    .image-small {
+        margin-bottom: 16px;
+        width: 100%;
+        order: 1;
+        img{
+            padding: 0;
+        }
+      }
+      .name-date > :nth-child(3){
+        width: 100%;
+        flex-shrink: 1;
+          }
+  }

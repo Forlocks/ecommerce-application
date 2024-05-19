@@ -36,7 +36,9 @@
     "import/extensions": "off",
     "class-methods-use-this": "off",
     "import/prefer-default-export": "off",
-    "no-nested-ternary": "off"
+    "no-nested-ternary": "off",
+    "operator-linebreak": "off",
+    "object-curly-newline": ["error", { "multiline": true, "consistent": true }]
   },
   "noInlineConfig": true
 }

@@ -1,20 +1,19 @@
 import React from 'react';
 import { Logo } from '../../components/visual/logo/Logo';
 import { RegistrationForm } from '../../components/visual/forms/RegistrationForm/RegistrationForm';
+import './RegistrationPage.scss';
 
 export const RegistrationPage: React.FC = function () {
   return (
-    <div className="login_page">
-      <div className="content_container">
+    <div className="registration_page">
+      <div className="registration_title">
         <Logo className="logo-main" />
         <h2>Please register</h2>
-        <span>
-          Welcome to our boutique of elegance, where unique designer vases await to add an artistic
-          touch to your cherished spaces.
-        </span>
+      </div>
+      <div className="form_container">
         <RegistrationForm />
       </div>
-      <div className="image_container-small">
+      <div className="image-small">
         <img src="./assets/images/RegistrationPage_small.webp" alt="Small image" />
       </div>
     </div>
