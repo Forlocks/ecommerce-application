@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLocation, NavLink } from 'react-router-dom';
 import { Logo } from '../logo/Logo';
 import { BurgerButton } from '../buttons/BurgerButton/BurgerButton';
+import { user } from '../../../index';
 
 export const Header: React.FC = () => {
   const location = useLocation();
@@ -15,6 +16,12 @@ export const Header: React.FC = () => {
 
   const closeBurgerMenu = () => {
     setBurgerMenuOpen(false);
+  };
+
+  const handleLogout = () => {
+    user.logout();
+
+    closeBurgerMenu();
   };
 
   return (
@@ -74,38 +81,35 @@ export const Header: React.FC = () => {
                   Cart
                 </NavLink>
               </li>
+              <li>
+                <NavLink
+                  to="/login"
+                  className={({ isActive }) => (isActive ? 'active' : undefined)}
+                  onClick={closeBurgerMenu}
+                >
+                  Log In
+                </NavLink>
+              </li>
+              <li id="register-link">
+                <NavLink
+                  to="/registration"
+                  className={({ isActive }) => (isActive ? 'active' : undefined)}
+                  onClick={closeBurgerMenu}
+                >
+                  Register
+                </NavLink>
+              </li>
               {localStorage.getItem('userState') === 'true' ? (
                 <li>
                   <NavLink
                     to="/login"
                     className={({ isActive }) => (isActive ? 'active' : undefined)}
-                    onClick={closeBurgerMenu}
+                    onClick={handleLogout}
                   >
                     Log out
                   </NavLink>
                 </li>
-              ) : (
-                <>
-                  <li>
-                    <NavLink
-                      to="/login"
-                      className={({ isActive }) => (isActive ? 'active' : undefined)}
-                      onClick={closeBurgerMenu}
-                    >
-                      Log In
-                    </NavLink>
-                  </li>
-                  <li id="register-link">
-                    <NavLink
-                      to="/registration"
-                      className={({ isActive }) => (isActive ? 'active' : undefined)}
-                      onClick={closeBurgerMenu}
-                    >
-                      Register
-                    </NavLink>
-                  </li>
-                </>
-              )}
+              ) : null}
             </>
           )}
         </ul>
