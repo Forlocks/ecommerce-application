@@ -270,6 +270,7 @@ export const RegistrationForm: React.FC = () => {
 
     user.registration(userData).then((result) => {
       if (result.email === 'ok') {
+        user.setUserState('true');
         navigate('/');
         console.log('success registration');
       } else {

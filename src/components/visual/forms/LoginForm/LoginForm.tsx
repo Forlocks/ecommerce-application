@@ -50,6 +50,7 @@ export const LoginForm: React.FC = () => {
 
     user.login(userData).then((result) => {
       if (result.email === 'ok' && result.password === 'ok') {
+        user.setUserState('true');
         navigate('/');
       } else {
         setState((prevState) => ({
