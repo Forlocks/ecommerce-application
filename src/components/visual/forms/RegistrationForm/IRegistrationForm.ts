@@ -1,4 +1,5 @@
 export interface IRegistrationForm {
+  prefix?: string;
   email: string;
   emailError: string;
   password: string;

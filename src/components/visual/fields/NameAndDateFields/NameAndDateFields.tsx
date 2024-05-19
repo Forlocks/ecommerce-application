@@ -14,7 +14,7 @@ export const NameAndDateFields: React.FC<INameAndDateFieldProps> = ({
   dateOfBirthError,
   onDateOfBirthChange,
 }) => (
-  <>
+  <div className="name-date">
     <TextInput
       label="First Name"
       name="firstName"
@@ -38,5 +38,5 @@ export const NameAndDateFields: React.FC<INameAndDateFieldProps> = ({
       onChange={onDateOfBirthChange}
       error={dateOfBirthError}
     />
-  </>
+  </div>
 );

@@ -1,6 +1,7 @@
 import { ChangeEvent } from 'react';
 
 export interface IAdressFields {
+  prefix?: string;
   country: string;
   countryError: string;
   onCountryChange: (event: ChangeEvent<HTMLInputElement>) => void;
