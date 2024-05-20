@@ -66,7 +66,7 @@ export const validatePostCode = (postCode: string): string => {
   if (!trimmedPostCode) return 'post code cannot be empty';
 
   if (!/^\d{5}(-\d{4})?$/.test(trimmedPostCode)) {
-    return 'postal code must be in the format XXXXX or XXXXX-YYYY';
+    return 'format XXXXX or XXXXX-YYYY';
   }
 
   return '';
@@ -76,7 +76,7 @@ export const validateName = (name: string): string => {
   const trimmedName = name.trim();
   if (!trimmedName) return 'this field cannot be empty';
   if (!/^[A-Za-z\s]*$/.test(trimmedName)) {
-    return 'this field must not contain special characters or numbers';
+    return 'field must not contain special characters or numbers';
   }
   return '';
 };
