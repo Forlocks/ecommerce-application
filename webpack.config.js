@@ -58,6 +58,11 @@ module.exports = (env) => {
             from: "./src/assets/images",
             to: path.resolve(__dirname, './dist/assets/images'),
             noErrorOnMissing: true
+          },
+          {
+            from: "./_redirects",
+            to: path.resolve(__dirname, './dist'),
+            noErrorOnMissing: true
           }
         ],
       }),
