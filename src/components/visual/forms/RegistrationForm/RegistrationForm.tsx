@@ -272,7 +272,7 @@ export const RegistrationForm: React.FC = () => {
       if (result.email === 'ok') {
         user.setUserState('true');
         navigate('/');
-        console.log('success registration');
+        alert('Registration completed successfully!');
       } else {
         setState((prevState) => ({
           ...prevState,
