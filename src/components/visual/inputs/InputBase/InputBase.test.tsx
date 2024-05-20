@@ -3,7 +3,7 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { InputBase } from './InputBase';
 
-describe('Input', () => {
+describe('InputBase', () => {
   test('renders input with label', () => {
     render(<InputBase label="Test label input" value="" name="test" onChange={() => {}} />);
     const inputElement = screen.getByLabelText(/test label input/i);
