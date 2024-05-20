@@ -130,6 +130,7 @@ export class User {
   public async logout() {
     this.setUserState('false');
     this.ctpClientFlow = this.ctpClientCredentialFlow;
+    localStorage.setItem('userTokenStorage', '');
   }
 
   public async registration(customerData: MyCustomerDraft) {
@@ -147,7 +148,6 @@ export class User {
         .execute();
       this.login({ email: customerData.email, password: customerData.password });
     } catch (error) {
-      // errorHandler(error as Error);
       responseObj.email = (error as Error).message;
     }
     return responseObj;
