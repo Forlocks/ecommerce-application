@@ -66,7 +66,7 @@ export const validatePostCode = (postCode: string): string => {
   if (!trimmedPostCode) return 'post code cannot be empty';
 
   if (!/^\d{5}(-\d{4})?$/.test(trimmedPostCode)) {
-    return 'United States post code must be in the numeric format XXXXX or XXXXX-YYYY';
+    return 'postal code must be in the format XXXXX or XXXXX-YYYY';
   }
 
   return '';
@@ -94,7 +94,7 @@ export const validateDateOfBirth = (date: string): string => {
   ) {
     age--;
   }
-  if (age < 13) return 'You must be 13 years old or older';
+  if (age < 13) return 'you must be 13 years old or older';
 
   return '';
 };
