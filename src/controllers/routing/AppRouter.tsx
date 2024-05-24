@@ -6,6 +6,7 @@ import { RegistrationPage } from '../../pages/RegistrationPage/RegistrationPage'
 import { LoginPage } from '../../pages/LoginPage/LoginPage';
 import { Layout } from '../../components/visual/layout/Layout';
 import { ProtectedRoute } from './ProtectedRoute/ProtectedRoute';
+import { ProfilePage } from '../../pages/ProfilePage/ProfilePage';
 
 export const AppRouter = () => {
   const router = createBrowserRouter([
@@ -34,6 +35,16 @@ export const AppRouter = () => {
         <ProtectedRoute>
           <Layout>
             <LoginPage />
+          </Layout>
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/profile',
+      element: (
+        <ProtectedRoute>
+          <Layout>
+            <ProfilePage />
           </Layout>
         </ProtectedRoute>
       ),
