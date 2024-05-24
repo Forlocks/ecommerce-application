@@ -1,6 +1,7 @@
 import React from 'react';
 import './MainPage.scss';
 import { Logo } from '../../components/visual/logo/Logo';
+import { ProductList } from '../../components/visual/product/ProductList/ProductList';
 
 export const MainPage: React.FC = function () {
   return (
@@ -29,6 +30,7 @@ export const MainPage: React.FC = function () {
         </div>
       </div>
       <div className="new-arrivals"></div>
+      <ProductList />
     </div>
   );
 };

@@ -38,7 +38,8 @@
     "import/prefer-default-export": "off",
     "no-nested-ternary": "off",
     "operator-linebreak": "off",
-    "object-curly-newline": ["error", { "multiline": true, "consistent": true }]
+    "object-curly-newline": ["error", { "multiline": true, "consistent": true }],
+    "@typescript-eslint/indent": "off"
   },
   "noInlineConfig": true
 }

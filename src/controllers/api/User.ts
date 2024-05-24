@@ -83,7 +83,6 @@ export class User {
           password: customerData.password,
         },
       },
-      scopes: [`manage_my_profile:${process.env.CTP_PROJECT_KEY}`],
       fetch,
       tokenCache: userTokenCache,
     };
@@ -111,10 +110,10 @@ export class User {
         if (body.results.length === 0) {
           responseObj.email = 'This email address has not been registered.';
         } else {
-          this.createApiPasswordAuthClient(customerData);
           const apiRoot = this.createApiRoot(this.ctpClientFlow);
           try {
             await apiRoot.me().login().post({ body: customerData }).execute();
+            this.createApiPasswordAuthClient(customerData);
             this.setUserToken(userTokenCache.get());
           } catch (err) {
             responseObj.password = 'Invalid password.';

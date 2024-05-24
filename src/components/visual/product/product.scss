@@ -1,0 +1,12 @@
+.product-list__item {
+  border-bottom: 1px solid #000000;
+}
+
+.price,
+.price_discount {
+  display: flex;
+}
+
+.price_old {
+  text-decoration: line-through;
+}
