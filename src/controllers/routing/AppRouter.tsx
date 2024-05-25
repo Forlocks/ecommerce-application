@@ -6,6 +6,7 @@ import { RegistrationPage } from '../../pages/RegistrationPage/RegistrationPage'
 import { LoginPage } from '../../pages/LoginPage/LoginPage';
 import { Layout } from '../../components/visual/layout/Layout';
 import { ProtectedRoute } from './ProtectedRoute/ProtectedRoute';
+import { ShopPage } from '../../pages/CartPage/ShopPage';
 
 export const AppRouter = () => {
   const router = createBrowserRouter([
@@ -36,6 +37,14 @@ export const AppRouter = () => {
             <LoginPage />
           </Layout>
         </ProtectedRoute>
+      ),
+    },
+    {
+      path: '/shop',
+      element: (
+        <Layout>
+          <ShopPage />
+        </Layout>
       ),
     },
   ]);

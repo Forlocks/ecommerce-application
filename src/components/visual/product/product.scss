@@ -1,12 +1,80 @@
-.product-list__item {
-  border-bottom: 1px solid #000000;
+@import '../mixins';
+@import '../variables';
+
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px 32px;
+  width: 100%;
+
+  > *:nth-child(4n + 1) {
+    grid-column: span 2;
+  }
 }
 
-.price,
-.price_discount {
-  display: flex;
+.product-card.shop {
+  img {
+    height: auto;
+    width: 100%;
+  }
 }
 
 .price_old {
-  text-decoration: line-through;
+  display: flex;
+  gap: 4px;
+  p {
+    &:first-child,
+    &:nth-child(2) {
+      text-decoration: line-through;
+      @include h3-style;
+      color: $grey-color;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 150%;
+      letter-spacing: 0.01em;
+    }
+
+    &.discount {
+      margin-left: 4px;
+      text-decoration: none;
+      @include h3-style;
+      color: $grey-color;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 150%;
+      letter-spacing: 0.01em;
+    }
+  }
+}
+
+.main-price {
+  display: flex;
+  gap: 4px;
+  @include h3-style;
+  p {
+    &:first-child {
+      font-weight: 600;
+    }
+
+    &:nth-child(2) {
+      font-weight: 900;
+    }
+  }
+}
+
+.discounted-price {
+  display: flex;
+  gap: 4px;
+  @include h3-style;
+  p {
+    &:first-child {
+      font-weight: 600;
+    }
+
+    &:nth-child(2) {
+      font-weight: 900;
+    }
+  }
+
+ 
 }
