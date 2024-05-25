@@ -13,23 +13,28 @@ export const NameAndDateFields: React.FC<INameAndDateFieldProps> = ({
   dateOfBirth,
   dateOfBirthError,
   onDateOfBirthChange,
+  firstNameDisabled,
+  lastNameDisabled,
+  dateOfBirthDisabled,
 }) => (
   <div className="name-date">
     <TextInput
       label="First Name"
       name="firstName"
-      placeholder="Enter your first name"
+      placeholder={'Enter your first name'}
       value={firstName}
       onChange={onFirstNameChange}
       error={firstNameError}
+      disabled={firstNameDisabled}
     />
     <TextInput
       label="Last Name"
       name="lastName"
-      placeholder="Enter your last name"
+      placeholder={'Enter your last name'}
       value={lastName}
       onChange={onLastNameChange}
       error={lastNameError}
+      disabled={lastNameDisabled}
     />
     <DateInput
       label="Date of Birth"
@@ -37,6 +42,7 @@ export const NameAndDateFields: React.FC<INameAndDateFieldProps> = ({
       value={dateOfBirth}
       onChange={onDateOfBirthChange}
       error={dateOfBirthError}
+      disabled={dateOfBirthDisabled}
     />
   </div>
 );

@@ -9,4 +9,7 @@ export interface IEmailAndPasswordFieldsProps {
   onPasswordChange: (event: ChangeEvent<HTMLInputElement>) => void;
   showPassword: boolean;
   togglePasswordVisibility: () => void;
+  emailDisabled?: boolean;
+  passwordDisabled?: boolean;
+  passwordPlaceholder?: string;
 }

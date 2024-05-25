@@ -14,11 +14,13 @@ export const PasswordInput: React.FC<IPasswordInput> = function ({
   return (
     <div className="password">
       <InputBase {...props} type={showPassword ? 'text' : 'password'} />
-      <SmallButton
-        onClick={togglePasswordVisibility}
-        icon={showPassword ? hideEyeIcon : showEyeIcon}
-        style={{ position: 'absolute', right: 16, top: 33 }}
-      />
+      {props.disabled || (
+        <SmallButton
+          onClick={togglePasswordVisibility}
+          icon={showPassword ? hideEyeIcon : showEyeIcon}
+          style={{ position: 'absolute', right: 16, top: 33 }}
+        />
+      )}
     </div>
   );
 };

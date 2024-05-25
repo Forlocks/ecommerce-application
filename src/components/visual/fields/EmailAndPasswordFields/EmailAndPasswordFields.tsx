@@ -12,25 +12,30 @@ export const EmailAndPasswordFields: React.FC<IEmailAndPasswordFieldsProps> = ({
   onPasswordChange,
   showPassword,
   togglePasswordVisibility,
+  emailDisabled,
+  passwordDisabled,
+  passwordPlaceholder = 'Enter your password',
 }) => (
   <>
     <EmailInput
       label="Email"
       name="email"
-      placeholder="Enter your email"
+      placeholder={'Enter your email'}
       value={email}
       onChange={onEmailChange}
       error={emailError}
+      disabled={emailDisabled}
     />
     <PasswordInput
       label="Password"
       name="password"
-      placeholder="Enter your password"
+      placeholder={passwordPlaceholder}
       value={password}
       onChange={onPasswordChange}
       showPassword={showPassword}
       togglePasswordVisibility={togglePasswordVisibility}
       error={passwordError}
+      disabled={passwordDisabled}
     />
   </>
 );

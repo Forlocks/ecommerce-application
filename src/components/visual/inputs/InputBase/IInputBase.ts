@@ -9,4 +9,5 @@ export interface IInputBase {
   value: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   name: string;
+  disabled?: boolean;
 }

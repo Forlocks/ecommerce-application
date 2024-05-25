@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { useNavigate, NavLink } from 'react-router-dom';
 import { user } from '../../../..';
 import {
@@ -15,10 +15,10 @@ import { LargeButton } from '../../buttons/LargeButton/LargeButton';
 import { EmailAndPasswordFields } from '../../fields/EmailAndPasswordFields/EmailAndPasswordFields';
 import { AdressFields } from '../../fields/AdressFields/AdressFields';
 import { Checkbox } from '../../checkbox/Checkbox';
-import { IRegistrationForm } from './IRegistrationForm';
 import { NameAndDateFields } from '../../fields/NameAndDateFields/NameAndDateFields';
+import { IRegistrationForm } from '../RegistrationForm/IRegistrationForm';
 
-export const RegistrationForm: React.FC = () => {
+export const ProfileForm: React.FC = () => {
   const [state, setState] = useState<IRegistrationForm>({
     email: '',
     emailError: '',
@@ -51,6 +51,26 @@ export const RegistrationForm: React.FC = () => {
     isSameAddresses: false,
     isDefaultBillingAddress: false,
   });
+
+  useEffect(() => {
+    const fetchCustomerData = async () => {
+      try {
+        const result = await user.getCustomer();
+        console.log(result.body);
+        setState((prevState) => ({
+          ...prevState,
+          email: result.body.email,
+          firstName: result.body.firstName as string,
+          lastName: result.body.lastName as string,
+          dateOfBirth: result.body.dateOfBirth as string,
+        }));
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+    fetchCustomerData();
+  }, []);
 
   const navigate = useNavigate();
 
@@ -286,10 +306,10 @@ export const RegistrationForm: React.FC = () => {
     <form onSubmit={handleSubmit} className="registration-form">
       <div className="user-container">
         <span>
-          Welcome to our boutique of elegance, where unique designer vases await to add an artistic
-          touch to your cherished spaces.
+          Welcome to your profile page! This is where you can view and manage all your personal
+          information. Make sure your information is always up-to-date.
         </span>
-        <span>Enter Your Email and Password</span>
+        <span>Your Email and Password</span>
         <div className="fields-container">
           <EmailAndPasswordFields
             email={state.email}
@@ -300,10 +320,13 @@ export const RegistrationForm: React.FC = () => {
             onPasswordChange={handlePasswordChange}
             showPassword={state.showPassword}
             togglePasswordVisibility={togglePasswordVisibility}
+            emailDisabled={true}
+            passwordDisabled={true}
+            passwordPlaceholder="********"
           />
         </div>
 
-        <span>Provide Your Name and Date of Birth</span>
+        <span>Your Name and Date of Birth</span>
         <div className="fields-container">
           <NameAndDateFields
             firstName={state.firstName}
@@ -312,9 +335,12 @@ export const RegistrationForm: React.FC = () => {
             lastName={state.lastName}
             lastNameError={state.lastNameError}
             onLastNameChange={handleLastNameChange}
+            firstNameDisabled={true}
+            lastNameDisabled={true}
             dateOfBirth={state.dateOfBirth}
             dateOfBirthError={state.dateOfBirthError}
             onDateOfBirthChange={handleDateOfBirth}
+            dateOfBirthDisabled={true}
           />
         </div>
       </div>

@@ -173,8 +173,8 @@ export class User {
     localStorage.setItem('userTokenStorage', JSON.stringify(userToken));
   }
 
-  // getCustomer() {
-  //   const apiRoot = this.createApiRoot(this.ctpClientFlow);
-  //   return apiRoot.me().get().execute();
-  // }
+  getCustomer() {
+    const apiRoot = this.createApiRoot(this.ctpClientFlow);
+    return apiRoot.me().get().execute();
+  }
 }

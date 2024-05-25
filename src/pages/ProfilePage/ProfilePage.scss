@@ -1,0 +1,22 @@
+@import '../../components/visual/variables';
+@import '../../components/visual/grid-layout';
+
+.profile_page {
+  @include grid-layout;
+  padding: 0 48px;
+  row-gap: 16px;
+  height: auto;
+  margin: auto;
+  h2 {
+    white-space: nowrap;
+  }
+}
+
+.profile_title {
+  grid-column: 1 / span 2;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0px 32px 0px 32px;
+}
