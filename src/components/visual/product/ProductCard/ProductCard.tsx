@@ -2,8 +2,8 @@ import React from 'react';
 import { Price } from '../ProductPrice/Price';
 import { MediumButton } from '../../buttons/MediumButton/MediumButton';
 import { IProductCardProps } from './IProductCardProps';
-import { ProductDescription } from '../ProductDescription/ProductDescription';
 import { ProductImage } from '../ProductImage/ProductImage';
+import { ShortProductDescription } from '../ProductDescription/ShortProductDescription/ShortProductDescription';
 
 export const ProductCard: React.FC<IProductCardProps> = ({ product, className, onButtonClick }) => {
   const { name, masterVariant, description } = product;
@@ -16,27 +16,31 @@ export const ProductCard: React.FC<IProductCardProps> = ({ product, className, o
 
   return (
     <div className={`product-card ${className}`}>
-      <p>{name['en-US']}</p>
       {masterVariant && masterVariant.images && masterVariant.images[0] && (
         <ProductImage url={masterVariant.images[0].url} alt="Product Image" />
       )}
-      {description && <ProductDescription description={description['en-US']} />}
-      {mainPrice && (
-        <Price
-          price={mainPrice.value.centAmount / 100}
-          currencyCode={mainPrice.value.currencyCode}
-          discounted={!!mainPrice.discounted}
-          discountPercentage={discountPercentage || undefined}
-          className="main-price"
-        />
+      <h3 className="card-header">{name['en-US']}</h3>
+      {description && (
+        <ShortProductDescription description={description['en-US']} maxLength={100} />
       )}
-      {discountedPrice && mainPrice && (
-        <Price
-          price={discountedPrice}
-          currencyCode={mainPrice.value.currencyCode}
-          className="discounted-price"
-        />
-      )}
+      <div className="card-prices">
+        {discountedPrice && mainPrice && (
+          <Price
+            price={discountedPrice}
+            currencyCode={mainPrice.value.currencyCode}
+            className="discounted-price"
+          />
+        )}
+        {mainPrice && (
+          <Price
+            price={mainPrice.value.centAmount / 100}
+            currencyCode={mainPrice.value.currencyCode}
+            discounted={!!mainPrice.discounted}
+            discountPercentage={discountPercentage || undefined}
+            className="main-price"
+          />
+        )}
+      </div>
       <MediumButton className="product-button" onClick={onButtonClick}>
         Add to cart
       </MediumButton>

@@ -60,10 +60,10 @@ $green-color: #e3fd16;
     color: $black-text;
     padding: 4px 8px;
     background-color: rgba($green-color, 1);
-    transition: background-color 0.2s ease;
+    transition: all 0.3s ease;
 
     &:hover {
-      background-color: rgba($green-color, 0.3);
+      background-color: rgba($grey-color, 0.2);
     }
   }
 }

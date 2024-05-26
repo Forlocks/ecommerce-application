@@ -6,41 +6,87 @@
   grid-template-columns: repeat(4, 1fr);
   gap: 24px 32px;
   width: 100%;
+  height: auto;
 
-  > *:nth-child(4n + 1) {
+  > *:nth-child(5n + 1) {
     grid-column: span 2;
   }
 }
 
 .product-card.shop {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px 16px;
+  transition: all 0.3s ease;
+
   img {
     height: auto;
     width: 100%;
+    transition: all 0.3s ease;
   }
+
+  p {
+    max-width: 450px;
+  }
+
+  .button {
+    margin-top: 12px;
+  }
+  
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.01);
+
+    img {
+      filter: blur(1px);
+      
+    }
+  }
+}
+
+.card-header {
+  font-weight: 900;
+  margin-top: 8px;
+}
+
+.card-prices {
+  display: flex;
+  gap: 16px;
 }
 
 .price_old {
   display: flex;
   gap: 4px;
+  align-self: flex-end;
   p {
-    &:first-child,
+    &:first-child {
+      text-decoration: none;
+      @include h3-style;
+      color: $grey-color;
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 150%;
+      letter-spacing: 0.01em;
+    }
+
     &:nth-child(2) {
       text-decoration: line-through;
       @include h3-style;
       color: $grey-color;
       font-weight: 500;
-      font-size: 14px;
+      font-size: 13px;
       line-height: 150%;
       letter-spacing: 0.01em;
     }
 
     &.discount {
-      margin-left: 4px;
+      margin-left: 2px;
       text-decoration: none;
       @include h3-style;
       color: $grey-color;
       font-weight: 400;
-      font-size: 14px;
+      font-size: 13px;
       line-height: 150%;
       letter-spacing: 0.01em;
     }
@@ -75,6 +121,4 @@
       font-weight: 900;
     }
   }
-
- 
 }
