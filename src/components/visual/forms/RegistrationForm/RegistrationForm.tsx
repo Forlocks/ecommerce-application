@@ -250,13 +250,13 @@ export const RegistrationForm: React.FC = () => {
         {
           country: 'US',
           city,
-          street,
+          streetName: street,
           postalCode: postCode,
         },
         {
           country: 'US',
           city: cityBilling,
-          street: streetBilling,
+          streetName: streetBilling,
           postalCode: postCodeBilling,
         },
       ],

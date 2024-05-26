@@ -1,22 +1,26 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
-import { useNavigate, NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { Customer } from '@commercetools/platform-sdk';
 import { user } from '../../../..';
 import {
   validateEmail,
   validatePassword,
-  validateCountry,
-  validateCity,
-  validateStreet,
-  validatePostCode,
+  // validateCountry,
+  // validateCity,
+  // validateStreet,
+  // validatePostCode,
   validateDateOfBirth,
   validateName,
 } from '../../../non-visual/validators/validators';
-import { LargeButton } from '../../buttons/LargeButton/LargeButton';
+// import { LargeButton } from '../../buttons/LargeButton/LargeButton';
 import { EmailAndPasswordFields } from '../../fields/EmailAndPasswordFields/EmailAndPasswordFields';
-import { AdressFields } from '../../fields/AdressFields/AdressFields';
-import { Checkbox } from '../../checkbox/Checkbox';
+//  import { AdressFields } from '../../fields/AdressFields/AdressFields';
+// / import { Checkbox } from '../../checkbox/Checkbox';
 import { NameAndDateFields } from '../../fields/NameAndDateFields/NameAndDateFields';
 import { IRegistrationForm } from '../RegistrationForm/IRegistrationForm';
+import { UserAddresses } from './UserAddresses';
+import './ProfileForm.scss';
+import { IUserAddress } from './IUserAddresses';
 
 export const ProfileForm: React.FC = () => {
   const [state, setState] = useState<IRegistrationForm>({
@@ -50,12 +54,35 @@ export const ProfileForm: React.FC = () => {
     isDefaultShippingAddress: false,
     isSameAddresses: false,
     isDefaultBillingAddress: false,
+    addresses: [],
   });
+
+  const fillAddresses = (userObj: Customer) => {
+    const updatedAddresses: IUserAddress[] = userObj.addresses.map((address) => ({
+      country: address.country,
+      city: address.city || '',
+      street: address.streetName || '',
+      postalCode: address.postalCode || '',
+      isBilling: userObj.billingAddressIds?.includes(address.id as string) || false,
+      isShipping: userObj.shippingAddressIds?.includes(address.id as string) || false,
+      isDefaultBilling: address.id === userObj.defaultBillingAddressId || false,
+      isDefaultShipping: address.id === userObj.defaultShippingAddressId || false,
+      id: address.id || '',
+    }));
+
+    console.log(updatedAddresses);
+
+    setState((prevState) => ({
+      ...prevState,
+      addresses: updatedAddresses,
+    }));
+  };
 
   useEffect(() => {
     const fetchCustomerData = async () => {
       try {
         const result = await user.getCustomer();
+        fillAddresses(result.body);
         console.log(result.body);
         setState((prevState) => ({
           ...prevState,
@@ -74,33 +101,33 @@ export const ProfileForm: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const isButtonDisabled =
-    state.email === '' ||
-    state.password === '' ||
-    state.emailError !== '' ||
-    state.passwordError !== '' ||
-    state.country === '' ||
-    state.countryError !== '' ||
-    state.city === '' ||
-    state.cityError !== '' ||
-    state.street === '' ||
-    state.streetError !== '' ||
-    state.postCode === '' ||
-    state.postCodeError !== '' ||
-    state.firstName === '' ||
-    state.firstNameError !== '' ||
-    state.lastName === '' ||
-    state.lastNameError !== '' ||
-    state.dateOfBirth === '' ||
-    state.dateOfBirthError !== '' ||
-    state.countryBilling === '' ||
-    state.countryErrorBilling !== '' ||
-    state.cityBilling === '' ||
-    state.cityErrorBilling !== '' ||
-    state.streetBilling === '' ||
-    state.streetErrorBilling !== '' ||
-    state.postCodeBilling === '' ||
-    state.postCodeErrorBilling !== '';
+  // const isButtonDisabled =
+  //   state.email === '' ||
+  //   state.password === '' ||
+  //   state.emailError !== '' ||
+  //   state.passwordError !== '' ||
+  //   state.country === '' ||
+  //   state.countryError !== '' ||
+  //   state.city === '' ||
+  //   state.cityError !== '' ||
+  //   state.street === '' ||
+  //   state.streetError !== '' ||
+  //   state.postCode === '' ||
+  //   state.postCodeError !== '' ||
+  //   state.firstName === '' ||
+  //   state.firstNameError !== '' ||
+  //   state.lastName === '' ||
+  //   state.lastNameError !== '' ||
+  //   state.dateOfBirth === '' ||
+  //   state.dateOfBirthError !== '' ||
+  //   state.countryBilling === '' ||
+  //   state.countryErrorBilling !== '' ||
+  //   state.cityBilling === '' ||
+  //   state.cityErrorBilling !== '' ||
+  //   state.streetBilling === '' ||
+  //   state.streetErrorBilling !== '' ||
+  //   state.postCodeBilling === '' ||
+  //   state.postCodeErrorBilling !== '';
 
   const togglePasswordVisibility = () => {
     setState((prevState) => ({ ...prevState, showPassword: !prevState.showPassword }));
@@ -118,61 +145,61 @@ export const ProfileForm: React.FC = () => {
     setState((prevState) => ({ ...prevState, password: newPassword, passwordError }));
   };
 
-  const handleCountryChange = (
-    event: ChangeEvent<HTMLInputElement>,
-    targetCountry: string,
-    targetCountryError: string,
-  ): void => {
-    const newCountry = event.target.value;
-    const countryError = validateCountry(newCountry);
-    setState((prevState) => ({
-      ...prevState,
-      [targetCountry]: newCountry,
-      [targetCountryError]: countryError,
-    }));
-  };
+  // const handleCountryChange = (
+  //   event: ChangeEvent<HTMLInputElement>,
+  //   targetCountry: string,
+  //   targetCountryError: string,
+  // ): void => {
+  //   const newCountry = event.target.value;
+  //   const countryError = validateCountry(newCountry);
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     [targetCountry]: newCountry,
+  //     [targetCountryError]: countryError,
+  //   }));
+  // };
 
-  const handleCityChange = (
-    event: ChangeEvent<HTMLInputElement>,
-    targetCity: string,
-    targetCityError: string,
-  ): void => {
-    const newCity = event.target.value;
-    const cityError = validateCity(newCity);
-    setState((prevState) => ({
-      ...prevState,
-      [targetCity]: newCity,
-      [targetCityError]: cityError,
-    }));
-  };
+  // const handleCityChange = (
+  //   event: ChangeEvent<HTMLInputElement>,
+  //   targetCity: string,
+  //   targetCityError: string,
+  // ): void => {
+  //   const newCity = event.target.value;
+  //   const cityError = validateCity(newCity);
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     [targetCity]: newCity,
+  //     [targetCityError]: cityError,
+  //   }));
+  // };
 
-  const handleStreetChange = (
-    event: ChangeEvent<HTMLInputElement>,
-    targetStreet: string,
-    targetStreetError: string,
-  ): void => {
-    const newStreet = event.target.value;
-    const streetError = validateStreet(newStreet);
-    setState((prevState) => ({
-      ...prevState,
-      [targetStreet]: newStreet,
-      [targetStreetError]: streetError,
-    }));
-  };
+  // const handleStreetChange = (
+  //   event: ChangeEvent<HTMLInputElement>,
+  //   targetStreet: string,
+  //   targetStreetError: string,
+  // ): void => {
+  //   const newStreet = event.target.value;
+  //   const streetError = validateStreet(newStreet);
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     [targetStreet]: newStreet,
+  //     [targetStreetError]: streetError,
+  //   }));
+  // };
 
-  const handlePostCodeChange = (
-    event: ChangeEvent<HTMLInputElement>,
-    targetPostCode: string,
-    targetPostCodeError: string,
-  ): void => {
-    const newPostCode = event.target.value;
-    const postCodeError = validatePostCode(newPostCode);
-    setState((prevState) => ({
-      ...prevState,
-      [targetPostCode]: newPostCode,
-      [targetPostCodeError]: postCodeError,
-    }));
-  };
+  // const handlePostCodeChange = (
+  //   event: ChangeEvent<HTMLInputElement>,
+  //   targetPostCode: string,
+  //   targetPostCodeError: string,
+  // ): void => {
+  //   const newPostCode = event.target.value;
+  //   const postCodeError = validatePostCode(newPostCode);
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     [targetPostCode]: newPostCode,
+  //     [targetPostCodeError]: postCodeError,
+  //   }));
+  // };
 
   const handleFirstNameChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newFirstName = event.target.value.trim();
@@ -196,50 +223,50 @@ export const ProfileForm: React.FC = () => {
     }));
   };
 
-  const handleCheckboxChangeDefaultShippingAddress = (checked: boolean) => {
-    setState({
-      ...state,
-      isDefaultShippingAddress: checked,
-    });
-  };
+  // const handleCheckboxChangeDefaultShippingAddress = (checked: boolean) => {
+  //   setState({
+  //     ...state,
+  //     isDefaultShippingAddress: checked,
+  //   });
+  // };
 
-  const handleCheckboxChangeDefaultBillingAddress = (checked: boolean) => {
-    setState({
-      ...state,
-      isDefaultBillingAddress: checked,
-    });
-  };
+  // const handleCheckboxChangeDefaultBillingAddress = (checked: boolean) => {
+  //   setState({
+  //     ...state,
+  //     isDefaultBillingAddress: checked,
+  //   });
+  // };
 
-  const handleCheckboxChangeSameAddresses = (checked: boolean) => {
-    setState((prevState) => {
-      if (checked) {
-        return {
-          ...prevState,
-          isSameAddresses: checked,
-          countryBilling: prevState.country,
-          countryErrorBilling: prevState.countryError,
-          cityBilling: prevState.city,
-          cityErrorBilling: prevState.cityError,
-          streetBilling: prevState.street,
-          streetErrorBilling: prevState.streetError,
-          postCodeBilling: prevState.postCode,
-          postCodeErrorBilling: prevState.postCodeError,
-        };
-      }
-      return {
-        ...prevState,
-        isSameAddresses: checked,
-        countryBilling: '',
-        countryErrorBilling: '',
-        cityBilling: '',
-        cityErrorBilling: '',
-        streetBilling: '',
-        streetErrorBilling: '',
-        postCodeBilling: '',
-        postCodeErrorBilling: '',
-      };
-    });
-  };
+  // const handleCheckboxChangeSameAddresses = (checked: boolean) => {
+  //   setState((prevState) => {
+  //     if (checked) {
+  //       return {
+  //         ...prevState,
+  //         isSameAddresses: checked,
+  //         countryBilling: prevState.country,
+  //         countryErrorBilling: prevState.countryError,
+  //         cityBilling: prevState.city,
+  //         cityErrorBilling: prevState.cityError,
+  //         streetBilling: prevState.street,
+  //         streetErrorBilling: prevState.streetError,
+  //         postCodeBilling: prevState.postCode,
+  //         postCodeErrorBilling: prevState.postCodeError,
+  //       };
+  //     }
+  //     return {
+  //       ...prevState,
+  //       isSameAddresses: checked,
+  //       countryBilling: '',
+  //       countryErrorBilling: '',
+  //       cityBilling: '',
+  //       cityErrorBilling: '',
+  //       streetBilling: '',
+  //       streetErrorBilling: '',
+  //       postCodeBilling: '',
+  //       postCodeErrorBilling: '',
+  //     };
+  //   });
+  // };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
@@ -270,13 +297,13 @@ export const ProfileForm: React.FC = () => {
         {
           country: 'US',
           city,
-          street,
+          streetName: street,
           postalCode: postCode,
         },
         {
           country: 'US',
           city: cityBilling,
-          street: streetBilling,
+          streetName: streetBilling,
           postalCode: postCodeBilling,
         },
       ],
@@ -345,8 +372,9 @@ export const ProfileForm: React.FC = () => {
         </div>
       </div>
       <div className="adress-container">
-        <span>Shipping address</span>
-        <div className="fields-container">
+        <span>Addresses</span>
+        <UserAddresses addresses={state.addresses as IUserAddress[]} />
+        {/* <div className="fields-container">
           <AdressFields
             prefix="shipping"
             country={state.country}
@@ -425,7 +453,7 @@ export const ProfileForm: React.FC = () => {
               <NavLink to="/login">Log in</NavLink>
             </span>
           </div>
-        </div>
+        </div> */}
       </div>
     </form>
   );
