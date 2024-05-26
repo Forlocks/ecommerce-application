@@ -8,8 +8,11 @@ export interface IUserAddress {
   isDefaultBilling: boolean;
   isDefaultShipping: boolean;
   id: string;
+  version: number;
 }
 
 export interface IUserAddresses {
   addresses: IUserAddress[];
+  updateAddresses: (updatedAddresses: IUserAddress[]) => void;
+  fetchUserData: () => void;
 }

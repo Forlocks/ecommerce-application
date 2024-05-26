@@ -33,4 +33,5 @@ export interface IRegistrationForm {
   isSameAddresses: boolean;
   isDefaultBillingAddress: boolean;
   addresses?: IUserAddress[];
+  version?: number;
 }

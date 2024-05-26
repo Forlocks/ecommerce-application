@@ -1,14 +1,27 @@
 import React from 'react';
 import { IUserAddresses } from './IUserAddresses';
+import { user } from '../../../..';
 
-export const UserAddresses: React.FC<IUserAddresses> = ({ addresses }) => {
+export const UserAddresses: React.FC<IUserAddresses> = ({
+  addresses,
+  updateAddresses,
+  fetchUserData,
+}) => {
   function handleEdit(index: number) {
     console.log(`Edit row ${index}`);
   }
 
-  function handleDelete(index: number) {
-    console.log(`Delete row ${index}`);
+  async function handleDelete(id: string, version: number) {
+    try {
+      await user.removeUserAddress(version, id);
+      const updatedAddresses = addresses.filter((address) => address.id !== id);
+      updateAddresses(updatedAddresses);
+      await fetchUserData();
+    } catch (error) {
+      console.error('Error deleting address:', error);
+    }
   }
+
   return (
     <table className="addresses-table">
       <thead>
@@ -27,7 +40,7 @@ export const UserAddresses: React.FC<IUserAddresses> = ({ addresses }) => {
           const addressTypes = [];
           if (row.isBilling) addressTypes.push('Billing');
           if (row.isShipping) addressTypes.push('Shipping');
-          if (row.isDefaultBilling) addressTypes.push('D`efault Billing');
+          if (row.isDefaultBilling) addressTypes.push('Default Billing');
           if (row.isDefaultShipping) addressTypes.push('Default Shipping');
 
           return (
@@ -54,7 +67,7 @@ export const UserAddresses: React.FC<IUserAddresses> = ({ addresses }) => {
                 </div>
               </td>
               <td>
-                <div onClick={() => handleDelete(index)}>
+                <div onClick={() => handleDelete(row.id, row.version)}>
                   <img
                     width={16}
                     src="./assets/images/Delete-Icon.webp"

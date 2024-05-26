@@ -55,6 +55,7 @@ export const ProfileForm: React.FC = () => {
     isSameAddresses: false,
     isDefaultBillingAddress: false,
     addresses: [],
+    version: 0,
   });
 
   const fillAddresses = (userObj: Customer) => {
@@ -68,6 +69,7 @@ export const ProfileForm: React.FC = () => {
       isDefaultBilling: address.id === userObj.defaultBillingAddressId || false,
       isDefaultShipping: address.id === userObj.defaultShippingAddressId || false,
       id: address.id || '',
+      version: userObj.version,
     }));
 
     console.log(updatedAddresses);
@@ -78,28 +80,35 @@ export const ProfileForm: React.FC = () => {
     }));
   };
 
-  useEffect(() => {
-    const fetchCustomerData = async () => {
-      try {
-        const result = await user.getCustomer();
-        fillAddresses(result.body);
-        console.log(result.body);
-        setState((prevState) => ({
-          ...prevState,
-          email: result.body.email,
-          firstName: result.body.firstName as string,
-          lastName: result.body.lastName as string,
-          dateOfBirth: result.body.dateOfBirth as string,
-        }));
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
+  const fetchUserData = async () => {
+    try {
+      const result = await user.getUser();
+      fillAddresses(result.body);
+      console.log(result.body);
+      setState((prevState) => ({
+        ...prevState,
+        email: result.body.email,
+        firstName: result.body.firstName as string,
+        lastName: result.body.lastName as string,
+        dateOfBirth: result.body.dateOfBirth as string,
+      }));
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    }
+  };
 
-    fetchCustomerData();
+  useEffect(() => {
+    fetchUserData();
   }, []);
 
   const navigate = useNavigate();
+
+  const updateAddresses = (updatedAddresses: IUserAddress[]) => {
+    setState((prevState) => ({
+      ...prevState,
+      addresses: updatedAddresses,
+    }));
+  };
 
   // const isButtonDisabled =
   //   state.email === '' ||
@@ -373,7 +382,11 @@ export const ProfileForm: React.FC = () => {
       </div>
       <div className="adress-container">
         <span>Addresses</span>
-        <UserAddresses addresses={state.addresses as IUserAddress[]} />
+        <UserAddresses
+          addresses={state.addresses as IUserAddress[]}
+          updateAddresses={updateAddresses}
+          fetchUserData={fetchUserData}
+        />
         {/* <div className="fields-container">
           <AdressFields
             prefix="shipping"

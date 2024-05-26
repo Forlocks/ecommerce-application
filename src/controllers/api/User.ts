@@ -9,6 +9,7 @@ import {
 import {
   CustomerSignin,
   MyCustomerDraft,
+  MyCustomerUpdateAction,
   createApiBuilderFromCtpClient,
 } from '@commercetools/platform-sdk';
 import {
@@ -173,8 +174,22 @@ export class User {
     localStorage.setItem('userTokenStorage', JSON.stringify(userToken));
   }
 
-  getCustomer() {
+  getUser() {
     const apiRoot = this.createApiRoot(this.ctpClientFlow);
     return apiRoot.me().get().execute();
+  }
+
+  updateUser(version: number, actions: MyCustomerUpdateAction[]) {
+    const apiRoot = this.createApiRoot(this.ctpClientFlow);
+    return apiRoot
+      .me()
+      .post({
+        body: { version, actions },
+      })
+      .execute();
+  }
+
+  removeUserAddress(version: number, addressId: string) {
+    return this.updateUser(version, [{ action: 'removeAddress', addressId }]);
   }
 }
