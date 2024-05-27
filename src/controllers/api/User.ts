@@ -204,4 +204,8 @@ export class User {
   updateUserEmail(version: number, email: string) {
     return this.updateUser(version, [{ action: 'changeEmail', email }]);
   }
+
+  updateUserDateOfBirth(version: number, dateOfBirth: string) {
+    return this.updateUser(version, [{ action: 'setDateOfBirth', dateOfBirth }]);
+  }
 }

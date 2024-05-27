@@ -60,6 +60,7 @@ export const ProfileForm: React.FC = () => {
     lastNameDisabled: true,
     emailDisabled: true,
     editMode: true,
+    dateDisabled: true,
   });
 
   const fillAddresses = (userObj: Customer) => {
@@ -156,6 +157,12 @@ export const ProfileForm: React.FC = () => {
   const onEditEmail = async () => {
     setState((prevState) => ({ ...prevState, emailDisabled: !prevState.emailDisabled }));
     await user.updateUserEmail(state.version as number, state.email);
+    fetchUserData();
+  };
+
+  const onEditDate = async () => {
+    setState((prevState) => ({ ...prevState, dateDisabled: !prevState.dateDisabled }));
+    await user.updateUserDateOfBirth(state.version as number, state.dateOfBirth);
     fetchUserData();
   };
 
@@ -399,10 +406,11 @@ export const ProfileForm: React.FC = () => {
             dateOfBirth={state.dateOfBirth}
             dateOfBirthError={state.dateOfBirthError}
             onDateOfBirthChange={handleDateOfBirth}
-            dateOfBirthDisabled={true}
+            dateOfBirthDisabled={state.dateDisabled}
             onEditFirstName={onEditFirstName}
             onEditLastName={onEditLastName}
             editMode={state.editMode}
+            onDateEdit={onEditDate}
           />
         </div>
       </div>
