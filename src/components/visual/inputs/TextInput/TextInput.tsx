@@ -16,7 +16,7 @@ export const TextInput: React.FC<IInputBase> = function ({ ...props }) {
         <SmallButton
           onClick={props.onEdit}
           icon={props.disabled ? editIcon : saveIcon}
-          style={{ position: 'absolute', right: 16, top: 33 }}
+          style={{ position: 'absolute', right: 36, top: 33 }}
         />
       )}
     </div>

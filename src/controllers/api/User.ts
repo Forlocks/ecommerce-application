@@ -208,4 +208,13 @@ export class User {
   updateUserDateOfBirth(version: number, dateOfBirth: string) {
     return this.updateUser(version, [{ action: 'setDateOfBirth', dateOfBirth }]);
   }
+
+  updateUserPassword(version: number, currentPassword: string, newPassword: string) {
+    const apiRoot = this.createApiRoot(this.ctpClientFlow);
+    return apiRoot
+      .me()
+      .password()
+      .post({ body: { currentPassword, newPassword, version } })
+      .execute();
+  }
 }

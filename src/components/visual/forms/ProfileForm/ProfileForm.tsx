@@ -61,6 +61,8 @@ export const ProfileForm: React.FC = () => {
     emailDisabled: true,
     editMode: true,
     dateDisabled: true,
+    passwordDisabled: true,
+    newPassword: '',
   });
 
   const fillAddresses = (userObj: Customer) => {
@@ -163,6 +165,17 @@ export const ProfileForm: React.FC = () => {
   const onEditDate = async () => {
     setState((prevState) => ({ ...prevState, dateDisabled: !prevState.dateDisabled }));
     await user.updateUserDateOfBirth(state.version as number, state.dateOfBirth);
+    fetchUserData();
+  };
+
+  const onEditPassword = async () => {
+    setState((prevState) => ({ ...prevState, passwordDisabled: !prevState.passwordDisabled }));
+    await user.updateUserPassword(
+      state.version as number,
+      state.password,
+      state.newPassword as string,
+    );
+
     fetchUserData();
   };
 
@@ -385,10 +398,11 @@ export const ProfileForm: React.FC = () => {
             showPassword={state.showPassword}
             togglePasswordVisibility={togglePasswordVisibility}
             emailDisabled={state.emailDisabled}
-            passwordDisabled={true}
+            passwordDisabled={state.passwordDisabled}
             passwordPlaceholder="********"
             editMode={state.editMode}
             onEditEmail={onEditEmail}
+            onEditPassword={onEditPassword}
           />
         </div>
 

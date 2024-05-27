@@ -39,4 +39,6 @@ export interface IRegistrationForm {
   emailDisabled?: boolean;
   editMode?: boolean;
   dateDisabled?: boolean;
+  passwordDisabled?: boolean;
+  newPassword?: string;
 }

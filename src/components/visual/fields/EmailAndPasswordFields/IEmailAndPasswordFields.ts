@@ -14,4 +14,5 @@ export interface IEmailAndPasswordFieldsProps {
   passwordPlaceholder?: string;
   editMode?: boolean;
   onEditEmail?: () => void;
+  onEditPassword?: () => void;
 }
