@@ -36,5 +36,6 @@ export interface IRegistrationForm {
   version?: number;
   firstNameDisabled?: boolean;
   lastNameDisabled?: boolean;
+  emailDisabled?: boolean;
   editMode?: boolean;
 }

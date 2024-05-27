@@ -200,4 +200,8 @@ export class User {
   updateUserLastName(version: number, lastName: string) {
     return this.updateUser(version, [{ action: 'setLastName', lastName }]);
   }
+
+  updateUserEmail(version: number, email: string) {
+    return this.updateUser(version, [{ action: 'changeEmail', email }]);
+  }
 }

@@ -11,4 +11,5 @@ export interface IInputBase {
   name: string;
   disabled?: boolean;
   editMode?: boolean;
+  onEdit?: () => void;
 }

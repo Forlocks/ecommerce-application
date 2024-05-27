@@ -15,6 +15,8 @@ export const EmailAndPasswordFields: React.FC<IEmailAndPasswordFieldsProps> = ({
   emailDisabled,
   passwordDisabled,
   passwordPlaceholder = 'Enter your password',
+  onEditEmail,
+  editMode,
 }) => (
   <>
     <EmailInput
@@ -25,6 +27,8 @@ export const EmailAndPasswordFields: React.FC<IEmailAndPasswordFieldsProps> = ({
       onChange={onEmailChange}
       error={emailError}
       disabled={emailDisabled}
+      editMode={editMode}
+      onEdit={onEditEmail}
     />
     <PasswordInput
       label="Password"

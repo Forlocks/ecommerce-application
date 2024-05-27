@@ -12,4 +12,6 @@ export interface IEmailAndPasswordFieldsProps {
   emailDisabled?: boolean;
   passwordDisabled?: boolean;
   passwordPlaceholder?: string;
+  editMode?: boolean;
+  onEditEmail?: () => void;
 }

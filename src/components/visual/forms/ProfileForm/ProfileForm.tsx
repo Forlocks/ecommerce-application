@@ -58,6 +58,7 @@ export const ProfileForm: React.FC = () => {
     version: 0,
     firstNameDisabled: true,
     lastNameDisabled: true,
+    emailDisabled: true,
     editMode: true,
   });
 
@@ -149,6 +150,12 @@ export const ProfileForm: React.FC = () => {
   const onEditLastName = async () => {
     setState((prevState) => ({ ...prevState, lastNameDisabled: !prevState.lastNameDisabled }));
     await user.updateUserLastName(state.version as number, state.lastName);
+    fetchUserData();
+  };
+
+  const onEditEmail = async () => {
+    setState((prevState) => ({ ...prevState, emailDisabled: !prevState.emailDisabled }));
+    await user.updateUserEmail(state.version as number, state.email);
     fetchUserData();
   };
 
@@ -370,9 +377,11 @@ export const ProfileForm: React.FC = () => {
             onPasswordChange={handlePasswordChange}
             showPassword={state.showPassword}
             togglePasswordVisibility={togglePasswordVisibility}
-            emailDisabled={true}
+            emailDisabled={state.emailDisabled}
             passwordDisabled={true}
             passwordPlaceholder="********"
+            editMode={state.editMode}
+            onEditEmail={onEditEmail}
           />
         </div>
 
