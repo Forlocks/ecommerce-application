@@ -16,7 +16,7 @@ export const UserAddresses: React.FC<IUserAddresses> = ({
       await user.removeUserAddress(version, id);
       const updatedAddresses = addresses.filter((address) => address.id !== id);
       updateAddresses(updatedAddresses);
-      await fetchUserData();
+      fetchUserData();
     } catch (error) {
       console.error('Error deleting address:', error);
     }
@@ -60,7 +60,7 @@ export const UserAddresses: React.FC<IUserAddresses> = ({
               <td>
                 <div onClick={() => handleEdit(index)}>
                   <img
-                    src="./assets/images/Edit-Icon.png"
+                    src="./assets/icons/Edit-Icon.png"
                     alt="edit"
                     style={{ opacity: 0.6, cursor: 'pointer' }}
                   ></img>
@@ -70,7 +70,7 @@ export const UserAddresses: React.FC<IUserAddresses> = ({
                 <div onClick={() => handleDelete(row.id, row.version)}>
                   <img
                     width={16}
-                    src="./assets/images/Delete-Icon.webp"
+                    src="./assets/icons/Delete-Icon.webp"
                     alt="edit"
                     style={{ opacity: 0.6, cursor: 'pointer' }}
                   ></img>

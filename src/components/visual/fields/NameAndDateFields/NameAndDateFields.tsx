@@ -16,6 +16,9 @@ export const NameAndDateFields: React.FC<INameAndDateFieldProps> = ({
   firstNameDisabled,
   lastNameDisabled,
   dateOfBirthDisabled,
+  onEditFirstName,
+  onEditLastName,
+  editMode,
 }) => (
   <div className="name-date">
     <TextInput
@@ -26,6 +29,8 @@ export const NameAndDateFields: React.FC<INameAndDateFieldProps> = ({
       onChange={onFirstNameChange}
       error={firstNameError}
       disabled={firstNameDisabled}
+      onEdit={onEditFirstName}
+      editMode={editMode}
     />
     <TextInput
       label="Last Name"
@@ -35,6 +40,8 @@ export const NameAndDateFields: React.FC<INameAndDateFieldProps> = ({
       onChange={onLastNameChange}
       error={lastNameError}
       disabled={lastNameDisabled}
+      onEdit={onEditLastName}
+      editMode={editMode}
     />
     <DateInput
       label="Date of Birth"

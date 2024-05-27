@@ -34,4 +34,7 @@ export interface IRegistrationForm {
   isDefaultBillingAddress: boolean;
   addresses?: IUserAddress[];
   version?: number;
+  firstNameDisabled?: boolean;
+  lastNameDisabled?: boolean;
+  editMode?: boolean;
 }

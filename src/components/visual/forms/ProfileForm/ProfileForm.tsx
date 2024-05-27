@@ -56,6 +56,9 @@ export const ProfileForm: React.FC = () => {
     isDefaultBillingAddress: false,
     addresses: [],
     version: 0,
+    firstNameDisabled: true,
+    lastNameDisabled: true,
+    editMode: true,
   });
 
   const fillAddresses = (userObj: Customer) => {
@@ -71,8 +74,6 @@ export const ProfileForm: React.FC = () => {
       id: address.id || '',
       version: userObj.version,
     }));
-
-    console.log(updatedAddresses);
 
     setState((prevState) => ({
       ...prevState,
@@ -91,6 +92,7 @@ export const ProfileForm: React.FC = () => {
         firstName: result.body.firstName as string,
         lastName: result.body.lastName as string,
         dateOfBirth: result.body.dateOfBirth as string,
+        version: result.body.version,
       }));
     } catch (error) {
       console.error('Error fetching user data:', error);
@@ -137,6 +139,18 @@ export const ProfileForm: React.FC = () => {
   //   state.streetErrorBilling !== '' ||
   //   state.postCodeBilling === '' ||
   //   state.postCodeErrorBilling !== '';
+
+  const onEditFirstName = async () => {
+    setState((prevState) => ({ ...prevState, firstNameDisabled: !prevState.firstNameDisabled }));
+    await user.updateUserFirstName(state.version as number, state.firstName);
+    fetchUserData();
+  };
+
+  const onEditLastName = async () => {
+    setState((prevState) => ({ ...prevState, lastNameDisabled: !prevState.lastNameDisabled }));
+    await user.updateUserLastName(state.version as number, state.lastName);
+    fetchUserData();
+  };
 
   const togglePasswordVisibility = () => {
     setState((prevState) => ({ ...prevState, showPassword: !prevState.showPassword }));
@@ -371,12 +385,15 @@ export const ProfileForm: React.FC = () => {
             lastName={state.lastName}
             lastNameError={state.lastNameError}
             onLastNameChange={handleLastNameChange}
-            firstNameDisabled={true}
-            lastNameDisabled={true}
+            firstNameDisabled={state.firstNameDisabled}
+            lastNameDisabled={state.lastNameDisabled}
             dateOfBirth={state.dateOfBirth}
             dateOfBirthError={state.dateOfBirthError}
             onDateOfBirthChange={handleDateOfBirth}
             dateOfBirthDisabled={true}
+            onEditFirstName={onEditFirstName}
+            onEditLastName={onEditLastName}
+            editMode={state.editMode}
           />
         </div>
       </div>

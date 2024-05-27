@@ -10,4 +10,5 @@ export interface IInputBase {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   name: string;
   disabled?: boolean;
+  editMode?: boolean;
 }

@@ -192,4 +192,12 @@ export class User {
   removeUserAddress(version: number, addressId: string) {
     return this.updateUser(version, [{ action: 'removeAddress', addressId }]);
   }
+
+  updateUserFirstName(version: number, firstName: string) {
+    return this.updateUser(version, [{ action: 'setFirstName', firstName }]);
+  }
+
+  updateUserLastName(version: number, lastName: string) {
+    return this.updateUser(version, [{ action: 'setLastName', lastName }]);
+  }
 }

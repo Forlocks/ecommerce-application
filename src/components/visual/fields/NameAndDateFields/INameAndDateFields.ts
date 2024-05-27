@@ -13,4 +13,7 @@ export interface INameAndDateFieldProps {
   firstNameDisabled?: boolean;
   lastNameDisabled?: boolean;
   dateOfBirthDisabled?: boolean;
+  onEditFirstName?: () => void;
+  onEditLastName?: () => void;
+  editMode?: boolean;
 }
