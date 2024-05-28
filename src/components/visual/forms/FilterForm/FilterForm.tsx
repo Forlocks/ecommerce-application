@@ -99,6 +99,7 @@ export const FilterForm: React.FC<IFilterFormProps> = () => {
   };
 
   const onEnterPress = () => {
+    console.log('1');
     if (minPrice && maxPrice && parseFloat(minPrice) <= parseFloat(maxPrice)) {
       console.log(`Отправка: Мин. цена - ${minPrice}, Макс. цена - ${maxPrice}`);
       // Здесь код для отправки данных на сервер...

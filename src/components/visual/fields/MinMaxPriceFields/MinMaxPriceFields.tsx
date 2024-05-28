@@ -20,6 +20,7 @@ export const MinMaxPriceField: React.FC<IMinMaxPriceFieldProps> = ({
       value={minPrice}
       onChange={onMinPriceChange}
       onKeyDown={(e) => {
+        console.log('MinPrice Enter pressed'); // Добавьте этот console.log
         if (e.key === 'Enter') onEnterPress();
       }}
       aria-label="Минимальная цена"
@@ -33,6 +34,7 @@ export const MinMaxPriceField: React.FC<IMinMaxPriceFieldProps> = ({
       value={maxPrice}
       onChange={onMaxPriceChange}
       onKeyDown={(e) => {
+        console.log('MaxPrice Enter pressed'); // Добавьте этот console.log
         if (e.key === 'Enter') onEnterPress();
       }}
       aria-label="Максимальная цена"
