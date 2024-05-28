@@ -1,5 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import { Customer } from '@commercetools/platform-sdk';
 import { user } from '../../../..';
 import {
@@ -110,7 +109,7 @@ export const ProfileForm: React.FC = () => {
     fetchUserData();
   }, []);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const updateAddresses = (updatedAddresses: IUserAddress[]) => {
     setState((prevState) => ({
@@ -187,11 +186,12 @@ export const ProfileForm: React.FC = () => {
         state.oldPassword as string,
         state.newPassword as string,
       );
-      user.createApiPasswordAuthClient({
+      user.logout();
+      await user.login({
         email: state.email,
         password: state.newPassword as string,
       });
-      fetchUserData();
+      user.setUserState('true');
     }
   };
 
@@ -354,66 +354,68 @@ export const ProfileForm: React.FC = () => {
   //   });
   // };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
-    event.preventDefault();
-    const {
-      email,
-      password,
-      city,
-      street,
-      postCode,
-      firstName,
-      lastName,
-      dateOfBirth,
-      cityBilling,
-      streetBilling,
-      postCodeBilling,
-      isDefaultShippingAddress,
-      isSameAddresses,
-      isDefaultBillingAddress,
-    } = state;
+  // const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
+  //   event.preventDefault();
+  //   const {
+  //     email,
+  //     password,
+  //     city,
+  //     street,
+  //     postCode,
+  //     firstName,
+  //     lastName,
+  //     dateOfBirth,
+  //     cityBilling,
+  //     streetBilling,
+  //     postCodeBilling,
+  //     isDefaultShippingAddress,
+  //     isSameAddresses,
+  //     isDefaultBillingAddress,
+  //   } = state;
 
-    const userData = {
-      email,
-      firstName,
-      lastName,
-      password,
-      dateOfBirth,
-      addresses: [
-        {
-          country: 'US',
-          city,
-          streetName: street,
-          postalCode: postCode,
-        },
-        {
-          country: 'US',
-          city: cityBilling,
-          streetName: streetBilling,
-          postalCode: postCodeBilling,
-        },
-      ],
-      shippingAddresses: [0],
-      billingAddresses: isSameAddresses ? [0] : [1],
-      defaultShippingAddress: isDefaultShippingAddress ? 0 : undefined,
-      defaultBillingAddress: isDefaultBillingAddress ? (isSameAddresses ? 0 : 1) : undefined,
-    };
+  //   const userData = {
+  //     email,
+  //     firstName,
+  //     lastName,
+  //     password,
+  //     dateOfBirth,
+  //     addresses: [
+  //       {
+  //         country: 'US',
+  //         city,
+  //         streetName: street,
+  //         postalCode: postCode,
+  //       },
+  //       {
+  //         country: 'US',
+  //         city: cityBilling,
+  //         streetName: streetBilling,
+  //         postalCode: postCodeBilling,
+  //       },
+  //     ],
+  //     shippingAddresses: [0],
+  //     billingAddresses: isSameAddresses ? [0] : [1],
+  //     defaultShippingAddress: isDefaultShippingAddress ? 0 : undefined,
+  //     defaultBillingAddress: isDefaultBillingAddress ? (isSameAddresses ? 0 : 1) : undefined,
+  //   };
 
-    if (isSameAddresses) userData.addresses.pop();
+  //   if (isSameAddresses) userData.addresses.pop();
 
-    user.registration(userData).then((result) => {
-      if (result.email === 'ok') {
-        user.setUserState('true');
-        navigate('/');
-        alert('Registration completed successfully!');
-      } else {
-        setState((prevState) => ({
-          ...prevState,
-          emailError: result.email === 'ok' ? '' : result.email,
-        }));
-      }
-    });
-  };
+  //   user.registration(userData).then((result) => {
+  //     if (result.email === 'ok') {
+  //       user.setUserState('true');
+  //       navigate('/');
+  //       alert('Registration completed successfully!');
+  //     } else {
+  //       setState((prevState) => ({
+  //         ...prevState,
+  //         emailError: result.email === 'ok' ? '' : result.email,
+  //       }));
+  //     }
+  //   });
+  // };
+
+  const handleSubmit = () => {};
 
   return (
     <form onSubmit={handleSubmit} className="registration-form">

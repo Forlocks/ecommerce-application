@@ -132,6 +132,11 @@ export class User {
     this.setUserState('false');
     this.ctpClientFlow = this.ctpClientCredentialFlow;
     localStorage.setItem('userTokenStorage', '');
+    userTokenCache.set({
+      token: '',
+      expirationTime: 0,
+      refreshToken: '',
+    });
   }
 
   public async registration(customerData: MyCustomerDraft) {
