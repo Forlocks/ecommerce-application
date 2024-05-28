@@ -1,5 +1,5 @@
 export interface IBasePriceProps {
-  price: number;
+  price?: number | null;
   currencyCode?: string;
   className?: string;
 }

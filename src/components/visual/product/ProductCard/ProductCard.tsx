@@ -5,11 +5,20 @@ import { IProductCardProps } from './IProductCardProps';
 import { ProductImage } from '../ProductImage/ProductImage';
 import { ShortProductDescription } from '../ProductDescription/ShortProductDescription/ShortProductDescription';
 
+const formatPercentage = (percentage: number) => Math.round(percentage).toString();
+
 const calculateDiscountedPrice = (mainPrice?: {
   discounted?: { value: { centAmount: number } };
 }) => {
   if (mainPrice?.discounted?.value.centAmount) {
     return mainPrice.discounted.value.centAmount / 100;
+  }
+  return null;
+};
+
+const calculateOldPrice = (mainPrice?: { value?: { centAmount: number } }) => {
+  if (mainPrice?.value?.centAmount) {
+    return mainPrice.value.centAmount / 100;
   }
   return null;
 };
@@ -28,6 +37,7 @@ export const ProductCard: React.FC<IProductCardProps> = ({ product, className, o
   const { name, masterVariant, description } = product;
   const mainPrice = masterVariant?.prices?.[0];
   const discountedPrice = calculateDiscountedPrice(mainPrice);
+  const oldPrice = calculateOldPrice(mainPrice);
   const discountPercentage = calculateDiscountPercentage(mainPrice);
 
   return (
@@ -41,11 +51,20 @@ export const ProductCard: React.FC<IProductCardProps> = ({ product, className, o
       )}
       {mainPrice && (
         <Price
-          price={discountedPrice || mainPrice.value.centAmount / 100}
+          price={
+            discountedPrice !== null
+              ? parseFloat(discountedPrice.toFixed(2))
+              : parseFloat((mainPrice.value.centAmount / 100).toFixed(2))
+          }
           currencyCode={mainPrice.value.currencyCode}
           discounted={!!discountedPrice}
-          discountPercentage={discountPercentage || undefined}
-          className={discountedPrice ? 'discounted-price' : 'main-price'}
+          discountPercentage={
+            discountPercentage !== null
+              ? parseInt(formatPercentage(discountPercentage), 10)
+              : undefined
+          }
+          className={discountedPrice !== null ? 'discounted-price' : 'main-price'}
+          oldPrice={oldPrice !== null ? parseFloat(oldPrice.toFixed(2)) : null}
         />
       )}
       <MediumButton className="product-button" onClick={onButtonClick}>

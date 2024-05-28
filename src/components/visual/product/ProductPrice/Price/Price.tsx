@@ -10,6 +10,7 @@ export const Price: React.FC<IPriceProps> = ({
   discounted,
   discountPercentage,
   className,
+  oldPrice, // Добавляем oldPrice в пропсы
 }) => {
   if (discounted && discountPercentage !== undefined) {
     return (
@@ -17,13 +18,18 @@ export const Price: React.FC<IPriceProps> = ({
         <DiscountedPrice price={price} currencyCode={currencyCode} className={className} />
         <OldPrice
           discountPercentage={discountPercentage}
-          price={price}
           currencyCode={currencyCode}
           className={className}
+          oldPrice={oldPrice}
+          price={price}
         />
       </div>
     );
   }
 
-  return <BasePrice price={price} currencyCode={currencyCode} className={className} />;
+  return (
+    <div className="card-prices">
+      <BasePrice price={price} currencyCode={currencyCode} className={className} />
+    </div>
+  );
 };

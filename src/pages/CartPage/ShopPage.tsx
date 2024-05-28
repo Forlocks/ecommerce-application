@@ -1,6 +1,7 @@
 import React from 'react';
 import './ShopPage.scss';
 import { ProductList } from '../../components/visual/product/ProductList/ProductList';
+import { FilterForm } from '../../components/visual/forms/FilterForm/FilterForm';
 
 export const ShopPage: React.FC = function () {
   return (
@@ -15,7 +16,9 @@ export const ShopPage: React.FC = function () {
       <div className="shop_container">
         <ProductList />
       </div>
-      <div className="shop_aside"></div>
+      <div className="shop_aside">
+        <FilterForm />
+      </div>
     </div>
   );
 };

@@ -28,7 +28,7 @@ export const ProductList: React.FC = () => {
           className="shop"
           key={product.id}
           product={product}
-          onButtonClick={() => console.log('Button click on shop card')}
+          onButtonClick={() => console.log(`Button click on shop card ${product.id}`)}
         />
       ))}
     </div>
