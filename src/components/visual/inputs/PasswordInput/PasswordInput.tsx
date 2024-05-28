@@ -13,10 +13,15 @@ const saveIcon = (
 export const PasswordInput: React.FC<IPasswordInput> = function ({
   showPassword,
   togglePasswordVisibility,
+  oldPassword,
+  newPassword,
+  onOldPasswordChange,
+  onNewPasswordChange,
+  newPasswordError,
   ...props
 }) {
-  return (
-    <>
+  if (!props.editMode) {
+    return (
       <>
         <div className="password">
           <InputBase {...props} type={showPassword ? 'text' : 'password'} />
@@ -27,11 +32,34 @@ export const PasswordInput: React.FC<IPasswordInput> = function ({
               style={{ position: 'absolute', right: 16, top: 33 }}
             />
           )}
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <>
+        <div className="password">
+          <InputBase
+            {...props}
+            placeholder={!props.disabled ? 'old password' : '********'}
+            type={showPassword ? 'text' : 'password'}
+            value={oldPassword as string}
+            onChange={onOldPasswordChange as () => void}
+          />
+          {props.disabled || (
+            <SmallButton
+              onClick={togglePasswordVisibility}
+              icon={showPassword ? hideEyeIcon : showEyeIcon}
+              style={{ position: 'absolute', right: 36, top: 33 }}
+            />
+          )}
           {props.editMode && props.disabled && (
             <SmallButton
               onClick={props.onEdit}
               icon={props.disabled ? editIcon : saveIcon}
-              style={{ position: 'absolute', right: 36, top: 33 }}
+              style={{ position: 'absolute', right: 16, top: 33 }}
             />
           )}
         </div>
@@ -39,17 +67,24 @@ export const PasswordInput: React.FC<IPasswordInput> = function ({
       {!props.disabled && props.editMode && (
         <>
           <div className="password">
-            <InputBase {...props} type={showPassword ? 'text' : 'password'} />
+            <InputBase
+              {...props}
+              placeholder="new password"
+              type={showPassword ? 'text' : 'password'}
+              value={newPassword as string}
+              onChange={onNewPasswordChange as () => void}
+              error={newPasswordError}
+            />
             <SmallButton
               onClick={togglePasswordVisibility}
               icon={showPassword ? hideEyeIcon : showEyeIcon}
-              style={{ position: 'absolute', right: 16, top: 33 }}
+              style={{ position: 'absolute', right: 36, top: 33 }}
             />
             {props.editMode && (
               <SmallButton
                 onClick={props.onEdit}
                 icon={props.disabled ? editIcon : saveIcon}
-                style={{ position: 'absolute', right: 36, top: 33 }}
+                style={{ position: 'absolute', right: 10, top: 33 }}
               />
             )}
           </div>

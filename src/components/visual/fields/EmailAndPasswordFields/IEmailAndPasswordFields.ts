@@ -15,4 +15,7 @@ export interface IEmailAndPasswordFieldsProps {
   editMode?: boolean;
   onEditEmail?: () => void;
   onEditPassword?: () => void;
+  onOldPasswordChange?: () => void;
+  onNewPasswordChange?: () => void;
+  newPasswordError?: string;
 }

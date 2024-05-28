@@ -63,6 +63,8 @@ export const ProfileForm: React.FC = () => {
     dateDisabled: true,
     passwordDisabled: true,
     newPassword: '',
+    oldPassword: '',
+    newPasswordError: '',
   });
 
   const fillAddresses = (userObj: Customer) => {
@@ -146,37 +148,46 @@ export const ProfileForm: React.FC = () => {
 
   const onEditFirstName = async () => {
     setState((prevState) => ({ ...prevState, firstNameDisabled: !prevState.firstNameDisabled }));
-    await user.updateUserFirstName(state.version as number, state.firstName);
-    fetchUserData();
+    if (!state.firstNameDisabled) {
+      await user.updateUserFirstName(state.version as number, state.firstName);
+      fetchUserData();
+    }
   };
 
   const onEditLastName = async () => {
     setState((prevState) => ({ ...prevState, lastNameDisabled: !prevState.lastNameDisabled }));
-    await user.updateUserLastName(state.version as number, state.lastName);
-    fetchUserData();
+    if (!state.lastNameDisabled) {
+      await user.updateUserLastName(state.version as number, state.lastName);
+      fetchUserData();
+    }
   };
 
   const onEditEmail = async () => {
     setState((prevState) => ({ ...prevState, emailDisabled: !prevState.emailDisabled }));
-    await user.updateUserEmail(state.version as number, state.email);
-    fetchUserData();
+    if (!state.emailDisabled) {
+      await user.updateUserEmail(state.version as number, state.email);
+      fetchUserData();
+    }
   };
 
   const onEditDate = async () => {
     setState((prevState) => ({ ...prevState, dateDisabled: !prevState.dateDisabled }));
-    await user.updateUserDateOfBirth(state.version as number, state.dateOfBirth);
-    fetchUserData();
+    if (!state.dateDisabled) {
+      await user.updateUserDateOfBirth(state.version as number, state.dateOfBirth);
+      fetchUserData();
+    }
   };
 
   const onEditPassword = async () => {
     setState((prevState) => ({ ...prevState, passwordDisabled: !prevState.passwordDisabled }));
-    await user.updateUserPassword(
-      state.version as number,
-      state.password,
-      state.newPassword as string,
-    );
-
-    fetchUserData();
+    if (!state.passwordDisabled) {
+      await user.updateUserPassword(
+        state.version as number,
+        state.oldPassword as string,
+        state.newPassword as string,
+      );
+      fetchUserData();
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -192,7 +203,23 @@ export const ProfileForm: React.FC = () => {
   const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newPassword = event.target.value.trim();
     const passwordError = validatePassword(newPassword);
-    setState((prevState) => ({ ...prevState, password: newPassword, passwordError }));
+    setState((prevState) => ({
+      ...prevState,
+      password: newPassword,
+      passwordError,
+    }));
+  };
+
+  const handleOldPasswordChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const oldPassword = event.target.value.trim();
+    const passwordError = validatePassword(oldPassword);
+    setState((prevState) => ({ ...prevState, oldPassword, passwordError }));
+  };
+
+  const handleNewPasswordChange = (event: ChangeEvent<HTMLInputElement>): void => {
+    const newPassword = event.target.value.trim();
+    const newPasswordError = validatePassword(newPassword);
+    setState((prevState) => ({ ...prevState, newPassword, newPasswordError }));
   };
 
   // const handleCountryChange = (
@@ -403,6 +430,9 @@ export const ProfileForm: React.FC = () => {
             editMode={state.editMode}
             onEditEmail={onEditEmail}
             onEditPassword={onEditPassword}
+            onOldPasswordChange={handleOldPasswordChange as () => void}
+            onNewPasswordChange={handleNewPasswordChange as () => void}
+            newPasswordError={state.newPasswordError}
           />
         </div>
 

@@ -18,6 +18,9 @@ export const EmailAndPasswordFields: React.FC<IEmailAndPasswordFieldsProps> = ({
   onEditEmail,
   editMode,
   onEditPassword,
+  onOldPasswordChange,
+  onNewPasswordChange,
+  newPasswordError,
 }) => (
   <>
     <EmailInput
@@ -43,6 +46,9 @@ export const EmailAndPasswordFields: React.FC<IEmailAndPasswordFieldsProps> = ({
       disabled={passwordDisabled}
       editMode={editMode}
       onEdit={onEditPassword}
+      onOldPasswordChange={onOldPasswordChange}
+      onNewPasswordChange={onNewPasswordChange}
+      newPasswordError={newPasswordError}
     />
   </>
 );
