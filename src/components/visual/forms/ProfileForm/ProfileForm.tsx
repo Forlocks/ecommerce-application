@@ -10,16 +10,21 @@ import {
   // validatePostCode,
   validateDateOfBirth,
   validateName,
+  validateCountry,
+  validateCity,
+  validateStreet,
+  validatePostCode,
 } from '../../../non-visual/validators/validators';
 // import { LargeButton } from '../../buttons/LargeButton/LargeButton';
 import { EmailAndPasswordFields } from '../../fields/EmailAndPasswordFields/EmailAndPasswordFields';
-//  import { AdressFields } from '../../fields/AdressFields/AdressFields';
-// / import { Checkbox } from '../../checkbox/Checkbox';
+import { AdressFields } from '../../fields/AdressFields/AdressFields';
+import { Checkbox } from '../../checkbox/Checkbox';
 import { NameAndDateFields } from '../../fields/NameAndDateFields/NameAndDateFields';
 import { IRegistrationForm } from '../RegistrationForm/IRegistrationForm';
 import { UserAddresses } from './UserAddresses';
 import './ProfileForm.scss';
 import { IUserAddress } from './IUserAddresses';
+import { MediumButton } from '../../buttons/MediumButton/MediumButton';
 
 export const ProfileForm: React.FC = () => {
   const [state, setState] = useState<IRegistrationForm>({
@@ -66,6 +71,8 @@ export const ProfileForm: React.FC = () => {
     newPasswordError: '',
     showNewPassword: false,
   });
+
+  const [showAddressForm, setShowAddressForm] = useState(false);
 
   const fillAddresses = (userObj: Customer) => {
     const updatedAddresses: IUserAddress[] = userObj.addresses.map((address) => ({
@@ -231,61 +238,65 @@ export const ProfileForm: React.FC = () => {
     setState((prevState) => ({ ...prevState, newPassword, newPasswordError }));
   };
 
-  // const handleCountryChange = (
-  //   event: ChangeEvent<HTMLInputElement>,
-  //   targetCountry: string,
-  //   targetCountryError: string,
-  // ): void => {
-  //   const newCountry = event.target.value;
-  //   const countryError = validateCountry(newCountry);
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     [targetCountry]: newCountry,
-  //     [targetCountryError]: countryError,
-  //   }));
-  // };
+  // ---------------------------------------------------------
 
-  // const handleCityChange = (
-  //   event: ChangeEvent<HTMLInputElement>,
-  //   targetCity: string,
-  //   targetCityError: string,
-  // ): void => {
-  //   const newCity = event.target.value;
-  //   const cityError = validateCity(newCity);
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     [targetCity]: newCity,
-  //     [targetCityError]: cityError,
-  //   }));
-  // };
+  const handleCountryChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    targetCountry: string,
+    targetCountryError: string,
+  ): void => {
+    const newCountry = event.target.value;
+    const countryError = validateCountry(newCountry);
+    setState((prevState) => ({
+      ...prevState,
+      [targetCountry]: newCountry,
+      [targetCountryError]: countryError,
+    }));
+  };
 
-  // const handleStreetChange = (
-  //   event: ChangeEvent<HTMLInputElement>,
-  //   targetStreet: string,
-  //   targetStreetError: string,
-  // ): void => {
-  //   const newStreet = event.target.value;
-  //   const streetError = validateStreet(newStreet);
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     [targetStreet]: newStreet,
-  //     [targetStreetError]: streetError,
-  //   }));
-  // };
+  const handleCityChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    targetCity: string,
+    targetCityError: string,
+  ): void => {
+    const newCity = event.target.value;
+    const cityError = validateCity(newCity);
+    setState((prevState) => ({
+      ...prevState,
+      [targetCity]: newCity,
+      [targetCityError]: cityError,
+    }));
+  };
 
-  // const handlePostCodeChange = (
-  //   event: ChangeEvent<HTMLInputElement>,
-  //   targetPostCode: string,
-  //   targetPostCodeError: string,
-  // ): void => {
-  //   const newPostCode = event.target.value;
-  //   const postCodeError = validatePostCode(newPostCode);
-  //   setState((prevState) => ({
-  //     ...prevState,
-  //     [targetPostCode]: newPostCode,
-  //     [targetPostCodeError]: postCodeError,
-  //   }));
-  // };
+  const handleStreetChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    targetStreet: string,
+    targetStreetError: string,
+  ): void => {
+    const newStreet = event.target.value;
+    const streetError = validateStreet(newStreet);
+    setState((prevState) => ({
+      ...prevState,
+      [targetStreet]: newStreet,
+      [targetStreetError]: streetError,
+    }));
+  };
+
+  const handlePostCodeChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    targetPostCode: string,
+    targetPostCodeError: string,
+  ): void => {
+    const newPostCode = event.target.value;
+    const postCodeError = validatePostCode(newPostCode);
+    setState((prevState) => ({
+      ...prevState,
+      [targetPostCode]: newPostCode,
+      [targetPostCodeError]: postCodeError,
+    }));
+  };
+
+  // -----------------------------------------------------------
 
   const handleFirstNameChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newFirstName = event.target.value.trim();
@@ -309,50 +320,52 @@ export const ProfileForm: React.FC = () => {
     }));
   };
 
-  // const handleCheckboxChangeDefaultShippingAddress = (checked: boolean) => {
-  //   setState({
-  //     ...state,
-  //     isDefaultShippingAddress: checked,
-  //   });
-  // };
+  // ---------------------------------------------------------------------------
 
-  // const handleCheckboxChangeDefaultBillingAddress = (checked: boolean) => {
-  //   setState({
-  //     ...state,
-  //     isDefaultBillingAddress: checked,
-  //   });
-  // };
+  const handleCheckboxChangeDefaultShippingAddress = (checked: boolean) => {
+    setState({
+      ...state,
+      isDefaultShippingAddress: checked,
+    });
+  };
 
-  // const handleCheckboxChangeSameAddresses = (checked: boolean) => {
-  //   setState((prevState) => {
-  //     if (checked) {
-  //       return {
-  //         ...prevState,
-  //         isSameAddresses: checked,
-  //         countryBilling: prevState.country,
-  //         countryErrorBilling: prevState.countryError,
-  //         cityBilling: prevState.city,
-  //         cityErrorBilling: prevState.cityError,
-  //         streetBilling: prevState.street,
-  //         streetErrorBilling: prevState.streetError,
-  //         postCodeBilling: prevState.postCode,
-  //         postCodeErrorBilling: prevState.postCodeError,
-  //       };
-  //     }
-  //     return {
-  //       ...prevState,
-  //       isSameAddresses: checked,
-  //       countryBilling: '',
-  //       countryErrorBilling: '',
-  //       cityBilling: '',
-  //       cityErrorBilling: '',
-  //       streetBilling: '',
-  //       streetErrorBilling: '',
-  //       postCodeBilling: '',
-  //       postCodeErrorBilling: '',
-  //     };
-  //   });
-  // };
+  const handleCheckboxChangeDefaultBillingAddress = (checked: boolean) => {
+    setState({
+      ...state,
+      isDefaultBillingAddress: checked,
+    });
+  };
+
+  const handleCheckboxChangeSameAddresses = (checked: boolean) => {
+    setState((prevState) => {
+      if (checked) {
+        return {
+          ...prevState,
+          isSameAddresses: checked,
+          countryBilling: prevState.country,
+          countryErrorBilling: prevState.countryError,
+          cityBilling: prevState.city,
+          cityErrorBilling: prevState.cityError,
+          streetBilling: prevState.street,
+          streetErrorBilling: prevState.streetError,
+          postCodeBilling: prevState.postCode,
+          postCodeErrorBilling: prevState.postCodeError,
+        };
+      }
+      return {
+        ...prevState,
+        isSameAddresses: checked,
+        countryBilling: '',
+        countryErrorBilling: '',
+        cityBilling: '',
+        cityErrorBilling: '',
+        streetBilling: '',
+        streetErrorBilling: '',
+        postCodeBilling: '',
+        postCodeErrorBilling: '',
+      };
+    });
+  };
 
   // const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
   //   event.preventDefault();
@@ -404,7 +417,7 @@ export const ProfileForm: React.FC = () => {
   //   user.registration(userData).then((result) => {
   //     if (result.email === 'ok') {
   //       user.setUserState('true');
-  //       navigate('/');
+  //       //   navigate('/');
   //       alert('Registration completed successfully!');
   //     } else {
   //       setState((prevState) => ({
@@ -415,10 +428,28 @@ export const ProfileForm: React.FC = () => {
   //   });
   // };
 
-  const handleSubmit = () => {};
+  // -----------------------------------------------------------------------------
+
+  const handleAddNewAddress = async () => {
+    setShowAddressForm(true);
+    if (showAddressForm) {
+      try {
+        await user.addAddress(state.version as number, {
+          country: 'US',
+          city: state.city,
+          streetName: state.street,
+          postalCode: state.postCode,
+        });
+        await fetchUserData();
+      } catch (error) {
+        console.error('Error adding new address:', error);
+      }
+      setShowAddressForm(false);
+    }
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="registration-form">
+    <div className="registration-form">
       <div className="user-container">
         <span>
           Welcome to your profile page! This is where you can view and manage all your personal
@@ -478,87 +509,56 @@ export const ProfileForm: React.FC = () => {
           updateAddresses={updateAddresses}
           fetchUserData={fetchUserData}
         />
-        {/* <div className="fields-container">
-          <AdressFields
-            prefix="shipping"
-            country={state.country}
-            countryError={state.countryError}
-            onCountryChange={(event) => handleCountryChange(event, 'country', 'countryError')}
-            city={state.city}
-            cityError={state.cityError}
-            onCityChange={(event) => handleCityChange(event, 'city', 'cityError')}
-            street={state.street}
-            streetError={state.streetError}
-            onStreetChange={(event) => handleStreetChange(event, 'street', 'streetError')}
-            postCode={state.postCode}
-            postCodeError={state.postCodeError}
-            onPostCodeChange={(event) => handlePostCodeChange(event, 'postCode', 'postCodeError')}
-          />
-        </div>
 
-        <Checkbox
-          id="default-shiping-address"
-          checked={state.isDefaultShippingAddress}
-          onChange={handleCheckboxChangeDefaultShippingAddress}
-          label="set as default shipping address"
-        />
-
-        <Checkbox
-          id="same-address"
-          checked={state.isSameAddresses}
-          onChange={handleCheckboxChangeSameAddresses}
-          label="shipping and billing addresses coincide"
-        />
-
-        {!state.isSameAddresses && (
+        {showAddressForm && (
           <>
-            <span>Billing address</span>
             <div className="fields-container">
               <AdressFields
-                prefix="billing"
-                country={state.countryBilling}
-                countryError={state.countryErrorBilling}
-                onCountryChange={(event) => {
-                  handleCountryChange(event, 'countryBilling', 'countryErrorBilling');
-                }}
-                city={state.cityBilling}
-                cityError={state.cityErrorBilling}
-                onCityChange={(event) => {
-                  handleCityChange(event, 'cityBilling', 'cityErrorBilling');
-                }}
-                street={state.streetBilling}
-                streetError={state.streetErrorBilling}
-                onStreetChange={(event) => {
-                  handleStreetChange(event, 'streetBilling', 'streetErrorBilling');
-                }}
-                postCode={state.postCodeBilling}
-                postCodeError={state.postCodeErrorBilling}
+                prefix="shipping"
+                country={state.country}
+                countryError={state.countryError}
+                onCountryChange={(event) => handleCountryChange(event, 'country', 'countryError')}
+                city={state.city}
+                cityError={state.cityError}
+                onCityChange={(event) => handleCityChange(event, 'city', 'cityError')}
+                street={state.street}
+                streetError={state.streetError}
+                onStreetChange={(event) => handleStreetChange(event, 'street', 'streetError')}
+                postCode={state.postCode}
+                postCodeError={state.postCodeError}
                 onPostCodeChange={(event) => {
-                  handlePostCodeChange(event, 'postCodeBilling', 'postCodeErrorBilling');
+                  handlePostCodeChange(event, 'postCode', 'postCodeError');
                 }}
+              />
+              <Checkbox
+                id="default-shiping-address"
+                checked={state.isDefaultShippingAddress}
+                onChange={handleCheckboxChangeDefaultShippingAddress}
+                label="set as billing address"
+              />
+              <Checkbox
+                id="same-address"
+                checked={state.isSameAddresses}
+                onChange={handleCheckboxChangeSameAddresses}
+                label="set as shipping billing"
+              />
+              <Checkbox
+                id="default-billing-address"
+                checked={state.isDefaultBillingAddress}
+                onChange={handleCheckboxChangeDefaultBillingAddress}
+                label="set as default billing address"
+              />
+              <Checkbox
+                id="default-billing-address"
+                checked={state.isDefaultBillingAddress}
+                onChange={handleCheckboxChangeDefaultBillingAddress}
+                label="set as default shipping address"
               />
             </div>
           </>
         )}
-
-        <Checkbox
-          id="default-billing-address"
-          checked={state.isDefaultBillingAddress}
-          onChange={handleCheckboxChangeDefaultBillingAddress}
-          label="set as default billing address"
-        />
-
-        <div className="login-buttons">
-          <LargeButton disabled={isButtonDisabled}>Register</LargeButton>
-
-          <div className="link">
-            <span>
-              Already have an account?&nbsp;
-              <NavLink to="/login">Log in</NavLink>
-            </span>
-          </div>
-        </div> */}
+        <MediumButton onClick={handleAddNewAddress} children={<div>Add new address</div>} />
       </div>
-    </form>
+    </div>
   );
 };

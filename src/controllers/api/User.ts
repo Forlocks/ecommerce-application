@@ -222,4 +222,16 @@ export class User {
       .post({ body: { currentPassword, newPassword, version } })
       .execute();
   }
+
+  addAddress(
+    version: number,
+    address: {
+      country: 'US';
+      city: string;
+      streetName: string;
+      postalCode: string;
+    },
+  ) {
+    return this.updateUser(version, [{ action: 'addAddress', address }]);
+  }
 }
