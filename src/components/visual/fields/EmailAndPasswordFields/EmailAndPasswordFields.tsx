@@ -21,6 +21,8 @@ export const EmailAndPasswordFields: React.FC<IEmailAndPasswordFieldsProps> = ({
   onOldPasswordChange,
   onNewPasswordChange,
   newPasswordError,
+  showNewPassword,
+  toggleNewPasswordVisibility,
 }) => (
   <>
     <EmailInput
@@ -49,6 +51,8 @@ export const EmailAndPasswordFields: React.FC<IEmailAndPasswordFieldsProps> = ({
       onOldPasswordChange={onOldPasswordChange}
       onNewPasswordChange={onNewPasswordChange}
       newPasswordError={newPasswordError}
+      showNewPassword={showNewPassword}
+      toggleNewPasswordVisibility={toggleNewPasswordVisibility}
     />
   </>
 );

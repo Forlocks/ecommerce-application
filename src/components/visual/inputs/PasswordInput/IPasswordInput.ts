@@ -8,4 +8,6 @@ export interface IPasswordInput extends IInputBase {
   onOldPasswordChange?: () => void;
   onNewPasswordChange?: () => void;
   newPasswordError?: string;
+  showNewPassword?: boolean;
+  toggleNewPasswordVisibility?: () => void;
 }

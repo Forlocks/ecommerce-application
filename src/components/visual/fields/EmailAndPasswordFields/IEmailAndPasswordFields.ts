@@ -18,4 +18,6 @@ export interface IEmailAndPasswordFieldsProps {
   onOldPasswordChange?: () => void;
   onNewPasswordChange?: () => void;
   newPasswordError?: string;
+  showNewPassword?: boolean;
+  toggleNewPasswordVisibility?: () => void;
 }

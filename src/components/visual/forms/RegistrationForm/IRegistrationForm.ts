@@ -43,4 +43,5 @@ export interface IRegistrationForm {
   newPassword?: string;
   oldPassword?: string;
   newPasswordError?: string;
+  showNewPassword?: boolean;
 }

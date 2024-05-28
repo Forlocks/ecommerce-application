@@ -65,6 +65,7 @@ export const ProfileForm: React.FC = () => {
     newPassword: '',
     oldPassword: '',
     newPasswordError: '',
+    showNewPassword: false,
   });
 
   const fillAddresses = (userObj: Customer) => {
@@ -196,6 +197,10 @@ export const ProfileForm: React.FC = () => {
 
   const togglePasswordVisibility = () => {
     setState((prevState) => ({ ...prevState, showPassword: !prevState.showPassword }));
+  };
+
+  const toggleNewPasswordVisibility = () => {
+    setState((prevState) => ({ ...prevState, showNewPassword: !prevState.showNewPassword }));
   };
 
   const handleEmailChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -437,6 +442,8 @@ export const ProfileForm: React.FC = () => {
             onOldPasswordChange={handleOldPasswordChange as () => void}
             onNewPasswordChange={handleNewPasswordChange as () => void}
             newPasswordError={state.newPasswordError}
+            showNewPassword={state.showNewPassword}
+            toggleNewPasswordVisibility={toggleNewPasswordVisibility}
           />
         </div>
 

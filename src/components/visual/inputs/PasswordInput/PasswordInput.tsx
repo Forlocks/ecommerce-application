@@ -18,6 +18,8 @@ export const PasswordInput: React.FC<IPasswordInput> = function ({
   onOldPasswordChange,
   onNewPasswordChange,
   newPasswordError,
+  showNewPassword,
+  toggleNewPasswordVisibility,
   ...props
 }) {
   if (!props.editMode) {
@@ -70,14 +72,14 @@ export const PasswordInput: React.FC<IPasswordInput> = function ({
             <InputBase
               {...props}
               placeholder="new password"
-              type={showPassword ? 'text' : 'password'}
+              type={showNewPassword ? 'text' : 'password'}
               value={newPassword as string}
               onChange={onNewPasswordChange as () => void}
               error={newPasswordError}
             />
             <SmallButton
-              onClick={togglePasswordVisibility}
-              icon={showPassword ? hideEyeIcon : showEyeIcon}
+              onClick={toggleNewPasswordVisibility}
+              icon={showNewPassword ? hideEyeIcon : showEyeIcon}
               style={{ position: 'absolute', right: 36, top: 33 }}
             />
             {props.editMode && (
