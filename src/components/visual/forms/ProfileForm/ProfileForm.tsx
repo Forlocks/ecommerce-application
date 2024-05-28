@@ -186,6 +186,10 @@ export const ProfileForm: React.FC = () => {
         state.oldPassword as string,
         state.newPassword as string,
       );
+      user.createApiPasswordAuthClient({
+        email: state.email,
+        password: state.newPassword as string,
+      });
       fetchUserData();
     }
   };
