@@ -2,8 +2,9 @@ import React from 'react';
 import { Logo } from '../../components/visual/logo/Logo';
 import { RegistrationForm } from '../../components/visual/forms/RegistrationForm/RegistrationForm';
 import './RegistrationPage.scss';
+import { IPage } from '../IPage';
 
-export const RegistrationPage: React.FC = function () {
+export const RegistrationPage: React.FC<IPage> = function () {
   return (
     <div className="registration_page">
       <div className="registration_title">

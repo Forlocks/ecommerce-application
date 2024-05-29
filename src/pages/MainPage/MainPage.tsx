@@ -2,8 +2,9 @@ import React from 'react';
 import './MainPage.scss';
 import { Logo } from '../../components/visual/logo/Logo';
 import { ProductList } from '../../components/visual/product/ProductList/ProductList';
+import { IPage } from '../IPage';
 
-export const MainPage: React.FC = function () {
+export const MainPage: React.FC<IPage> = function () {
   return (
     <div className="main_page">
       <div className="hero-section">
