@@ -4,10 +4,6 @@ import { user } from '../../../..';
 import {
   validateEmail,
   validatePassword,
-  // validateCountry,
-  // validateCity,
-  // validateStreet,
-  // validatePostCode,
   validateDateOfBirth,
   validateName,
   validateCountry,
@@ -15,7 +11,6 @@ import {
   validateStreet,
   validatePostCode,
 } from '../../../non-visual/validators/validators';
-// import { LargeButton } from '../../buttons/LargeButton/LargeButton';
 import { EmailAndPasswordFields } from '../../fields/EmailAndPasswordFields/EmailAndPasswordFields';
 import { AdressFields } from '../../fields/AdressFields/AdressFields';
 import { Checkbox } from '../../checkbox/Checkbox';
@@ -70,6 +65,8 @@ export const ProfileForm: React.FC = () => {
     oldPassword: '',
     newPasswordError: '',
     showNewPassword: false,
+    isBilling: false,
+    isShipping: false,
   });
 
   const [showAddressForm, setShowAddressForm] = useState(false);
@@ -98,6 +95,7 @@ export const ProfileForm: React.FC = () => {
     try {
       const result = await user.getUser();
       fillAddresses(result.body);
+
       console.log(result.body);
       setState((prevState) => ({
         ...prevState,
@@ -321,6 +319,19 @@ export const ProfileForm: React.FC = () => {
   };
 
   // ---------------------------------------------------------------------------
+  const handleCheckboxChangeBillingAddress = (checked: boolean) => {
+    setState({
+      ...state,
+      isBilling: checked,
+    });
+  };
+
+  const handleCheckboxChangeShippingAddress = (checked: boolean) => {
+    setState({
+      ...state,
+      isShipping: checked,
+    });
+  };
 
   const handleCheckboxChangeDefaultShippingAddress = (checked: boolean) => {
     setState({
@@ -336,36 +347,36 @@ export const ProfileForm: React.FC = () => {
     });
   };
 
-  const handleCheckboxChangeSameAddresses = (checked: boolean) => {
-    setState((prevState) => {
-      if (checked) {
-        return {
-          ...prevState,
-          isSameAddresses: checked,
-          countryBilling: prevState.country,
-          countryErrorBilling: prevState.countryError,
-          cityBilling: prevState.city,
-          cityErrorBilling: prevState.cityError,
-          streetBilling: prevState.street,
-          streetErrorBilling: prevState.streetError,
-          postCodeBilling: prevState.postCode,
-          postCodeErrorBilling: prevState.postCodeError,
-        };
-      }
-      return {
-        ...prevState,
-        isSameAddresses: checked,
-        countryBilling: '',
-        countryErrorBilling: '',
-        cityBilling: '',
-        cityErrorBilling: '',
-        streetBilling: '',
-        streetErrorBilling: '',
-        postCodeBilling: '',
-        postCodeErrorBilling: '',
-      };
-    });
-  };
+  // const handleCheckboxChangeSameAddresses = (checked: boolean) => {
+  //   setState((prevState) => {
+  //     if (checked) {
+  //       return {
+  //         ...prevState,
+  //         isSameAddresses: checked,
+  //         countryBilling: prevState.country,
+  //         countryErrorBilling: prevState.countryError,
+  //         cityBilling: prevState.city,
+  //         cityErrorBilling: prevState.cityError,
+  //         streetBilling: prevState.street,
+  //         streetErrorBilling: prevState.streetError,
+  //         postCodeBilling: prevState.postCode,
+  //         postCodeErrorBilling: prevState.postCodeError,
+  //       };
+  //     }
+  //     return {
+  //       ...prevState,
+  //       isSameAddresses: checked,
+  //       countryBilling: '',
+  //       countryErrorBilling: '',
+  //       cityBilling: '',
+  //       cityErrorBilling: '',
+  //       streetBilling: '',
+  //       streetErrorBilling: '',
+  //       postCodeBilling: '',
+  //       postCodeErrorBilling: '',
+  //     };
+  //   });
+  // };
 
   // const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
   //   event.preventDefault();
@@ -430,6 +441,42 @@ export const ProfileForm: React.FC = () => {
 
   // -----------------------------------------------------------------------------
 
+  const addAddressBillingType = async () => {
+    const result = await user.getUser();
+    await user.addBillingType(
+      result.body.version,
+      result.body.addresses[result.body.addresses.length - 1].id as string,
+    );
+    fetchUserData();
+  };
+
+  const addAddressShippingType = async () => {
+    const result = await user.getUser();
+    await user.addShippingType(
+      result.body.version,
+      result.body.addresses[result.body.addresses.length - 1].id as string,
+    );
+    fetchUserData();
+  };
+
+  const setDefaultBillingAddress = async () => {
+    const result = await user.getUser();
+    await user.setDefaultBillingAddress(
+      result.body.version,
+      result.body.addresses[result.body.addresses.length - 1].id as string,
+    );
+    fetchUserData();
+  };
+
+  const setDefaultShippingAddress = async () => {
+    const result = await user.getUser();
+    await user.setDefaultShippingAddress(
+      result.body.version,
+      result.body.addresses[result.body.addresses.length - 1].id as string,
+    );
+    fetchUserData();
+  };
+
   const handleAddNewAddress = async () => {
     setShowAddressForm(true);
     if (showAddressForm) {
@@ -440,7 +487,18 @@ export const ProfileForm: React.FC = () => {
           streetName: state.street,
           postalCode: state.postCode,
         });
-        await fetchUserData();
+        if (state.isBilling) await addAddressBillingType();
+        if (state.isShipping) await addAddressShippingType();
+        if (state.isDefaultBillingAddress) await setDefaultBillingAddress();
+        if (state.isDefaultShippingAddress) await setDefaultShippingAddress();
+        if (
+          !state.isBilling &&
+          !state.isShipping &&
+          !state.isDefaultBillingAddress &&
+          !state.isDefaultShippingAddress
+        ) {
+          fetchUserData();
+        }
       } catch (error) {
         console.error('Error adding new address:', error);
       }
@@ -531,15 +589,15 @@ export const ProfileForm: React.FC = () => {
                 }}
               />
               <Checkbox
-                id="default-shiping-address"
-                checked={state.isDefaultShippingAddress}
-                onChange={handleCheckboxChangeDefaultShippingAddress}
+                id="billing-address"
+                checked={state.isBilling}
+                onChange={handleCheckboxChangeBillingAddress}
                 label="set as billing address"
               />
               <Checkbox
-                id="same-address"
-                checked={state.isSameAddresses}
-                onChange={handleCheckboxChangeSameAddresses}
+                id="shipping-address"
+                checked={state.isShipping}
+                onChange={handleCheckboxChangeShippingAddress}
                 label="set as shipping billing"
               />
               <Checkbox
@@ -549,9 +607,9 @@ export const ProfileForm: React.FC = () => {
                 label="set as default billing address"
               />
               <Checkbox
-                id="default-billing-address"
-                checked={state.isDefaultBillingAddress}
-                onChange={handleCheckboxChangeDefaultBillingAddress}
+                id="default-shipping-address"
+                checked={state.isDefaultShippingAddress}
+                onChange={handleCheckboxChangeDefaultShippingAddress}
                 label="set as default shipping address"
               />
             </div>

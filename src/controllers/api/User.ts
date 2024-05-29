@@ -234,4 +234,20 @@ export class User {
   ) {
     return this.updateUser(version, [{ action: 'addAddress', address }]);
   }
+
+  addBillingType(version: number, addressId: string) {
+    return this.updateUser(version, [{ action: 'addBillingAddressId', addressId }]);
+  }
+
+  addShippingType(version: number, addressId: string) {
+    return this.updateUser(version, [{ action: 'addShippingAddressId', addressId }]);
+  }
+
+  setDefaultBillingAddress(version: number, addressId: string) {
+    return this.updateUser(version, [{ action: 'setDefaultBillingAddress', addressId }]);
+  }
+
+  setDefaultShippingAddress(version: number, addressId: string) {
+    return this.updateUser(version, [{ action: 'setDefaultShippingAddress', addressId }]);
+  }
 }
