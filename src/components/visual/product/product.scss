@@ -19,6 +19,12 @@
   gap: 8px;
   padding: 24px 16px;
   transition: all 0.3s ease;
+  text-decoration: none; 
+  color: inherit;
+
+  &:before {
+    content: none;
+  }
 
   img {
     height: auto;
@@ -34,8 +40,6 @@
     font-weight: 900;
   }
 
-  
-
   .button {
     margin-top: 12px;
   }
@@ -49,6 +53,7 @@
     }
   }
 }
+
 
 .card-header {
   margin-top: 8px;

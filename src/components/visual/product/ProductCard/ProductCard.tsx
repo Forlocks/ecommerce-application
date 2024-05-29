@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Price } from '../ProductPrice/Price/Price';
 import { MediumButton } from '../../buttons/MediumButton/MediumButton';
 import { IProductCardProps } from './IProductCardProps';
@@ -40,8 +41,10 @@ export const ProductCard: React.FC<IProductCardProps> = ({ product, className, o
   const oldPrice = calculateOldPrice(mainPrice);
   const discountPercentage = calculateDiscountPercentage(mainPrice);
 
+  const productUrl = `/product/${product.id}`;
+
   return (
-    <div className={`product-card ${className}`}>
+    <Link to={productUrl} className={`product-card ${className}`}>
       {masterVariant?.images?.[0] && (
         <ProductImage url={masterVariant.images[0].url} alt="Product Image" />
       )}
@@ -70,6 +73,6 @@ export const ProductCard: React.FC<IProductCardProps> = ({ product, className, o
       <MediumButton className="product-button" onClick={onButtonClick}>
         Add to cart
       </MediumButton>
-    </div>
+    </Link>
   );
 };
