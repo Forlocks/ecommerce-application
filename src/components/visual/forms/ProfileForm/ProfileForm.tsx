@@ -153,33 +153,73 @@ export const ProfileForm: React.FC = () => {
 
   const onEditFirstName = async () => {
     setState((prevState) => ({ ...prevState, firstNameDisabled: !prevState.firstNameDisabled }));
-    if (!state.firstNameDisabled) {
-      await user.updateUserFirstName(state.version as number, state.firstName);
-      fetchUserData();
+    if (!state.firstNameDisabled && state.firstNameError === '') {
+      try {
+        await user.updateUserFirstName(state.version as number, state.firstName);
+        let message = 'first name has been successfully updated';
+        setState((prevState) => ({ ...prevState, firstNameError: message }));
+        setTimeout(() => {
+          message = '';
+          setState((prevState) => ({ ...prevState, firstNameError: message }));
+        }, 3000);
+        fetchUserData();
+      } catch (error) {
+        console.error('Error updating first name:', error);
+      }
     }
   };
 
   const onEditLastName = async () => {
     setState((prevState) => ({ ...prevState, lastNameDisabled: !prevState.lastNameDisabled }));
-    if (!state.lastNameDisabled) {
-      await user.updateUserLastName(state.version as number, state.lastName);
-      fetchUserData();
+    if (!state.lastNameDisabled && state.lastNameError === '') {
+      try {
+        await user.updateUserLastName(state.version as number, state.lastName);
+        let message = 'last name has been successfully updated';
+        setState((prevState) => ({ ...prevState, lastNameError: message }));
+        setTimeout(() => {
+          message = '';
+          setState((prevState) => ({ ...prevState, lastNameError: message }));
+        }, 3000);
+        fetchUserData();
+      } catch (error) {
+        console.error('Error updating last name:', error);
+      }
     }
   };
 
   const onEditEmail = async () => {
     setState((prevState) => ({ ...prevState, emailDisabled: !prevState.emailDisabled }));
-    if (!state.emailDisabled) {
-      await user.updateUserEmail(state.version as number, state.email);
-      fetchUserData();
+    if (!state.emailDisabled && state.emailError === '') {
+      try {
+        await user.updateUserEmail(state.version as number, state.email);
+        let message = 'email has been successfully updated';
+        setState((prevState) => ({ ...prevState, emailError: message }));
+        setTimeout(() => {
+          message = '';
+          setState((prevState) => ({ ...prevState, emailError: message }));
+        }, 3000);
+        fetchUserData();
+      } catch (error) {
+        console.error('Error updating email:', error);
+      }
     }
   };
 
   const onEditDate = async () => {
     setState((prevState) => ({ ...prevState, dateDisabled: !prevState.dateDisabled }));
-    if (!state.dateDisabled) {
-      await user.updateUserDateOfBirth(state.version as number, state.dateOfBirth);
-      fetchUserData();
+    if (!state.dateDisabled && state.dateOfBirthError === '') {
+      try {
+        await user.updateUserDateOfBirth(state.version as number, state.dateOfBirth);
+        let message = 'date has been successfully updated';
+        setState((prevState) => ({ ...prevState, dateOfBirthError: message }));
+        setTimeout(() => {
+          message = '';
+          setState((prevState) => ({ ...prevState, dateOfBirthError: message }));
+        }, 3000);
+        fetchUserData();
+      } catch (error) {
+        console.error('Error updating email:', error);
+      }
     }
   };
 
