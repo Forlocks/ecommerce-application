@@ -225,18 +225,30 @@ export const ProfileForm: React.FC = () => {
 
   const onEditPassword = async () => {
     setState((prevState) => ({ ...prevState, passwordDisabled: !prevState.passwordDisabled }));
-    if (!state.passwordDisabled) {
-      await user.updateUserPassword(
-        state.version as number,
-        state.oldPassword as string,
-        state.newPassword as string,
-      );
-      user.logout();
-      await user.login({
-        email: state.email,
-        password: state.newPassword as string,
-      });
-      user.setUserState('true');
+    if (!state.passwordDisabled && state.passwordError === '' && state.newPasswordError === '') {
+      try {
+        await user.updateUserPassword(
+          state.version as number,
+          state.oldPassword as string,
+          state.newPassword as string,
+        );
+        user.logout();
+        await user.login({
+          email: state.email,
+          password: state.newPassword as string,
+        });
+        user.setUserState('true');
+        let message = 'password has been successfully updated';
+        setTimeout(() => {
+          message = '';
+          setState((prevState) => ({ ...prevState, passwordError: message }));
+        }, 3000);
+        setState((prevState) => ({ ...prevState, passwordError: message }));
+        fetchUserData();
+      } catch (error) {
+        const errorMessage = (error as Error).message;
+        setState((prevState) => ({ ...prevState, passwordError: errorMessage }));
+      }
     }
   };
 
