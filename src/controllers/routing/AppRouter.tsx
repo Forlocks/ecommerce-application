@@ -57,22 +57,8 @@ export const AppRouter = () => {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="product/:id"
-            element={
-              <ProtectedRoute openModal={openModal}>
-                <ProductDetailsPage openModal={openModal} />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="shop"
-            element={
-              <ProtectedRoute openModal={openModal}>
-                <ShopPage openModal={openModal} />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="product/:id" element={<ProductDetailsPage openModal={openModal} />} />
+          <Route path="shop" element={<ShopPage openModal={openModal} />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>
