@@ -1,12 +1,161 @@
-.product-list__item {
-  border-bottom: 1px solid #000000;
+@import '../mixins';
+@import '../variables';
+
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px 32px;
+  width: 100%;
+  height: auto;
+
+  > *:nth-child(5n + 1) {
+    grid-column: span 2;
+  }
 }
 
-.price,
-.price_discount {
+.product-card.shop {
   display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 24px 16px;
+  transition: all 0.3s ease;
+  text-decoration: none; 
+  color: inherit;
+
+  &:before {
+    content: none;
+  }
+
+  img {
+    height: auto;
+    width: 100%;
+    transition: all 0.3s ease;
+  }
+
+  p {
+    max-width: 450px;
+  }
+
+  h3 {
+    font-weight: 900;
+  }
+
+  .button {
+    margin-top: 12px;
+  }
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.01);
+
+    img {
+      filter: blur(1px);
+    }
+  }
 }
 
-.price_old {
-  text-decoration: line-through;
+
+.card-header {
+  margin-top: 8px;
+}
+
+.card-prices {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.base-price {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  @include h3-style;
+
+  p {
+    &:first-child {
+      font-weight: 600;
+    }
+
+    &:nth-child(2) {
+      font-weight: 900;
+    }
+  }
+}
+.discounted-price {
+  @include h3-style;
+  display: flex;
+  gap: 4px;
+
+  .new {
+    @extend .base-price;
+  }
+
+  .old {
+    align-self: flex-end;
+
+    p {
+      &:first-child {
+        text-decoration: none;
+        color: $grey-color;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 150%;
+        letter-spacing: 0.01em;
+      }
+
+      &:nth-child(2) {
+        text-decoration: line-through;
+        color: $grey-color;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 150%;
+        letter-spacing: 0.01em;
+      }
+    }
+
+    
+  }
+}
+
+.discount {
+  display: flex;
+  p {
+   
+    align-self: flex-end;
+  margin-left: 2px;
+  text-decoration: none;
+  color: $grey-color;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 150%;
+  letter-spacing: 0.01em;
+  }
+}
+@media (max-width: 1024px) and (min-width: 769px) {
+  .product-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px 32px;
+    width: 100%;
+    height: auto;
+  
+    > *:nth-child(5n + 1) {
+      grid-column: span 2;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+
+  .product-list {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 24px 32px;
+    width: 100%;
+    height: auto;
+  
+    > *:nth-child(5n + 1) {
+      grid-column: span 1;
+    }
+  }
 }

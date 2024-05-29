@@ -9,6 +9,7 @@ import {
 import {
   CustomerSignin,
   MyCustomerDraft,
+  MyCustomerUpdateAction,
   createApiBuilderFromCtpClient,
 } from '@commercetools/platform-sdk';
 import {
@@ -110,10 +111,11 @@ export class User {
         if (body.results.length === 0) {
           responseObj.email = 'This email address has not been registered.';
         } else {
+          this.createApiPasswordAuthClient(customerData);
           const apiRoot = this.createApiRoot(this.ctpClientFlow);
           try {
             await apiRoot.me().login().post({ body: customerData }).execute();
-            this.createApiPasswordAuthClient(customerData);
+
             this.setUserToken(userTokenCache.get());
           } catch (err) {
             responseObj.password = 'Invalid password.';
@@ -130,6 +132,11 @@ export class User {
     this.setUserState('false');
     this.ctpClientFlow = this.ctpClientCredentialFlow;
     localStorage.setItem('userTokenStorage', '');
+    userTokenCache.set({
+      token: '',
+      expirationTime: 0,
+      refreshToken: '',
+    });
   }
 
   public async registration(customerData: MyCustomerDraft) {
@@ -172,8 +179,75 @@ export class User {
     localStorage.setItem('userTokenStorage', JSON.stringify(userToken));
   }
 
-  // getCustomer() {
-  //   const apiRoot = this.createApiRoot(this.ctpClientFlow);
-  //   return apiRoot.me().get().execute();
-  // }
+  getUser() {
+    const apiRoot = this.createApiRoot(this.ctpClientFlow);
+    return apiRoot.me().get().execute();
+  }
+
+  updateUser(version: number, actions: MyCustomerUpdateAction[]) {
+    const apiRoot = this.createApiRoot(this.ctpClientFlow);
+    return apiRoot
+      .me()
+      .post({
+        body: { version, actions },
+      })
+      .execute();
+  }
+
+  removeUserAddress(version: number, addressId: string) {
+    return this.updateUser(version, [{ action: 'removeAddress', addressId }]);
+  }
+
+  updateUserFirstName(version: number, firstName: string) {
+    return this.updateUser(version, [{ action: 'setFirstName', firstName }]);
+  }
+
+  updateUserLastName(version: number, lastName: string) {
+    return this.updateUser(version, [{ action: 'setLastName', lastName }]);
+  }
+
+  updateUserEmail(version: number, email: string) {
+    return this.updateUser(version, [{ action: 'changeEmail', email }]);
+  }
+
+  updateUserDateOfBirth(version: number, dateOfBirth: string) {
+    return this.updateUser(version, [{ action: 'setDateOfBirth', dateOfBirth }]);
+  }
+
+  updateUserPassword(version: number, currentPassword: string, newPassword: string) {
+    const apiRoot = this.createApiRoot(this.ctpClientFlow);
+    return apiRoot
+      .me()
+      .password()
+      .post({ body: { currentPassword, newPassword, version } })
+      .execute();
+  }
+
+  addAddress(
+    version: number,
+    address: {
+      country: 'US';
+      city: string;
+      streetName: string;
+      postalCode: string;
+    },
+  ) {
+    return this.updateUser(version, [{ action: 'addAddress', address }]);
+  }
+
+  addBillingType(version: number, addressId: string) {
+    return this.updateUser(version, [{ action: 'addBillingAddressId', addressId }]);
+  }
+
+  addShippingType(version: number, addressId: string) {
+    return this.updateUser(version, [{ action: 'addShippingAddressId', addressId }]);
+  }
+
+  setDefaultBillingAddress(version: number, addressId: string) {
+    return this.updateUser(version, [{ action: 'setDefaultBillingAddress', addressId }]);
+  }
+
+  setDefaultShippingAddress(version: number, addressId: string) {
+    return this.updateUser(version, [{ action: 'setDefaultShippingAddress', addressId }]);
+  }
 }

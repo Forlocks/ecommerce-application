@@ -1,3 +1,5 @@
+import { IUserAddress } from '../ProfileForm/IUserAddresses';
+
 export interface IRegistrationForm {
   prefix?: string;
   email: string;
@@ -30,4 +32,18 @@ export interface IRegistrationForm {
   isDefaultShippingAddress: boolean;
   isSameAddresses: boolean;
   isDefaultBillingAddress: boolean;
+  addresses?: IUserAddress[];
+  version?: number;
+  firstNameDisabled?: boolean;
+  lastNameDisabled?: boolean;
+  emailDisabled?: boolean;
+  editMode?: boolean;
+  dateDisabled?: boolean;
+  passwordDisabled?: boolean;
+  newPassword?: string;
+  oldPassword?: string;
+  newPasswordError?: string;
+  showNewPassword?: boolean;
+  isBilling?: boolean;
+  isShipping?: boolean;
 }

@@ -6,7 +6,9 @@ import { RegistrationPage } from '../../pages/RegistrationPage/RegistrationPage'
 import { LoginPage } from '../../pages/LoginPage/LoginPage';
 import { Layout } from '../../components/visual/layout/Layout';
 import { ProtectedRoute } from './ProtectedRoute/ProtectedRoute';
+import { ShopPage } from '../../pages/ShopPage/ShopPage';
 import { ProfilePage } from '../../pages/ProfilePage/ProfilePage';
+import { ProductDetailsPage } from '../../pages/ProductDetailsPage/ProductDetailsPage';
 
 export const AppRouter = () => {
   const [modalContent, setModalContent] = React.useState<React.ReactNode>(null);
@@ -27,7 +29,11 @@ export const AppRouter = () => {
         <Route
           path="/"
           element={
-            <Layout closeModal={closeModal} showModal={showModal} modalContent={modalContent} />
+            <Layout
+              closeModal={closeModal}
+              showModal={showModal}
+              modalContent={modalContent}
+            />
           }
         >
           <Route index element={<MainPage openModal={openModal} />} />
@@ -48,11 +54,27 @@ export const AppRouter = () => {
             }
           />
           <Route
+            path="shop"
+            element={
+              <Layout>
+                <ShopPage />
+              </Layout>
+            }
+          />
+          <Route
             path="profile"
             element={
               <ProtectedRoute openModal={openModal}>
                 <ProfilePage openModal={openModal} />
               </ProtectedRoute>
+            }
+          />
+          <Route
+            path="product/:id"
+            element={
+              <Layout>
+                <ProductDetailsPage />
+              </Layout>
             }
           />
         </Route>

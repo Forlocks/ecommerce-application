@@ -31,7 +31,6 @@ export const MainPage: React.FC<IPage> = function () {
         </div>
       </div>
       <div className="new-arrivals"></div>
-      <ProductList />
     </div>
   );
 };
