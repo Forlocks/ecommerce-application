@@ -126,71 +126,31 @@
   letter-spacing: 0.01em;
   }
 }
+@media (max-width: 1024px) and (min-width: 769px) {
+  .product-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px 32px;
+    width: 100%;
+    height: auto;
+  
+    > *:nth-child(5n + 1) {
+      grid-column: span 2;
+    }
+  }
+}
 
-// .price_old {
-//   display: flex;
-//   gap: 4px;
-//   align-self: flex-end;
-//   p {
-//     &:first-child {
-//       text-decoration: none;
-//       @include h3-style;
-//       color: $grey-color;
-//       font-weight: 500;
-//       font-size: 13px;
-//       line-height: 150%;
-//       letter-spacing: 0.01em;
-//     }
+@media (max-width: 768px) {
 
-//     &:nth-child(2) {
-//       text-decoration: line-through;
-//       @include h3-style;
-//       color: $grey-color;
-//       font-weight: 500;
-//       font-size: 13px;
-//       line-height: 150%;
-//       letter-spacing: 0.01em;
-//     }
-
-//     &.discount {
-//       margin-left: 2px;
-//       text-decoration: none;
-//       @include h3-style;
-//       color: $grey-color;
-//       font-weight: 400;
-//       font-size: 13px;
-//       line-height: 150%;
-//       letter-spacing: 0.01em;
-//     }
-//   }
-// }
-
-// .main-price {
-//   display: flex;
-//   gap: 4px;
-//   @include h3-style;
-//   p {
-//     &:first-child {
-//       font-weight: 600;
-//     }
-
-//     &:nth-child(2) {
-//       font-weight: 900;
-//     }
-//   }
-// }
-
-// .discounted-price {
-//   display: flex;
-//   gap: 4px;
-//   @include h3-style;
-//   p {
-//     &:first-child {
-//       font-weight: 600;
-//     }
-
-//     &:nth-child(2) {
-//       font-weight: 900;
-//     }
-//   }
-// }
+  .product-list {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 24px 32px;
+    width: 100%;
+    height: auto;
+  
+    > *:nth-child(5n + 1) {
+      grid-column: span 1;
+    }
+  }
+}

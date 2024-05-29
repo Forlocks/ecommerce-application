@@ -119,3 +119,10 @@ span {
     font-size: 12px;
   }
 }
+
+@media (max-width: 768px) {
+  body {
+    height: auto;
+    font-size: 8px;
+  }
+}
