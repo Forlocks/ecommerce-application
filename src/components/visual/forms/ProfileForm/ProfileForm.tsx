@@ -479,7 +479,16 @@ export const ProfileForm: React.FC = () => {
 
   const handleAddNewAddress = async () => {
     setShowAddressForm(true);
-    if (showAddressForm) {
+    const isButtonDisabled =
+      state.country === '' ||
+      state.countryError !== '' ||
+      state.city === '' ||
+      state.cityError !== '' ||
+      state.street === '' ||
+      state.streetError !== '' ||
+      state.postCode === '' ||
+      state.postCodeError !== '';
+    if (showAddressForm && !isButtonDisabled) {
       try {
         await user.addAddress(state.version as number, {
           country: 'US',
