@@ -98,3 +98,67 @@ export const validateDateOfBirth = (date: string): string => {
 
   return '';
 };
+
+// min/max
+
+export const hasValidDecimalPlaces = (value: string, decimalPlaces: number): boolean => {
+  const parts = value.split('.');
+  if (parts.length === 2) {
+    return parts[1].length <= decimalPlaces;
+  }
+  return true;
+};
+
+export const isWithinRange = (value: string, min: number, max: number): boolean => {
+  if (value === '' || value === '.') {
+    return true;
+  }
+  const num = parseFloat(value);
+  if (Number.isNaN(num)) {
+    return false;
+  }
+
+  return num >= min && num <= max;
+};
+
+export const validateMinPrice = (value: string, maxPrice: string | null): string => {
+  if (!hasValidDecimalPlaces(value, 1)) {
+    return 'no no';
+  }
+
+  if (!isWithinRange(value, 0, 10000)) {
+    return 'out of range';
+  }
+
+  const minPriceValue = parseFloat(value);
+  if (minPriceValue < 0) {
+    return 'no no';
+  }
+
+  if (maxPrice && minPriceValue > parseFloat(maxPrice)) {
+    return 'max < min';
+  }
+
+  return '';
+};
+
+export const validateMaxPrice = (value: string, minPrice: string | null): string => {
+  if (!hasValidDecimalPlaces(value, 1)) {
+    return 'no no';
+  }
+
+  if (!isWithinRange(value, 0, 10000)) {
+    return 'out of range';
+  }
+
+  const maxPriceValue = parseFloat(value);
+  if (maxPriceValue <= 0) {
+    return 'no no';
+  }
+
+  if (minPrice && maxPriceValue < parseFloat(minPrice)) {
+    return 'max < min';
+  }
+
+  return '';
+};

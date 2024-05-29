@@ -1,11 +1,27 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { LargeButton } from '../../buttons/LargeButton/LargeButton';
 import { IFilterFormProps } from './IFilterFormProps';
 import { SearchInput } from '../../inputs/SearchInput/SearchInput';
 import { ListInput } from '../../inputs/ListInput/ListInput';
 import { MinMaxPriceField } from '../../fields/MinMaxPriceFields/MinMaxPriceFields';
+import { validateMinPrice, validateMaxPrice } from '../../../non-visual/validators/validators';
+import { SmallButton } from '../../buttons/SmallButton/SmallButton';
+import { Checkbox } from '../../checkbox/Checkbox';
 
 export const FilterForm: React.FC<IFilterFormProps> = () => {
+  const clear = <img src="./assets/icons/clear.svg" alt="clear" />;
+  const colorNames = [
+    'Red',
+    'Green',
+    'Blue',
+    'Yellow',
+    'Black',
+    'White',
+    'Orange',
+    'Purple',
+    'Pink',
+    'Brown',
+  ];
+
   const [search, setSearch] = useState('');
   const [sortByprice, setSortByPrice] = useState('');
   const [sortByName, setSortByName] = useState('');
@@ -16,6 +32,18 @@ export const FilterForm: React.FC<IFilterFormProps> = () => {
   const [maxPrice, setMaxPrice] = useState('');
   const [minPriceError, setMinPriceError] = useState('');
   const [maxPriceError, setMaxPriceError] = useState('');
+
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);
+
+  const isFormEmpty =
+    !search &&
+    !sortByprice &&
+    !sortByName &&
+    !materialFilter &&
+    !styleFilter &&
+    !minPrice &&
+    !maxPrice &&
+    selectedColors.length === 0;
 
   // ------ Search --------
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -73,47 +101,56 @@ export const FilterForm: React.FC<IFilterFormProps> = () => {
   const onMinPriceChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const value = event.target.value;
     setMinPrice(value);
-
-    // Validate the minimum price
-    if (value === '') {
-      setMinPriceError('required');
-    } else if (maxPrice && parseFloat(value) > parseFloat(maxPrice)) {
-      setMinPriceError('max < min');
-    } else {
-      setMinPriceError('');
-    }
+    const error = validateMinPrice(value, maxPrice);
+    setMinPriceError(error);
   };
 
   const onMaxPriceChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const value = event.target.value;
     setMaxPrice(value);
+    const error = validateMaxPrice(value, minPrice);
+    setMaxPriceError(error);
+  };
 
-    // Validate the maximum price
-    if (value === '') {
-      setMaxPriceError('required');
-    } else if (minPrice && parseFloat(value) < parseFloat(minPrice)) {
-      setMaxPriceError('max < min');
+  const onEnterPress = () => {
+    const minPriceValue = minPrice ? parseFloat(minPrice) : 0;
+    const maxPriceValue = maxPrice ? parseFloat(maxPrice) : 1000;
+
+    const minError = validateMinPrice(minPrice || '', maxPrice);
+    const maxError = validateMaxPrice(maxPrice || '', minPrice);
+
+    setMinPriceError(minError);
+    setMaxPriceError(maxError);
+
+    if (minPriceError || maxPriceError) {
+      return;
+    }
+
+    if (minPriceValue <= maxPriceValue) {
+      const minPriceToSend = minPriceValue * 100;
+      const maxPriceToSend = maxPriceValue * 100;
+      console.log(`Мин. цена - ${minPriceToSend}, Макс. цена - ${maxPriceToSend}`);
+      // Код для отправки запроса на сервер, чтобы отфильтровать продукты по цене
+      // sendPriceFilterRequest(minPriceValue, maxPriceValue);
+
+      if (minPriceValue === 0) setMinPrice('0');
+      if (maxPriceValue === 1000) setMaxPrice('1000');
     } else {
+      setMinPriceError('max < min');
       setMaxPriceError('');
     }
   };
 
-  const onEnterPress = () => {
-    console.log('1');
-    if (minPrice && maxPrice && parseFloat(minPrice) <= parseFloat(maxPrice)) {
-      console.log(`Отправка: Мин. цена - ${minPrice}, Макс. цена - ${maxPrice}`);
-      // Здесь код для отправки данных на сервер...
-    } else {
-      // Обработка ошибок, если цены не введены или минимальная цена больше максимальной
-      setMinPriceError(minPrice ? '' : 'Введите минимальную цену');
-      setMaxPriceError(
-        maxPrice
-          ? parseFloat(minPrice) <= parseFloat(maxPrice)
-            ? ''
-            : 'Минимальная цена должна быть меньше максимальной'
-          : 'Введите максимальную цену',
-      );
-    }
+  const handleColorChange = (color: string) => (checked: boolean) => {
+    const updatedColors = checked
+      ? [...selectedColors, color]
+      : selectedColors.filter((c) => c !== color);
+    setSelectedColors(updatedColors);
+
+    console.log(`Filtered by colors: ${updatedColors.join(', ')}`);
+    // Здесь будет код для отправки значения на сервер для фильтрации
+    // Например:
+    // sendColorFilterRequest(updatedColors);
   };
 
   const handleClear = () => {
@@ -126,6 +163,7 @@ export const FilterForm: React.FC<IFilterFormProps> = () => {
     setMaxPrice('');
     setMinPriceError('');
     setMaxPriceError('');
+    setSelectedColors([]);
     console.log('Filters cleared');
   };
 
@@ -193,11 +231,21 @@ export const FilterForm: React.FC<IFilterFormProps> = () => {
             maxPriceError={maxPriceError}
           />
         </div>
+        <label>Color</label>
+        <div className="color-container">
+          {colorNames.map((color, index) => (
+            <Checkbox
+              key={index}
+              id={`color-${index + 1}`}
+              checked={selectedColors.includes(color)}
+              onChange={handleColorChange(color)}
+              label={color}
+            />
+          ))}
+        </div>
       </div>
       <div className="filter-buttons">
-        <LargeButton type="button" onClick={handleClear}>
-          Clear
-        </LargeButton>
+        <SmallButton onClick={handleClear} icon={clear} disabled={isFormEmpty} />
       </div>
     </form>
   );
