@@ -29,11 +29,7 @@ export const AppRouter = () => {
         <Route
           path="/"
           element={
-            <Layout
-              closeModal={closeModal}
-              showModal={showModal}
-              modalContent={modalContent}
-            />
+            <Layout closeModal={closeModal} showModal={showModal} modalContent={modalContent} />
           }
         >
           <Route index element={<MainPage openModal={openModal} />} />
@@ -54,14 +50,6 @@ export const AppRouter = () => {
             }
           />
           <Route
-            path="shop"
-            element={
-              <Layout>
-                <ShopPage />
-              </Layout>
-            }
-          />
-          <Route
             path="profile"
             element={
               <ProtectedRoute openModal={openModal}>
@@ -72,9 +60,17 @@ export const AppRouter = () => {
           <Route
             path="product/:id"
             element={
-              <Layout>
-                <ProductDetailsPage />
-              </Layout>
+              <ProtectedRoute openModal={openModal}>
+                <ProductDetailsPage openModal={openModal} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="shop"
+            element={
+              <ProtectedRoute openModal={openModal}>
+                <ShopPage openModal={openModal} />
+              </ProtectedRoute>
             }
           />
         </Route>
