@@ -4,7 +4,6 @@ export interface IInputBase {
   id?: string;
   label?: string;
   type?: string;
-  error?: string;
   placeholder?: string;
   value: string;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -12,4 +11,5 @@ export interface IInputBase {
   disabled?: boolean;
   editMode?: boolean;
   onEdit?: () => void;
+  error?: string;
 }
