@@ -31,6 +31,8 @@ export const UserAddresses: React.FC<IUserAddresses> = ({
     isShipping: false,
     isDefaultBilling: false,
     isDefaultShipping: false,
+    version: 0,
+    addressId: '',
   });
 
   async function handleDelete(id: string, version: number) {
@@ -65,6 +67,8 @@ export const UserAddresses: React.FC<IUserAddresses> = ({
         isShipping: addressToEdit.isShipping,
         isDefaultBilling: addressToEdit.isDefaultBilling,
         isDefaultShipping: addressToEdit.isDefaultShipping,
+        version: addressToEdit.version,
+        addressId: addressToEdit.id,
       });
     }
   };
@@ -95,24 +99,23 @@ export const UserAddresses: React.FC<IUserAddresses> = ({
     }));
   };
 
-  const handleSaveChanges = () => {
-    setEditIndex(null);
-    setEditMode(false);
+  const handleSaveChanges = async () => {
+    if (editIndex !== null) {
+      try {
+        await user.changeAddress(newAddress.version, newAddress.addressId, {
+          country: 'US',
+          city: newAddress.city,
+          streetName: newAddress.street,
+          postalCode: newAddress.postalCode,
+        });
+      } catch (error) {
+        console.error('Error editing address:', error);
+      }
+      fetchUserData();
+      setEditIndex(null);
+      setEditMode(false);
+    }
   };
-
-  // ----------------------------------------------
-
-  // const handleCountryChange = (event: ChangeEvent<HTMLInputElement>): void => {
-  //   const newCountry = event.target.value;
-  //   const newCountryError = validateCountry(newCountry);
-  //   setNewAddress((prevState) => ({
-  //     ...prevState,
-  //     newCountry,
-  //     newCountryError,
-  //   }));
-  // };
-
-  // ----------------------------------------------
 
   return (
     <>
