@@ -99,6 +99,29 @@ export const UserAddresses: React.FC<IUserAddresses> = ({
     }));
   };
 
+  const addAddressBillingType = async () => {
+    const result = await user.getUser();
+    await user.addBillingType(result.body.version, newAddress.addressId);
+  };
+
+  const addAddressShippingType = async () => {
+    const result = await user.getUser();
+    await user.addShippingType(result.body.version, newAddress.addressId);
+    fetchUserData();
+  };
+
+  const setDefaultBillingAddress = async () => {
+    const result = await user.getUser();
+    await user.setDefaultBillingAddress(result.body.version, newAddress.addressId);
+    fetchUserData();
+  };
+
+  const setDefaultShippingAddress = async () => {
+    const result = await user.getUser();
+    await user.setDefaultShippingAddress(result.body.version, newAddress.addressId);
+    fetchUserData();
+  };
+
   const handleSaveChanges = async () => {
     if (editIndex !== null) {
       try {
@@ -108,6 +131,18 @@ export const UserAddresses: React.FC<IUserAddresses> = ({
           streetName: newAddress.street,
           postalCode: newAddress.postalCode,
         });
+        if (newAddress.isBilling) await addAddressBillingType();
+        if (newAddress.isShipping) await addAddressShippingType();
+        if (newAddress.isDefaultBilling) await setDefaultBillingAddress();
+        if (newAddress.isDefaultShipping) await setDefaultShippingAddress();
+        if (
+          !newAddress.isBilling &&
+          !newAddress.isShipping &&
+          !newAddress.isDefaultBilling &&
+          !newAddress.isDefaultShipping
+        ) {
+          fetchUserData();
+        }
       } catch (error) {
         console.error('Error editing address:', error);
       }
