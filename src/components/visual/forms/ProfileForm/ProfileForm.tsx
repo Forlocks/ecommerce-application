@@ -95,8 +95,6 @@ export const ProfileForm: React.FC = () => {
     try {
       const result = await user.getUser();
       fillAddresses(result.body);
-
-      console.log(result.body);
       setState((prevState) => ({
         ...prevState,
         email: result.body.email,
@@ -122,34 +120,6 @@ export const ProfileForm: React.FC = () => {
       addresses: updatedAddresses,
     }));
   };
-
-  // const isButtonDisabled =
-  //   state.email === '' ||
-  //   state.password === '' ||
-  //   state.emailError !== '' ||
-  //   state.passwordError !== '' ||
-  //   state.country === '' ||
-  //   state.countryError !== '' ||
-  //   state.city === '' ||
-  //   state.cityError !== '' ||
-  //   state.street === '' ||
-  //   state.streetError !== '' ||
-  //   state.postCode === '' ||
-  //   state.postCodeError !== '' ||
-  //   state.firstName === '' ||
-  //   state.firstNameError !== '' ||
-  //   state.lastName === '' ||
-  //   state.lastNameError !== '' ||
-  //   state.dateOfBirth === '' ||
-  //   state.dateOfBirthError !== '' ||
-  //   state.countryBilling === '' ||
-  //   state.countryErrorBilling !== '' ||
-  //   state.cityBilling === '' ||
-  //   state.cityErrorBilling !== '' ||
-  //   state.streetBilling === '' ||
-  //   state.streetErrorBilling !== '' ||
-  //   state.postCodeBilling === '' ||
-  //   state.postCodeErrorBilling !== '';
 
   const onEditFirstName = async () => {
     setState((prevState) => ({ ...prevState, firstNameDisabled: !prevState.firstNameDisabled }));
@@ -288,8 +258,6 @@ export const ProfileForm: React.FC = () => {
     setState((prevState) => ({ ...prevState, newPassword, newPasswordError }));
   };
 
-  // ---------------------------------------------------------
-
   const handleCountryChange = (
     event: ChangeEvent<HTMLInputElement>,
     targetCountry: string,
@@ -346,8 +314,6 @@ export const ProfileForm: React.FC = () => {
     }));
   };
 
-  // -----------------------------------------------------------
-
   const handleFirstNameChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newFirstName = event.target.value.trim();
     const firstNameError = validateName(newFirstName);
@@ -370,7 +336,6 @@ export const ProfileForm: React.FC = () => {
     }));
   };
 
-  // ---------------------------------------------------------------------------
   const handleCheckboxChangeBillingAddress = (checked: boolean) => {
     setState({
       ...state,
@@ -398,100 +363,6 @@ export const ProfileForm: React.FC = () => {
       isDefaultBillingAddress: checked,
     });
   };
-
-  // const handleCheckboxChangeSameAddresses = (checked: boolean) => {
-  //   setState((prevState) => {
-  //     if (checked) {
-  //       return {
-  //         ...prevState,
-  //         isSameAddresses: checked,
-  //         countryBilling: prevState.country,
-  //         countryErrorBilling: prevState.countryError,
-  //         cityBilling: prevState.city,
-  //         cityErrorBilling: prevState.cityError,
-  //         streetBilling: prevState.street,
-  //         streetErrorBilling: prevState.streetError,
-  //         postCodeBilling: prevState.postCode,
-  //         postCodeErrorBilling: prevState.postCodeError,
-  //       };
-  //     }
-  //     return {
-  //       ...prevState,
-  //       isSameAddresses: checked,
-  //       countryBilling: '',
-  //       countryErrorBilling: '',
-  //       cityBilling: '',
-  //       cityErrorBilling: '',
-  //       streetBilling: '',
-  //       streetErrorBilling: '',
-  //       postCodeBilling: '',
-  //       postCodeErrorBilling: '',
-  //     };
-  //   });
-  // };
-
-  // const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
-  //   event.preventDefault();
-  //   const {
-  //     email,
-  //     password,
-  //     city,
-  //     street,
-  //     postCode,
-  //     firstName,
-  //     lastName,
-  //     dateOfBirth,
-  //     cityBilling,
-  //     streetBilling,
-  //     postCodeBilling,
-  //     isDefaultShippingAddress,
-  //     isSameAddresses,
-  //     isDefaultBillingAddress,
-  //   } = state;
-
-  //   const userData = {
-  //     email,
-  //     firstName,
-  //     lastName,
-  //     password,
-  //     dateOfBirth,
-  //     addresses: [
-  //       {
-  //         country: 'US',
-  //         city,
-  //         streetName: street,
-  //         postalCode: postCode,
-  //       },
-  //       {
-  //         country: 'US',
-  //         city: cityBilling,
-  //         streetName: streetBilling,
-  //         postalCode: postCodeBilling,
-  //       },
-  //     ],
-  //     shippingAddresses: [0],
-  //     billingAddresses: isSameAddresses ? [0] : [1],
-  //     defaultShippingAddress: isDefaultShippingAddress ? 0 : undefined,
-  //     defaultBillingAddress: isDefaultBillingAddress ? (isSameAddresses ? 0 : 1) : undefined,
-  //   };
-
-  //   if (isSameAddresses) userData.addresses.pop();
-
-  //   user.registration(userData).then((result) => {
-  //     if (result.email === 'ok') {
-  //       user.setUserState('true');
-  //       //   navigate('/');
-  //       alert('Registration completed successfully!');
-  //     } else {
-  //       setState((prevState) => ({
-  //         ...prevState,
-  //         emailError: result.email === 'ok' ? '' : result.email,
-  //       }));
-  //     }
-  //   });
-  // };
-
-  // -----------------------------------------------------------------------------
 
   const addAddressBillingType = async () => {
     const result = await user.getUser();

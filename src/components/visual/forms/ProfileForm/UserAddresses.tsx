@@ -35,6 +35,13 @@ export const UserAddresses: React.FC<IUserAddresses> = ({
     addressId: '',
   });
 
+  const [prevAddress, setPrevAddress] = useState({
+    isBilling: false,
+    isShipping: false,
+    isDefaultBilling: false,
+    isDefaultShipping: false,
+  });
+
   async function handleDelete(id: string, version: number) {
     try {
       await user.removeUserAddress(version, id);
@@ -69,6 +76,12 @@ export const UserAddresses: React.FC<IUserAddresses> = ({
         isDefaultShipping: addressToEdit.isDefaultShipping,
         version: addressToEdit.version,
         addressId: addressToEdit.id,
+      });
+      setPrevAddress({
+        isBilling: addressToEdit.isBilling,
+        isShipping: addressToEdit.isShipping,
+        isDefaultBilling: addressToEdit.isDefaultBilling,
+        isDefaultShipping: addressToEdit.isDefaultShipping,
       });
     }
   };
@@ -110,6 +123,16 @@ export const UserAddresses: React.FC<IUserAddresses> = ({
     fetchUserData();
   };
 
+  const removeAddressBillingType = async () => {
+    const result = await user.getUser();
+    await user.removeBillingTypeAddress(result.body.version, newAddress.addressId);
+  };
+
+  const removeAddressShippingType = async () => {
+    const result = await user.getUser();
+    await user.removeShippingTypeAddress(result.body.version, newAddress.addressId);
+  };
+
   const setDefaultBillingAddress = async () => {
     const result = await user.getUser();
     await user.setDefaultBillingAddress(result.body.version, newAddress.addressId);
@@ -123,7 +146,16 @@ export const UserAddresses: React.FC<IUserAddresses> = ({
   };
 
   const handleSaveChanges = async () => {
-    if (editIndex !== null) {
+    const isButtonDisabled =
+      newAddress.country === '' ||
+      newAddress.countryError !== '' ||
+      newAddress.city === '' ||
+      newAddress.cityError !== '' ||
+      newAddress.street === '' ||
+      newAddress.streetError !== '' ||
+      newAddress.postalCode === '' ||
+      newAddress.postalCodeError !== '';
+    if (!isButtonDisabled && editIndex !== null) {
       try {
         await user.changeAddress(newAddress.version, newAddress.addressId, {
           country: 'US',
@@ -131,17 +163,28 @@ export const UserAddresses: React.FC<IUserAddresses> = ({
           streetName: newAddress.street,
           postalCode: newAddress.postalCode,
         });
-        if (newAddress.isBilling) await addAddressBillingType();
-        if (newAddress.isShipping) await addAddressShippingType();
-        if (newAddress.isDefaultBilling) await setDefaultBillingAddress();
-        if (newAddress.isDefaultShipping) await setDefaultShippingAddress();
-        if (
-          !newAddress.isBilling &&
-          !newAddress.isShipping &&
-          !newAddress.isDefaultBilling &&
-          !newAddress.isDefaultShipping
-        ) {
-          fetchUserData();
+        if (newAddress.isBilling !== prevAddress.isBilling) {
+          if (newAddress.isBilling) {
+            await addAddressBillingType();
+          } else {
+            await removeAddressBillingType();
+          }
+        }
+
+        if (newAddress.isShipping !== prevAddress.isShipping) {
+          if (newAddress.isShipping) {
+            await addAddressShippingType();
+          } else {
+            await removeAddressShippingType();
+          }
+        }
+
+        if (newAddress.isDefaultBilling && !prevAddress.isDefaultBilling) {
+          await setDefaultBillingAddress();
+        }
+
+        if (newAddress.isDefaultShipping && !prevAddress.isDefaultShipping) {
+          await setDefaultShippingAddress();
         }
       } catch (error) {
         console.error('Error editing address:', error);
@@ -253,6 +296,7 @@ export const UserAddresses: React.FC<IUserAddresses> = ({
             <Checkbox
               id="default-billing-address"
               checked={newAddress.isDefaultBilling}
+              disabled={newAddress.isDefaultBilling}
               onChange={() => {
                 setNewAddress((prevState) => ({
                   ...prevState,
@@ -264,6 +308,7 @@ export const UserAddresses: React.FC<IUserAddresses> = ({
             <Checkbox
               id="default-shipping-address"
               checked={newAddress.isDefaultShipping}
+              disabled={newAddress.isDefaultShipping}
               onChange={() => {
                 setNewAddress((prevState) => ({
                   ...prevState,

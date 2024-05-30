@@ -255,4 +255,12 @@ export class User {
   changeAddress(version: number, addressId: string, address: BaseAddress) {
     return this.updateUser(version, [{ action: 'changeAddress', addressId, address }]);
   }
+
+  removeBillingTypeAddress(version: number, addressId: string) {
+    return this.updateUser(version, [{ action: 'removeBillingAddressId', addressId }]);
+  }
+
+  removeShippingTypeAddress(version: number, addressId: string) {
+    return this.updateUser(version, [{ action: 'removeShippingAddressId', addressId }]);
+  }
 }
