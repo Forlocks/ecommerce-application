@@ -35,10 +35,7 @@ h1 {
 }
 
 h2 {
-  font-family: 'Craftwork Grotesk Medium', sans-serif;
-  font-weight: 500;
-  font-size: 3em;
-  line-height: 125%;
+  @include h2-style;
   color: $black-text;
 }
 

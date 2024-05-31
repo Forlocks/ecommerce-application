@@ -46,12 +46,10 @@ export const ProductCard: React.FC<IProductCardProps> = ({ product, className, o
   return (
     <Link to={productUrl} className={`product-card ${className}`}>
       {masterVariant?.images?.[0] && (
-        <ProductImage url={masterVariant.images[0].url} alt="Product Image" />
+        <ProductImage url={masterVariant.images[1].url} alt="Product Image" />
       )}
       <h3 className="card-header">{name['en-US']}</h3>
-      {description && (
-        <ShortProductDescription description={description['en-US']} maxLength={100} />
-      )}
+      {description && <ShortProductDescription description={description['en-US']} maxLength={80} />}
       {mainPrice && (
         <Price
           price={

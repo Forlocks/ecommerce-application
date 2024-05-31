@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { ProductVariant } from '@commercetools/platform-sdk';
 import { IProductDetailsCardProps } from './IProductDetailsCard';
 import { BaseDescription } from '../ProductDescription/BaseDescription/BaseDescription';
 import { ProductColor } from '../ProductColor/ProductColor';
@@ -13,8 +14,8 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
   className,
   onButtonClick,
 }) => {
+  const [selectedVariant, setSelectedVariant] = useState(product.masterVariant);
   const formatPercentage = (percentage: number) => Math.round(percentage).toString();
-
   const calculateDiscountedPrice = (mainPrice?: {
     discounted?: { value: { centAmount: number } };
   }) => {
@@ -40,67 +41,84 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
     }
     return null;
   };
+
   const color =
-    (product?.masterVariant?.attributes?.find((attr) => attr.name === 'attribute-colour-03')
+    (selectedVariant?.attributes?.find((attr) => attr.name === 'attribute-colour-03')
       ?.value as string) || 'Unknown';
   const material =
-    (product?.masterVariant?.attributes?.find((attr) => attr.name === 'attribute-material-02')
+    (selectedVariant?.attributes?.find((attr) => attr.name === 'attribute-material-02')
       ?.value as string) || 'Unknown';
   const style =
-    (product?.masterVariant?.attributes?.find((attr) => attr.name === 'attribute-style-01')
+    (selectedVariant?.attributes?.find((attr) => attr.name === 'attribute-style-01')
       ?.value as string) || 'Unknown';
   const description = product.description?.['en-US'] || 'Unknown';
-
-  const { name, masterVariant } = product;
-  const mainPrice = masterVariant?.prices?.[0];
+  const { name } = product;
+  const mainPrice = selectedVariant?.prices?.[0];
   const discountedPrice = calculateDiscountedPrice(mainPrice);
   const oldPrice = calculateOldPrice(mainPrice);
   const discountPercentage = calculateDiscountPercentage(mainPrice);
 
+  const handleVariantClick = (variant: React.SetStateAction<ProductVariant>) => {
+    setSelectedVariant(variant);
+  };
+
+  const variantsWithMaster = [product.masterVariant, ...product.variants];
+
   return (
     <div className={className}>
-      <h3 className="card-header">{name['en-US']}</h3>
-      <div className="details-first">
-        <BaseDescription description={description} />
-        {mainPrice && (
-          <Price
-            price={
-              discountedPrice !== null
-                ? parseFloat(discountedPrice.toFixed(2))
-                : parseFloat((mainPrice.value.centAmount / 100).toFixed(2))
-            }
-            currencyCode={mainPrice.value.currencyCode}
-            discounted={!!discountedPrice}
-            discountPercentage={
-              discountPercentage !== null
-                ? parseInt(formatPercentage(discountPercentage), 10)
-                : undefined
-            }
-            className={discountedPrice !== null ? 'discounted-price' : 'main-price'}
-            oldPrice={oldPrice !== null ? parseFloat(oldPrice.toFixed(2)) : null}
-          />
-        )}
-        <div className="variant-images">
-          {product.variants.map((variant, index) => (
-            <div key={index} className={`${index + 1}`}>
-              {/* Проверка наличия основного изображения варианта */}
-              {variant.images && variant.images.length > 0 && (
-                <ProductImage url={variant.images[0].url} alt={`Variant ${index + 1} Image`} />
-              )}
-            </div>
-          ))}
+      <div className="product-details_title">
+        <h1 className="card-header">{name['en-US']}</h1>
+      </div>
+      <div className="product-details-first">
+        <div className="product-info">
+          <BaseDescription description={description} />
+          {mainPrice && (
+            <Price
+              price={
+                discountedPrice !== null
+                  ? parseFloat(discountedPrice.toFixed(2))
+                  : parseFloat((mainPrice.value.centAmount / 100).toFixed(2))
+              }
+              currencyCode={mainPrice.value.currencyCode}
+              discounted={!!discountedPrice}
+              discountPercentage={
+                discountPercentage !== null
+                  ? parseInt(formatPercentage(discountPercentage), 10)
+                  : undefined
+              }
+              className={discountedPrice !== null ? 'discounted-price' : 'main-price'}
+              oldPrice={oldPrice !== null ? parseFloat(oldPrice.toFixed(2)) : null}
+            />
+          )}
+          <span>Choose a variant</span>
+          <div className="variant-images">
+            {variantsWithMaster.map((variant, index) => (
+              <div
+                key={index}
+                className={` ${variant === selectedVariant ? 'selected-variant' : ''}`}
+                // className={`${index + 1}`}
+                onClick={() => handleVariantClick(variant)}
+              >
+                {variant.images && variant.images.length > 0 && (
+                  <ProductImage url={variant.images[0].url} alt={`Variant ${index + 1} Image`} />
+                )}
+              </div>
+            ))}
+          </div>
         </div>
-        <LargeButton className="product-button" onClick={onButtonClick}>
-          Complete Order
+        <LargeButton className="product-details-button" onClick={onButtonClick}>
+          Add to cart
         </LargeButton>
       </div>
 
-      <div className="details-second">
-        {masterVariant?.images?.[0] && (
-          <ProductImage url={masterVariant.images[0].url} alt="Product Image" />
-        )}
+      <div className="product-details-second">
+        <div className="product-slider">
+          {selectedVariant?.images?.[0] && (
+            <ProductImage url={selectedVariant.images[0].url} alt="Product Image" />
+          )}
+        </div>
       </div>
-      <div className="details-third">
+      <div className="product-details-third">
         <ProductColor color={color} />
         <ProductMaterial material={material} />
         <ProductStyle style={style} />

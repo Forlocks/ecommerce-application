@@ -55,82 +55,6 @@
 }
 
 
-.card-header {
-  margin-top: 8px;
-}
-
-.card-prices {
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-}
-
-.base-price {
-  display: flex;
-  flex-direction: row;
-  gap: 4px;
-  @include h3-style;
-
-  p {
-    &:first-child {
-      font-weight: 600;
-    }
-
-    &:nth-child(2) {
-      font-weight: 900;
-    }
-  }
-}
-.discounted-price {
-  @include h3-style;
-  display: flex;
-  gap: 4px;
-
-  .new {
-    @extend .base-price;
-  }
-
-  .old {
-    align-self: flex-end;
-
-    p {
-      &:first-child {
-        text-decoration: none;
-        color: $grey-color;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 150%;
-        letter-spacing: 0.01em;
-      }
-
-      &:nth-child(2) {
-        text-decoration: line-through;
-        color: $grey-color;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 150%;
-        letter-spacing: 0.01em;
-      }
-    }
-
-    
-  }
-}
-
-.discount {
-  display: flex;
-  p {
-   
-    align-self: flex-end;
-  margin-left: 2px;
-  text-decoration: none;
-  color: $grey-color;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 150%;
-  letter-spacing: 0.01em;
-  }
-}
 @media (max-width: 1024px) and (min-width: 769px) {
   .product-list {
     display: grid;
@@ -138,15 +62,10 @@
     gap: 24px 32px;
     width: 100%;
     height: auto;
-  
-    > *:nth-child(5n + 1) {
-      grid-column: span 2;
-    }
   }
 }
 
 @media (max-width: 768px) {
-
   .product-list {
     display: grid;
     grid-template-columns: repeat(1, 1fr);

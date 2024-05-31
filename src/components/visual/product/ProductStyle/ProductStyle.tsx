@@ -3,6 +3,6 @@ import { IProductStyleProps } from './IProductStyle';
 
 export const ProductStyle: React.FC<IProductStyleProps> = ({ style }) => (
   <div className="product-style">
-    <p>Style:</p> {style}
+    <h4>Style:</h4> <h5>{style}</h5>
   </div>
 );

@@ -3,6 +3,7 @@ import { ProductProjection } from '@commercetools/platform-sdk';
 import { useParams } from 'react-router-dom';
 import { ProductDetailsCard } from '../../components/visual/product/ProductDetailsCard/ProductDetailsCard';
 import { getProductID } from '../../controllers/api/Products';
+import './ProductDetailsPage.scss';
 
 export const ProductDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -29,15 +30,12 @@ export const ProductDetailsPage: React.FC = () => {
   }
 
   return (
-    <div className="product-details-page">
-      <ProductDetailsCard
-        product={product}
-        className="extended-product-card"
-        onButtonClick={() => {
-          // Implement the button click functionality here
-          console.log('Button clicked!');
-        }}
-      />
-    </div>
+    <ProductDetailsCard
+      product={product}
+      className="product-details_page"
+      onButtonClick={() => {
+        console.log('Button clicked!');
+      }}
+    />
   );
 };
