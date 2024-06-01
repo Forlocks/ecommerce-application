@@ -100,7 +100,7 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onColorFilterChange }) 
     // Код для отправки запроса на сервер, чтобы отфильтровать продукты
     // по выбранному стилю
     // sendStyleFilterRequest(newStyleFilter);
-    if (onColorFilterChange) onColorFilterChange(selectedColors, newStyleFilter);
+    if (onColorFilterChange) onColorFilterChange(selectedColors, newStyleFilter, selectedMaterials);
   };
 
   const onMinPriceChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -151,7 +151,7 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onColorFilterChange }) 
       ? [...selectedColors, color]
       : selectedColors.filter((c) => c !== color);
     setSelectedColors(updatedColors);
-    if (onColorFilterChange) onColorFilterChange(updatedColors, styleFilter);
+    if (onColorFilterChange) onColorFilterChange(updatedColors, styleFilter, selectedMaterials);
 
     console.log(`Filtered by colors: ${updatedColors.join(', ')}`);
     // Здесь будет код для отправки значения на сервер для фильтрации
@@ -164,7 +164,7 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onColorFilterChange }) 
       ? [...selectedMaterials, material]
       : selectedMaterials.filter((c) => c !== material);
     setSelectedMaterials(updatedMaterials);
-
+    if (onColorFilterChange) onColorFilterChange(selectedColors, styleFilter, updatedMaterials);
     console.log(`Filtered by materials: ${updatedMaterials.join(', ')}`);
     // Здесь будет код для отправки значения на сервер для фильтрации
     // Например:

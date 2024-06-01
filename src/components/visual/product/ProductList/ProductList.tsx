@@ -5,7 +5,11 @@ import { searchProduct } from '../../../../controllers/api/Products';
 import { ProductCard } from '../ProductCard/ProductCard';
 import { IProductList } from './IProductList';
 
-export const ProductList: React.FC<IProductList> = ({ selectedColors, selectedStyle }) => {
+export const ProductList: React.FC<IProductList> = ({
+  selectedColors,
+  selectedStyle,
+  selectedMaterials,
+}) => {
   const [products, setProducts] = useState<ProductProjection[]>([]);
 
   useEffect(() => {
@@ -14,16 +18,21 @@ export const ProductList: React.FC<IProductList> = ({ selectedColors, selectedSt
         selectedColors.length !== 0
           ? selectedColors.map((color: string) => `"${color}"`)
           : ['exists'];
+      const materialStr = selectedMaterials.map((material: string) => `"${material}"`);
+
       const queryArr = [`variants.attributes.attribute-colour-03:${[...colorStr]}`];
       if (selectedStyle !== '') {
         queryArr.push(`variants.attributes.attribute-style-01:"${selectedStyle}"`);
+      }
+      if (selectedMaterials.length !== 0) {
+        queryArr.push(`variants.attributes.attribute-material-02:${[...materialStr]}`);
       }
       const result = await searchProduct(queryArr);
       setProducts(result);
     };
 
     fetchFilteredProducts();
-  }, [selectedColors]);
+  }, [selectedColors, selectedStyle, selectedMaterials]);
 
   return (
     <div className="product-list">

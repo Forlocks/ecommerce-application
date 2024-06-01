@@ -7,10 +7,12 @@ import { IPage } from '../IPage';
 export const ShopPage: React.FC<IPage> = function () {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedStyle, setSelectedStyle] = useState<string>('');
+  const [selectedMaterials, setSelectedMaterials] = useState<string[]>([]);
 
-  const handleColorFilterChange = (colors: string[], style: string) => {
+  const handleColorFilterChange = (colors: string[], style: string, materials: string[]) => {
     setSelectedColors(colors);
     setSelectedStyle(style);
+    setSelectedMaterials(materials);
   };
 
   return (
@@ -23,7 +25,11 @@ export const ShopPage: React.FC<IPage> = function () {
         </h1>
       </div>
       <div className="shop_container">
-        <ProductList selectedColors={selectedColors} selectedStyle={selectedStyle} />
+        <ProductList
+          selectedColors={selectedColors}
+          selectedStyle={selectedStyle}
+          selectedMaterials={selectedMaterials}
+        />
       </div>
       <div className="shop_aside">
         <FilterForm onColorFilterChange={handleColorFilterChange} />
