@@ -21,3 +21,22 @@ export async function getProductID(ID: string) {
     throw new Error((error as Error).message);
   }
 }
+
+export async function searchProduct(filter: string) {
+  const apiRoot = user.createApiRoot(user.ctpClientFlow);
+  try {
+    const response = await apiRoot
+      .productProjections()
+      .search()
+      .get({
+        queryArgs: {
+          filter,
+        },
+      })
+      .execute();
+    return response.body.results;
+  } catch (error) {
+    // alert(error);
+    throw new Error((error as Error).message);
+  }
+}

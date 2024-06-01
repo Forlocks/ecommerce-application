@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import '../product.scss';
 import { ProductProjection } from '@commercetools/platform-sdk';
-import { getProducts } from '../../../../controllers/api/Products';
+import { searchProduct } from '../../../../controllers/api/Products';
 import { ProductCard } from '../ProductCard/ProductCard';
+import { IProductList } from './IProductList';
 
-export const ProductList: React.FC = () => {
+export const ProductList: React.FC<IProductList> = ({ selectedColors }) => {
   const [products, setProducts] = useState<ProductProjection[]>([]);
 
   useEffect(() => {
-    async function fetchProducts() {
-      try {
-        const productArr = await getProducts();
-        setProducts(productArr);
-        console.log(productArr);
-      } catch (error) {
-        console.error('Error:', (error as Error).message);
-      }
-    }
+    const fetchFilteredProducts = async () => {
+      const colorStr =
+        selectedColors.length !== 0
+          ? selectedColors.map((color: string) => `"${color}"`)
+          : ['exists'];
+      const result = await searchProduct(
+        `variants.attributes.attribute-colour-03:${[...colorStr]}`,
+      );
+      setProducts(result);
+    };
 
-    fetchProducts();
-  }, []);
+    fetchFilteredProducts();
+  }, [selectedColors]);
 
   return (
     <div className="product-list">

@@ -7,22 +7,22 @@ import { validateMinPrice, validateMaxPrice } from '../../../non-visual/validato
 import { SmallButton } from '../../buttons/SmallButton/SmallButton';
 import { Checkbox } from '../../checkbox/Checkbox';
 
-export const FilterForm: React.FC<IFilterFormProps> = () => {
+export const FilterForm: React.FC<IFilterFormProps> = ({ onColorFilterChange }) => {
   const clear = <img src="./assets/icons/clear.svg" alt="clear" />;
   const colorNames = [
-    'Red',
-    'Green',
-    'Blue',
-    'Yellow',
-    'Black',
-    'White',
-    'Orange',
-    'Purple',
-    'Pink',
-    'Brown',
+    'gray',
+    'green',
+    'blue',
+    'yellow',
+    'black',
+    'white',
+    'orange',
+    'purple',
+    'pink',
+    'brown',
   ];
 
-  const materialNames = ['Ceramic', 'Glass', 'Metal', 'Plastic', 'Wood'];
+  const materialNames = ['ceramic', 'glass', 'resin', 'metal'];
 
   const [search, setSearch] = useState('');
   const [sortByprice, setSortByPrice] = useState('');
@@ -150,6 +150,7 @@ export const FilterForm: React.FC<IFilterFormProps> = () => {
       ? [...selectedColors, color]
       : selectedColors.filter((c) => c !== color);
     setSelectedColors(updatedColors);
+    if (onColorFilterChange) onColorFilterChange(updatedColors);
 
     console.log(`Filtered by colors: ${updatedColors.join(', ')}`);
     // Здесь будет код для отправки значения на сервер для фильтрации
@@ -232,7 +233,7 @@ export const FilterForm: React.FC<IFilterFormProps> = () => {
         <ListInput
           label="Style"
           placeholder="Choose a style"
-          options={['Modern', 'Classic']}
+          options={['modern', 'classic', 'minimalism']}
           value={styleFilter}
           onChange={handleStyleFilterChange}
           name="styleFilter"
