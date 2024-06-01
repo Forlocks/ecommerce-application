@@ -100,6 +100,7 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onColorFilterChange }) 
     // Код для отправки запроса на сервер, чтобы отфильтровать продукты
     // по выбранному стилю
     // sendStyleFilterRequest(newStyleFilter);
+    if (onColorFilterChange) onColorFilterChange(selectedColors, newStyleFilter);
   };
 
   const onMinPriceChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -150,7 +151,7 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onColorFilterChange }) 
       ? [...selectedColors, color]
       : selectedColors.filter((c) => c !== color);
     setSelectedColors(updatedColors);
-    if (onColorFilterChange) onColorFilterChange(updatedColors);
+    if (onColorFilterChange) onColorFilterChange(updatedColors, styleFilter);
 
     console.log(`Filtered by colors: ${updatedColors.join(', ')}`);
     // Здесь будет код для отправки значения на сервер для фильтрации

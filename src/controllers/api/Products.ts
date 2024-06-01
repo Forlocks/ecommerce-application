@@ -22,7 +22,7 @@ export async function getProductID(ID: string) {
   }
 }
 
-export async function searchProduct(filter: string) {
+export async function searchProduct(filters: string[]) {
   const apiRoot = user.createApiRoot(user.ctpClientFlow);
   try {
     const response = await apiRoot
@@ -30,7 +30,7 @@ export async function searchProduct(filter: string) {
       .search()
       .get({
         queryArgs: {
-          filter,
+          filter: filters,
         },
       })
       .execute();

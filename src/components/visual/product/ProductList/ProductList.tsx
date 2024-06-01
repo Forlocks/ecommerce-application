@@ -5,7 +5,7 @@ import { searchProduct } from '../../../../controllers/api/Products';
 import { ProductCard } from '../ProductCard/ProductCard';
 import { IProductList } from './IProductList';
 
-export const ProductList: React.FC<IProductList> = ({ selectedColors }) => {
+export const ProductList: React.FC<IProductList> = ({ selectedColors, selectedStyle }) => {
   const [products, setProducts] = useState<ProductProjection[]>([]);
 
   useEffect(() => {
@@ -14,9 +14,11 @@ export const ProductList: React.FC<IProductList> = ({ selectedColors }) => {
         selectedColors.length !== 0
           ? selectedColors.map((color: string) => `"${color}"`)
           : ['exists'];
-      const result = await searchProduct(
-        `variants.attributes.attribute-colour-03:${[...colorStr]}`,
-      );
+      const queryArr = [`variants.attributes.attribute-colour-03:${[...colorStr]}`];
+      if (selectedStyle !== '') {
+        queryArr.push(`variants.attributes.attribute-style-01:"${selectedStyle}"`);
+      }
+      const result = await searchProduct(queryArr);
       setProducts(result);
     };
 

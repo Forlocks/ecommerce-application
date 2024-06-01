@@ -1,3 +1,3 @@
 export interface IFilterFormProps {
-  onColorFilterChange?: (colors: string[]) => void;
+  onColorFilterChange?: (colors: string[], styles: string) => void;
 }
