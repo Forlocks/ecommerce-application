@@ -7,7 +7,7 @@ import { validateMinPrice, validateMaxPrice } from '../../../non-visual/validato
 import { SmallButton } from '../../buttons/SmallButton/SmallButton';
 import { Checkbox } from '../../checkbox/Checkbox';
 
-export const FilterForm: React.FC<IFilterFormProps> = ({ onColorFilterChange }) => {
+export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
   const clear = <img src="./assets/icons/clear.svg" alt="clear" />;
   const colorNames = [
     'gray',
@@ -100,7 +100,7 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onColorFilterChange }) 
     // Код для отправки запроса на сервер, чтобы отфильтровать продукты
     // по выбранному стилю
     // sendStyleFilterRequest(newStyleFilter);
-    if (onColorFilterChange) onColorFilterChange(selectedColors, newStyleFilter, selectedMaterials);
+    if (onFilterChange) onFilterChange(selectedColors, newStyleFilter, selectedMaterials);
   };
 
   const onMinPriceChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -151,7 +151,7 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onColorFilterChange }) 
       ? [...selectedColors, color]
       : selectedColors.filter((c) => c !== color);
     setSelectedColors(updatedColors);
-    if (onColorFilterChange) onColorFilterChange(updatedColors, styleFilter, selectedMaterials);
+    if (onFilterChange) onFilterChange(updatedColors, styleFilter, selectedMaterials);
 
     console.log(`Filtered by colors: ${updatedColors.join(', ')}`);
     // Здесь будет код для отправки значения на сервер для фильтрации
@@ -164,7 +164,7 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onColorFilterChange }) 
       ? [...selectedMaterials, material]
       : selectedMaterials.filter((c) => c !== material);
     setSelectedMaterials(updatedMaterials);
-    if (onColorFilterChange) onColorFilterChange(selectedColors, styleFilter, updatedMaterials);
+    if (onFilterChange) onFilterChange(selectedColors, styleFilter, updatedMaterials);
     console.log(`Filtered by materials: ${updatedMaterials.join(', ')}`);
     // Здесь будет код для отправки значения на сервер для фильтрации
     // Например:

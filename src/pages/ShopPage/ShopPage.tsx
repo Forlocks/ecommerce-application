@@ -9,7 +9,7 @@ export const ShopPage: React.FC<IPage> = function () {
   const [selectedStyle, setSelectedStyle] = useState<string>('');
   const [selectedMaterials, setSelectedMaterials] = useState<string[]>([]);
 
-  const handleColorFilterChange = (colors: string[], style: string, materials: string[]) => {
+  const handleFilterChange = (colors: string[], style: string, materials: string[]) => {
     setSelectedColors(colors);
     setSelectedStyle(style);
     setSelectedMaterials(materials);
@@ -32,7 +32,7 @@ export const ShopPage: React.FC<IPage> = function () {
         />
       </div>
       <div className="shop_aside">
-        <FilterForm onColorFilterChange={handleColorFilterChange} />
+        <FilterForm onFilterChange={handleFilterChange} />
       </div>
     </div>
   );
