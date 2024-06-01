@@ -2,8 +2,9 @@ import React from 'react';
 import './LoginPage.scss';
 import { LoginForm } from '../../components/visual/forms/LoginForm/LoginForm';
 import { Logo } from '../../components/visual/logo/Logo';
+import { IPage } from '../IPage';
 
-export const LoginPage: React.FC = function () {
+export const LoginPage: React.FC<IPage> = function () {
   return (
     <div className="login_page">
       <div className="content_container">

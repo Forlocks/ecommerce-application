@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ErrorPage } from '../../pages/ErrorPage/ErrorPage';
 import { MainPage } from '../../pages/MainPage/MainPage';
 import { RegistrationPage } from '../../pages/RegistrationPage/RegistrationPage';
@@ -11,63 +11,57 @@ import { ProfilePage } from '../../pages/ProfilePage/ProfilePage';
 import { ProductDetailsPage } from '../../pages/ProductDetailsPage/ProductDetailsPage';
 
 export const AppRouter = () => {
-  const router = createBrowserRouter([
-    {
-      path: '/',
-      element: (
-        <Layout>
-          <MainPage />
-        </Layout>
-      ),
-      errorElement: <ErrorPage />,
-    },
-    {
-      path: '/registration',
-      element: (
-        <ProtectedRoute>
-          <Layout>
-            <RegistrationPage />
-          </Layout>
-        </ProtectedRoute>
-      ),
-    },
-    {
-      path: '/login',
-      element: (
-        <ProtectedRoute>
-          <Layout>
-            <LoginPage />
-          </Layout>
-        </ProtectedRoute>
-      ),
-    },
-    {
-      path: '/shop',
-      element: (
-        <Layout>
-          <ShopPage />
-        </Layout>
-      ),
-    },
-    {
-      path: '/profile',
-      element: (
-        <ProtectedRoute>
-          <Layout>
-            <ProfilePage />
-          </Layout>
-        </ProtectedRoute>
-      ),
-    },
-    {
-      path: '/product/:id',
-      element: (
-        <Layout>
-          <ProductDetailsPage />
-        </Layout>
-      ),
-    },
-  ]);
+  const [modalContent, setModalContent] = React.useState<React.ReactNode>(null);
+  const [showModal, setShowModal] = React.useState(false);
 
-  return <RouterProvider router={router} />;
+  const openModal = (content: React.ReactNode) => {
+    setModalContent(content);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Layout closeModal={closeModal} showModal={showModal} modalContent={modalContent} />
+          }
+        >
+          <Route index element={<MainPage openModal={openModal} />} />
+          <Route
+            path="registration"
+            element={
+              <ProtectedRoute openModal={openModal}>
+                <RegistrationPage openModal={openModal} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="login"
+            element={
+              <ProtectedRoute openModal={openModal}>
+                <LoginPage openModal={openModal} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="profile"
+            element={
+              <ProtectedRoute openModal={openModal}>
+                <ProfilePage openModal={openModal} />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="product/:id" element={<ProductDetailsPage openModal={openModal} />} />
+          <Route path="shop" element={<ShopPage openModal={openModal} />} />
+        </Route>
+        <Route path="*" element={<ErrorPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
 };

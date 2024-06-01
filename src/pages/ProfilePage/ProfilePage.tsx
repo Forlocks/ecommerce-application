@@ -1,9 +1,10 @@
 import React from 'react';
 import { Logo } from '../../components/visual/logo/Logo';
+import { IPage } from '../IPage';
 import './ProfilePage.scss';
 import { ProfileForm } from '../../components/visual/forms/ProfileForm/ProfileForm';
 
-export const ProfilePage: React.FC = function () {
+export const ProfilePage: React.FC<IPage> = function () {
   return (
     <div className="profile_page">
       <div className="profile_title">

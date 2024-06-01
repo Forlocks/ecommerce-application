@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { ProductProjection } from '@commercetools/platform-sdk';
 import { useParams } from 'react-router-dom';
+
 import { ProductDetailsCard } from '../../components/visual/product/ProductDetailsCard/ProductDetailsCard';
 import { getProductID } from '../../controllers/api/Products';
 import './ProductDetailsPage.scss';
 
-export const ProductDetailsPage: React.FC = () => {
+import { IPage } from '../IPage';
+
+
+export const ProductDetailsPage: React.FC<IPage> = () => {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<ProductProjection | null>(null);
 

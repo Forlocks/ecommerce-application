@@ -7,6 +7,7 @@ import {
   TokenStore,
 } from '@commercetools/sdk-client-v2';
 import {
+  BaseAddress,
   CustomerSignin,
   MyCustomerDraft,
   MyCustomerUpdateAction,
@@ -249,5 +250,17 @@ export class User {
 
   setDefaultShippingAddress(version: number, addressId: string) {
     return this.updateUser(version, [{ action: 'setDefaultShippingAddress', addressId }]);
+  }
+
+  changeAddress(version: number, addressId: string, address: BaseAddress) {
+    return this.updateUser(version, [{ action: 'changeAddress', addressId, address }]);
+  }
+
+  removeBillingTypeAddress(version: number, addressId: string) {
+    return this.updateUser(version, [{ action: 'removeBillingAddressId', addressId }]);
+  }
+
+  removeShippingTypeAddress(version: number, addressId: string) {
+    return this.updateUser(version, [{ action: 'removeShippingAddressId', addressId }]);
   }
 }
