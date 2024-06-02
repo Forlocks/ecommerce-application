@@ -38,7 +38,7 @@
   .arrow-right {
     position: absolute;
     top: 50%;
-    width:  14px;
+    width: 14px;
     height: 14px;
     margin: -12.5px 0 0 0;
     background-color: rgba(255, 255, 255, 0.4);
@@ -106,7 +106,7 @@
   .arrow-right {
     position: absolute;
     top: 50%;
-    width:  14px;
+    width: 14px;
     height: 14px;
     margin: -3.611vh 0 0 0;
     background-color: rgba(255, 255, 255, 0.4);
@@ -173,16 +173,22 @@
     }
 
     .arrow-left {
-      left: 1.294vw;
-      padding-right: 0.559vw;
+      top: 50%;
+      left: 3em;
+      width: 24px;
+      height: 24px;
     }
 
     .arrow-right {
-      right: 1.294vw;
-      padding-left: 0.559vw;
+      top: 50%;
+      right: 3em;
+      width: 24px;
+      height: 24px;
     }
+
   }
 }
+
 .image-gallery {
   display: flex;
   flex-direction: column;
@@ -224,7 +230,7 @@
         border: 1px solid transparent;
 
         &.selected {
-          border-color: $grey-color;
+          border-color: grey;
         }
       }
     }
@@ -241,7 +247,6 @@
 
     .arrow-left {
       margin-right: 16px;
-      
     }
 
     .arrow-right {
@@ -249,45 +254,121 @@
     }
   }
 
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba($white-color, 0.8);
+  z-index: 1000;
+
+  .modal-content {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: $white-color;
-    z-index: 1000;
+    background-color: transparent;
+    position: relative;
+    padding: 24px 32px;
 
-    .modal-content {
-      padding: 20px;
-      position: relative;
-      max-width: 90%;
-      max-height: 90%;
-      overflow: auto;
+    .arrow-left,
+    .arrow-right,
+    .button--small {
+      position: absolute;
+      background-color: transparent;
+      cursor: pointer;
+      transition: all ease 0.5s;
+    }
+
+    .arrow-left {
+      top: 50%;
+      left: -3em;
+      width: 24px;
+      height: 24px;
+    }
+
+    .arrow-right {
+      top: 50%;
+      right: -3em;
+      width: 24px;
+      height: 24px;
+    }
+
+    .button--small {
+      top: 0px;
+      right: 0px;
+      width: 24px;
+      height: 24px;
+    }
+
+    .slider-images {
+      width: 70%;
+      height: 70%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
 
       img {
-        width: 100%;
-        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
       }
-
-      .close-button {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
       }
     }
-  }
-
-  .slick-track {
-    display: flex;
-    gap: 16px;
-  }
+  }  
+  @media (max-width: 950px) {
+    .modal {
+     
+    
+      .modal-content {
+        padding: 24px 32px;
+    
+        .arrow-left,
+        .arrow-right,
+        .button--small {
+          position: absolute;
+          background-color: transparent;
+          cursor: pointer;
+          transition: all ease 0.5s;
+        }
+    
+        .arrow-left {
+          top: 50%;
+          left: 1em;
+          width: 24px;
+          height: 24px;
+        }
+    
+        .arrow-right {
+          top: 50%;
+          right: 1em;
+          width: 24px;
+          height: 24px;
+        }
+    
+        .button--small {
+          top: 0px;
+          right: 0px;
+          width: 24px;
+          height: 24px;
+        }
+    
+        .slider-images {
+          width: 60%;
+          height: 60%;
+    
+          img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+          }
+          }
+        }
+      }  
 }
-
+}

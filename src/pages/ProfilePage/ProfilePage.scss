@@ -1,5 +1,6 @@
 @import '../../components/visual/variables';
 @import '../../components/visual/grid-layout';
+@import '../../components/visual/mixins';
 
 .profile_page {
   @include grid-layout;
@@ -20,3 +21,51 @@
   gap: 16px;
   padding: 0px 32px 0px 32px;
 }
+
+
+table thead th {
+  @include h4-style;
+  color: $black-text;
+}
+
+tbody {
+  @include h5-style;
+color: $grey-text;
+}
+
+.addresses-table {
+  padding: 8px 16px;
+}
+
+@media (max-width: 768px) {
+.profile_page{
+  padding: 24px 16px;
+}
+
+.user-container {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.adress-container{
+  padding-top: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.profile_title {
+  padding: 0px;
+}
+
+.adress-container {
+  margin-top: -8px;
+ 
+.addresses-table {
+  margin-top: -16px;
+  margin-bottom: 32px;
+}
+}
+  .image-small {
+     display: none;
+    }
+  }

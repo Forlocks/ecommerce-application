@@ -1,5 +1,6 @@
 @import '../../components/visual/variables';
 @import '../../components/visual/grid-layout';
+@import '../../components/visual/mixins';
 
 
 .registration_page {
@@ -97,6 +98,7 @@ flex-shrink: 0;
         padding: 24px 32px 96px 32px;
       }
   }
+
 
   @media (max-width: 1024px) and (min-width: 769px) {
     .image-small {

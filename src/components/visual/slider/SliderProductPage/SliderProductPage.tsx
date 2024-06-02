@@ -4,7 +4,7 @@ import { SliderBasic } from '../SliderBasic/SliderBasic';
 import '../Slider.scss';
 import { SmallButton } from '../../buttons/SmallButton/SmallButton';
 
-const closeIcon = <img src="./assets/icons/cross.svg" alt="edit" />;
+const closeIcon = <img src="../../../assets/icons/cross.svg" alt="close" />;
 
 export const ImageGallery: React.FC<IImageGallery> = ({
   images,
