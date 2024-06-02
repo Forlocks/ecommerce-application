@@ -7,5 +7,6 @@ export interface IFilterFormProps {
     maxPrice: number | null,
     sortByPrice: string,
     sortByName: string,
+    search: string,
   ) => void;
 }

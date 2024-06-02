@@ -59,6 +59,18 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
   ): void => {
     event.preventDefault();
     console.log('Search value:', search);
+    if (onFilterChange) {
+      onFilterChange(
+        selectedColors,
+        styleFilter,
+        selectedMaterials,
+        parseFloat(minPrice),
+        parseFloat(maxPrice),
+        sortByPrice,
+        sortByName,
+        search,
+      );
+    }
     // Здесь будет код для отправки значения на сервер для сортировки
     // Например:
     // sendSearchRequest(search);
@@ -78,6 +90,7 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
         maxPrice ? parseFloat(maxPrice) : null,
         newPrice,
         sortByName,
+        search,
       );
     }
   };
@@ -98,6 +111,7 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
         parseFloat(maxPrice),
         sortByPrice,
         newSortOrder,
+        search,
       );
     }
   };
@@ -128,6 +142,7 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
         parseFloat(maxPrice),
         sortByPrice,
         sortByName,
+        search,
       );
     }
   };
@@ -179,6 +194,7 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
         parseFloat(maxPrice),
         sortByPrice,
         sortByName,
+        search,
       );
     }
   };
@@ -197,6 +213,7 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
         parseFloat(maxPrice),
         sortByPrice,
         sortByName,
+        search,
       );
     }
 
@@ -220,6 +237,7 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
         parseFloat(maxPrice),
         sortByPrice,
         sortByName,
+        search,
       );
     }
     console.log(`Filtered by materials: ${updatedMaterials.join(', ')}`);

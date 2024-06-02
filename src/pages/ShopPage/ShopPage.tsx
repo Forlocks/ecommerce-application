@@ -12,6 +12,7 @@ export const ShopPage: React.FC<IPage> = function () {
   const [maxPrice, setMaxPrice] = useState<number | null>(null);
   const [sortByPrice, setSortByPrice] = useState<string>('');
   const [sortByName, setSortByName] = useState<string>('');
+  const [search, setSearch] = useState('');
 
   const handleFilterChange = (
     colors: string[],
@@ -21,6 +22,7 @@ export const ShopPage: React.FC<IPage> = function () {
     newMaxPrice: number | null,
     newSortByPrice: string,
     newSortByName: string,
+    newSearch: string,
   ) => {
     setSelectedColors(colors);
     setSelectedStyle(style);
@@ -29,6 +31,7 @@ export const ShopPage: React.FC<IPage> = function () {
     setMaxPrice(newMaxPrice);
     setSortByPrice(newSortByPrice);
     setSortByName(newSortByName);
+    setSearch(newSearch);
   };
 
   return (
@@ -49,6 +52,7 @@ export const ShopPage: React.FC<IPage> = function () {
           maxPrice={maxPrice}
           sortByPrice={sortByPrice}
           sortByName={sortByName}
+          search={search}
         />
       </div>
       <div className="shop_aside">

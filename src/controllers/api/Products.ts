@@ -22,7 +22,7 @@ export async function getProductID(ID: string) {
   }
 }
 
-export async function searchProduct(filters: string[], sort: string[], text?: string) {
+export async function searchProduct(filters: string[], sort: string[], text: string) {
   const apiRoot = user.createApiRoot(user.ctpClientFlow);
   try {
     const response = await apiRoot

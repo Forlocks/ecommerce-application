@@ -13,6 +13,7 @@ export const ProductList: React.FC<IProductList> = ({
   maxPrice,
   sortByPrice,
   sortByName,
+  search,
 }) => {
   const [products, setProducts] = useState<ProductProjection[]>([]);
 
@@ -55,7 +56,9 @@ export const ProductList: React.FC<IProductList> = ({
         sortOrderArr.push(sortOrderName);
       }
 
-      const result = await searchProduct(queryArr, sortOrderArr);
+      const searchString = search;
+
+      const result = await searchProduct(queryArr, sortOrderArr, searchString);
       // const result = await searchProduct([], [], '"chicken"');
       setProducts(result);
     };
@@ -69,6 +72,7 @@ export const ProductList: React.FC<IProductList> = ({
     maxPrice,
     sortByPrice,
     sortByName,
+    search,
   ]);
 
   return (

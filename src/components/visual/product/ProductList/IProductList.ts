@@ -6,4 +6,5 @@ export interface IProductList {
   maxPrice: number | null;
   sortByPrice: string;
   sortByName: string;
+  search: string;
 }
