@@ -32,7 +32,7 @@ export async function searchProduct(filters: string[], sort: string[], text?: st
         queryArgs: {
           fuzzy: true,
           filter: filters,
-          'text.en': text,
+          'text.EN-US': text,
           staged: true,
           //  limit: 10,
           sort,

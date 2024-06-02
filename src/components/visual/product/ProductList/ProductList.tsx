@@ -48,12 +48,15 @@ export const ProductList: React.FC<IProductList> = ({
       const sortOrderArr = [];
 
       if (sortByPrice) {
-        const sortOrder = sortByPrice === 'Min price' ? 'price asc' : 'price desc';
-        sortOrderArr.push(sortOrder);
+        const sortOrderPrice = sortByPrice === 'Min price' ? 'price asc' : 'price desc';
+        sortOrderArr.push(sortOrderPrice);
+      } else if (sortByName) {
+        const sortOrderName = sortByName === 'A-Z' ? 'name.EN-US asc' : 'name.EN-US desc';
+        sortOrderArr.push(sortOrderName);
       }
 
       const result = await searchProduct(queryArr, sortOrderArr);
-      // const result = await searchProduct([], '"VAS-Whispering Pines-003-A');
+      // const result = await searchProduct([], [], '"chicken"');
       setProducts(result);
     };
 

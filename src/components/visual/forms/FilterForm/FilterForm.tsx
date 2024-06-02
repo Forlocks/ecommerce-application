@@ -89,6 +89,17 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
     // Код для отправки запроса на сервер, чтобы отсортировать продукты
     // по названию в выбранном порядке
     // sendNameSortRequest(newSortOrder);
+    if (onFilterChange) {
+      onFilterChange(
+        selectedColors,
+        styleFilter,
+        selectedMaterials,
+        parseFloat(minPrice),
+        parseFloat(maxPrice),
+        sortByPrice,
+        newSortOrder,
+      );
+    }
   };
 
   // ------ Filter by --------
