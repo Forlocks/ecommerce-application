@@ -4,4 +4,6 @@ export interface IProductList {
   selectedMaterials: string[];
   minPrice: number | null;
   maxPrice: number | null;
+  sortByPrice: string;
+  sortByName: string;
 }

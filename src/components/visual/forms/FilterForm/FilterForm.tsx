@@ -25,7 +25,7 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
   const materialNames = ['ceramic', 'glass', 'resin', 'metal'];
 
   const [search, setSearch] = useState('');
-  const [sortByprice, setSortByPrice] = useState('');
+  const [sortByPrice, setSortByPrice] = useState('');
   const [sortByName, setSortByName] = useState('');
   //   const [materialFilter, setMaterialFilter] = useState('');
   const [styleFilter, setStyleFilter] = useState('');
@@ -40,7 +40,7 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
 
   const isFormEmpty =
     !search &&
-    !sortByprice &&
+    !sortByPrice &&
     !sortByName &&
     // !materialFilter &&
     !styleFilter &&
@@ -68,7 +68,7 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
   const handlePriceChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newPrice = event.target.value;
     setSortByPrice(newPrice);
-    console.log('sortByprice value:', newPrice);
+    console.log('sortByPrice value:', newPrice);
     if (onFilterChange) {
       onFilterChange(
         selectedColors,
@@ -76,11 +76,10 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
         selectedMaterials,
         minPrice ? parseFloat(minPrice) : null,
         maxPrice ? parseFloat(maxPrice) : null,
+        newPrice,
+        sortByName,
       );
     }
-    // Здесь будет код для отправки значения на сервер для сортировки
-    // Например:
-    // sendSortRequest(newPrice);
   };
 
   const handleSortByNameChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -116,6 +115,8 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
         selectedMaterials,
         parseFloat(minPrice),
         parseFloat(maxPrice),
+        sortByPrice,
+        sortByName,
       );
     }
   };
@@ -165,6 +166,8 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
         selectedMaterials,
         parseFloat(minPrice),
         parseFloat(maxPrice),
+        sortByPrice,
+        sortByName,
       );
     }
   };
@@ -181,6 +184,8 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
         selectedMaterials,
         parseFloat(minPrice),
         parseFloat(maxPrice),
+        sortByPrice,
+        sortByName,
       );
     }
 
@@ -202,6 +207,8 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
         updatedMaterials,
         parseFloat(minPrice),
         parseFloat(maxPrice),
+        sortByPrice,
+        sortByName,
       );
     }
     console.log(`Filtered by materials: ${updatedMaterials.join(', ')}`);
@@ -255,7 +262,7 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
           label="Price"
           placeholder="Sort by price"
           options={['Min price', 'Max price']}
-          value={sortByprice}
+          value={sortByPrice}
           onChange={handlePriceChange}
           name="priceSort"
         />

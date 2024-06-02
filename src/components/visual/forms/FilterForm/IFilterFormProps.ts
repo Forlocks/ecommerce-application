@@ -5,5 +5,7 @@ export interface IFilterFormProps {
     materials: string[],
     minPrice: number | null,
     maxPrice: number | null,
+    sortByPrice: string,
+    sortByName: string,
   ) => void;
 }

@@ -11,6 +11,8 @@ export const ProductList: React.FC<IProductList> = ({
   selectedMaterials,
   minPrice,
   maxPrice,
+  sortByPrice,
+  sortByName,
 }) => {
   const [products, setProducts] = useState<ProductProjection[]>([]);
 
@@ -43,12 +45,28 @@ export const ProductList: React.FC<IProductList> = ({
         queryArr.push(priceFilter);
       }
 
-      const result = await searchProduct(queryArr);
+      const sortOrderArr = [];
+
+      if (sortByPrice) {
+        const sortOrder = sortByPrice === 'Min price' ? 'price asc' : 'price desc';
+        sortOrderArr.push(sortOrder);
+      }
+
+      const result = await searchProduct(queryArr, sortOrderArr);
+      // const result = await searchProduct([], '"VAS-Whispering Pines-003-A');
       setProducts(result);
     };
 
     fetchFilteredProducts();
-  }, [selectedColors, selectedStyle, selectedMaterials, minPrice, maxPrice]);
+  }, [
+    selectedColors,
+    selectedStyle,
+    selectedMaterials,
+    minPrice,
+    maxPrice,
+    sortByPrice,
+    sortByName,
+  ]);
 
   return (
     <div className="product-list">

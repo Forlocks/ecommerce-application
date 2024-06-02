@@ -22,7 +22,7 @@ export async function getProductID(ID: string) {
   }
 }
 
-export async function searchProduct(filters: string[]) {
+export async function searchProduct(filters: string[], sort: string[], text?: string) {
   const apiRoot = user.createApiRoot(user.ctpClientFlow);
   try {
     const response = await apiRoot
@@ -30,7 +30,12 @@ export async function searchProduct(filters: string[]) {
       .search()
       .get({
         queryArgs: {
+          fuzzy: true,
           filter: filters,
+          'text.en': text,
+          staged: true,
+          //  limit: 10,
+          sort,
         },
       })
       .execute();
