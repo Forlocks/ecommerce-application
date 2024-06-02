@@ -30,8 +30,8 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
   //   const [materialFilter, setMaterialFilter] = useState('');
   const [styleFilter, setStyleFilter] = useState('');
 
-  const [minPrice, setMinPrice] = useState('');
-  const [maxPrice, setMaxPrice] = useState('');
+  const [minPrice, setMinPrice] = useState<string>('');
+  const [maxPrice, setMaxPrice] = useState<string>('');
   const [minPriceError, setMinPriceError] = useState('');
   const [maxPriceError, setMaxPriceError] = useState('');
 
@@ -69,6 +69,15 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
     const newPrice = event.target.value;
     setSortByPrice(newPrice);
     console.log('sortByprice value:', newPrice);
+    if (onFilterChange) {
+      onFilterChange(
+        selectedColors,
+        styleFilter,
+        selectedMaterials,
+        minPrice ? parseFloat(minPrice) : null,
+        maxPrice ? parseFloat(maxPrice) : null,
+      );
+    }
     // Здесь будет код для отправки значения на сервер для сортировки
     // Например:
     // sendSortRequest(newPrice);
@@ -100,7 +109,15 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
     // Код для отправки запроса на сервер, чтобы отфильтровать продукты
     // по выбранному стилю
     // sendStyleFilterRequest(newStyleFilter);
-    if (onFilterChange) onFilterChange(selectedColors, newStyleFilter, selectedMaterials);
+    if (onFilterChange) {
+      onFilterChange(
+        selectedColors,
+        newStyleFilter,
+        selectedMaterials,
+        parseFloat(minPrice),
+        parseFloat(maxPrice),
+      );
+    }
   };
 
   const onMinPriceChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -137,12 +154,18 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
       console.log(`Мин. цена - ${minPriceToSend}, Макс. цена - ${maxPriceToSend}`);
       // Код для отправки запроса на сервер, чтобы отфильтровать продукты по цене
       // sendPriceFilterRequest(minPriceValue, maxPriceValue);
-
-      if (minPriceValue === 0) setMinPrice('0');
-      if (maxPriceValue === 1000) setMaxPrice('1000');
     } else {
       setMinPriceError('max < min');
       setMaxPriceError('');
+    }
+    if (onFilterChange) {
+      onFilterChange(
+        selectedColors,
+        styleFilter,
+        selectedMaterials,
+        parseFloat(minPrice),
+        parseFloat(maxPrice),
+      );
     }
   };
 
@@ -151,7 +174,15 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
       ? [...selectedColors, color]
       : selectedColors.filter((c) => c !== color);
     setSelectedColors(updatedColors);
-    if (onFilterChange) onFilterChange(updatedColors, styleFilter, selectedMaterials);
+    if (onFilterChange) {
+      onFilterChange(
+        updatedColors,
+        styleFilter,
+        selectedMaterials,
+        parseFloat(minPrice),
+        parseFloat(maxPrice),
+      );
+    }
 
     console.log(`Filtered by colors: ${updatedColors.join(', ')}`);
     // Здесь будет код для отправки значения на сервер для фильтрации
@@ -164,7 +195,15 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
       ? [...selectedMaterials, material]
       : selectedMaterials.filter((c) => c !== material);
     setSelectedMaterials(updatedMaterials);
-    if (onFilterChange) onFilterChange(selectedColors, styleFilter, updatedMaterials);
+    if (onFilterChange) {
+      onFilterChange(
+        selectedColors,
+        styleFilter,
+        updatedMaterials,
+        parseFloat(minPrice),
+        parseFloat(maxPrice),
+      );
+    }
     console.log(`Filtered by materials: ${updatedMaterials.join(', ')}`);
     // Здесь будет код для отправки значения на сервер для фильтрации
     // Например:

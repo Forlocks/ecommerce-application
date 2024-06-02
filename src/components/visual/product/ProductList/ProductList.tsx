@@ -9,6 +9,8 @@ export const ProductList: React.FC<IProductList> = ({
   selectedColors,
   selectedStyle,
   selectedMaterials,
+  minPrice,
+  maxPrice,
 }) => {
   const [products, setProducts] = useState<ProductProjection[]>([]);
 
@@ -27,12 +29,26 @@ export const ProductList: React.FC<IProductList> = ({
       if (selectedMaterials.length !== 0) {
         queryArr.push(`variants.attributes.attribute-material-02:${[...materialStr]}`);
       }
+
+      const minPriceValue =
+        typeof minPrice === 'number' && !Number.isNaN(minPrice) ? minPrice * 100 : null;
+      const maxPriceValue =
+        typeof maxPrice === 'number' && !Number.isNaN(maxPrice) ? maxPrice * 100 : null;
+
+      if (minPriceValue !== null || maxPriceValue !== null) {
+        const minPricePlaceholder = minPriceValue !== null ? minPriceValue : '*';
+        const maxPricePlaceholder = maxPriceValue !== null ? maxPriceValue : '*';
+        const priceFilter = `variants.price.centAmount:range (${minPricePlaceholder} to ${maxPricePlaceholder})`;
+        console.log(priceFilter);
+        queryArr.push(priceFilter);
+      }
+
       const result = await searchProduct(queryArr);
       setProducts(result);
     };
 
     fetchFilteredProducts();
-  }, [selectedColors, selectedStyle, selectedMaterials]);
+  }, [selectedColors, selectedStyle, selectedMaterials, minPrice, maxPrice]);
 
   return (
     <div className="product-list">

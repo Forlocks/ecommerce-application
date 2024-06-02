@@ -8,11 +8,21 @@ export const ShopPage: React.FC<IPage> = function () {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedStyle, setSelectedStyle] = useState<string>('');
   const [selectedMaterials, setSelectedMaterials] = useState<string[]>([]);
+  const [minPrice, setMinPrice] = useState<number | null>(null);
+  const [maxPrice, setMaxPrice] = useState<number | null>(null);
 
-  const handleFilterChange = (colors: string[], style: string, materials: string[]) => {
+  const handleFilterChange = (
+    colors: string[],
+    style: string,
+    materials: string[],
+    newMinPrice: number | null,
+    newMaxPrice: number | null,
+  ) => {
     setSelectedColors(colors);
     setSelectedStyle(style);
     setSelectedMaterials(materials);
+    setMinPrice(newMinPrice);
+    setMaxPrice(newMaxPrice);
   };
 
   return (
@@ -29,6 +39,8 @@ export const ShopPage: React.FC<IPage> = function () {
           selectedColors={selectedColors}
           selectedStyle={selectedStyle}
           selectedMaterials={selectedMaterials}
+          minPrice={minPrice}
+          maxPrice={maxPrice}
         />
       </div>
       <div className="shop_aside">
