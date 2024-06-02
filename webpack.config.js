@@ -13,6 +13,7 @@ module.exports = (env) => {
     devtool: isDev ? 'inline-source-map' : false,
     entry: './src/index.tsx',
     output: {
+      publicPath: "/",
       path: path.resolve(__dirname, 'dist'),
       filename: 'bundle.js',
       assetModuleFilename: './assets/fonts/[name].[ext]'

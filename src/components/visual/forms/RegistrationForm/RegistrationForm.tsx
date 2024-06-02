@@ -18,7 +18,11 @@ import { Checkbox } from '../../checkbox/Checkbox';
 import { IRegistrationForm } from './IRegistrationForm';
 import { NameAndDateFields } from '../../fields/NameAndDateFields/NameAndDateFields';
 
-export const RegistrationForm: React.FC = () => {
+interface RegistrationFormProps {
+  openModal: (content: React.ReactNode) => void;
+}
+
+export const RegistrationForm: React.FC<RegistrationFormProps> = ({ openModal }) => {
   const [state, setState] = useState<IRegistrationForm>({
     email: '',
     emailError: '',
@@ -272,7 +276,7 @@ export const RegistrationForm: React.FC = () => {
       if (result.email === 'ok') {
         user.setUserState('true');
         navigate('/');
-        alert('Registration completed successfully!');
+        openModal(<p>Registration completed successfully!</p>);
       } else {
         setState((prevState) => ({
           ...prevState,

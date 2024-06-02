@@ -6,7 +6,10 @@ import { RegistrationPage } from '../../pages/RegistrationPage/RegistrationPage'
 import { LoginPage } from '../../pages/LoginPage/LoginPage';
 import { Layout } from '../../components/visual/layout/Layout';
 import { ProtectedRoute } from './ProtectedRoute/ProtectedRoute';
-import { ShopPage } from '../../pages/ShopPage/ShopPage';
+import { CatalogLayout } from '../../components/visual/catalog/catalogLayout/CatalogLayout';
+import { ProductsPage } from '../../pages/ShopPages/ProductsPage';
+import { VasesPage } from '../../pages/ShopPages/VasesPage';
+import { DecorationsPage } from '../../pages/ShopPages/DecorationsPage';
 import { ProfilePage } from '../../pages/ProfilePage/ProfilePage';
 import { ProductDetailsPage } from '../../pages/ProductDetailsPage/ProductDetailsPage';
 
@@ -58,7 +61,11 @@ export const AppRouter = () => {
             }
           />
           <Route path="product/:id" element={<ProductDetailsPage openModal={openModal} />} />
-          <Route path="shop" element={<ShopPage openModal={openModal} />} />
+          <Route path="shop/" element={<CatalogLayout openModal={openModal} />}>
+            <Route index element={<ProductsPage />} />
+            <Route path="vases" element={<VasesPage />} />
+            <Route path="decorations" element={<DecorationsPage />} />
+          </Route>
         </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>
