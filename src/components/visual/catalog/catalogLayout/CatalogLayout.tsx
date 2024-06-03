@@ -8,13 +8,9 @@ import { IPage } from '../../../../pages/IPage';
 export const CatalogLayout: React.FC<IPage> = () => (
   <div className="shop_page">
     <div className="shop_title">
-      <h1>
-        Our featured
-        <br />
-        products
-      </h1>
+      <h1>Our products</h1>
+      <CatalogHeader />
     </div>
-    <CatalogHeader />
     <div className="shop_container">
       <Outlet />
     </div>

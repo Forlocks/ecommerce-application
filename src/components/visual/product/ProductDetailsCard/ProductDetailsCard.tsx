@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { ProductVariant } from '@commercetools/platform-sdk';
 import { IProductDetailsCardProps } from './IProductDetailsCard';
 import { BaseDescription } from '../ProductDescription/BaseDescription/BaseDescription';
@@ -14,6 +15,9 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
   className,
   onButtonClick,
 }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   const [selectedVariant, setSelectedVariant] = useState(product.masterVariant);
   const formatPercentage = (percentage: number) => Math.round(percentage).toString();
   const calculateDiscountedPrice = (mainPrice?: {
@@ -68,6 +72,40 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
     <div className={className}>
       <div className="product-details_title">
         <h1 className="card-header">{name['en-US']}</h1>
+        <div className="header__breadcrumb">
+          <LargeButton
+            onClick={() => {
+              navigate('/shop');
+            }}
+          >
+            Shop
+          </LargeButton>
+          {product.masterVariant.sku?.slice(0, 3) === 'VAS' ? (
+            <LargeButton
+              onClick={() => {
+                navigate('/shop/vases');
+              }}
+            >
+              Vases
+            </LargeButton>
+          ) : null}
+          {product.masterVariant.sku?.slice(0, 3) === 'DEC' ? (
+            <LargeButton
+              onClick={() => {
+                navigate('/shop/decorations');
+              }}
+            >
+              Decorations
+            </LargeButton>
+          ) : null}
+          <LargeButton
+            onClick={() => {
+              navigate(location.pathname);
+            }}
+          >
+            {name['en-US']}
+          </LargeButton>
+        </div>
       </div>
       <div className="product-details-first">
         <div className="product-info">
