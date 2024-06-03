@@ -203,8 +203,8 @@ export const UserAddresses: React.FC<IUserAddresses> = ({
             <th>Country</th>
             <th>City</th>
             <th>Street</th>
-            <th>Postal Code</th>
-            <th>Address Type</th>
+            <th>Postode</th>
+            <th>Type</th>
             <th></th>
             <th></th>
           </tr>

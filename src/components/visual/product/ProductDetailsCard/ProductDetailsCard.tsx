@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ProductVariant } from '@commercetools/platform-sdk';
 import { IProductDetailsCardProps } from './IProductDetailsCard';
@@ -9,6 +9,7 @@ import { ProductStyle } from '../ProductStyle/ProductStyle';
 import { LargeButton } from '../../buttons/LargeButton/LargeButton';
 import { ProductImage } from '../ProductImage/ProductImage';
 import { Price } from '../ProductPrice/Price/Price';
+import { ImageGallery } from '../../slider/SliderProductPage/SliderProductPage';
 
 export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
   product,
@@ -17,7 +18,6 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
-
   const [selectedVariant, setSelectedVariant] = useState(product.masterVariant);
   const formatPercentage = (percentage: number) => Math.round(percentage).toString();
   const calculateDiscountedPrice = (mainPrice?: {
@@ -62,8 +62,15 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
   const oldPrice = calculateOldPrice(mainPrice);
   const discountPercentage = calculateDiscountPercentage(mainPrice);
 
-  const handleVariantClick = (variant: React.SetStateAction<ProductVariant>) => {
+  const [images, setImages] = useState(selectedVariant?.images?.map((image) => image.url) || []);
+
+  useEffect(() => {
+    setImages(selectedVariant?.images?.map((image) => image.url) || []);
+  }, [selectedVariant]);
+
+  const handleVariantClick = (variant: ProductVariant) => {
     setSelectedVariant(variant);
+    setImages(variant.images?.map((image) => image.url) || []);
   };
 
   const variantsWithMaster = [product.masterVariant, ...product.variants];
@@ -152,7 +159,7 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
       <div className="product-details-second">
         <div className="product-slider">
           {selectedVariant?.images?.[0] && (
-            <ProductImage url={selectedVariant.images[0].url} alt="Product Image" />
+            <ImageGallery images={images} key={selectedVariant.id} />
           )}
         </div>
       </div>
