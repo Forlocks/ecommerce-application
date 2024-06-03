@@ -1,4 +1,6 @@
-export interface IFilterFormProps {
+import { IPage } from '../../../../pages/IPage';
+
+export interface ICatalogLayout extends IPage {
   onFilterChange?: (
     colors: string[],
     styles: string,

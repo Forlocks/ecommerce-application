@@ -3,9 +3,9 @@ import './CatalogLayout.scss';
 import { Outlet } from 'react-router-dom';
 import { FilterForm } from '../../forms/FilterForm/FilterForm';
 import { CatalogHeader } from '../catalogHeader/CatalogHeader';
-import { IPage } from '../../../../pages/IPage';
+import { ICatalogLayout } from './ICatalogLayout';
 
-export const CatalogLayout: React.FC<IPage> = () => (
+export const CatalogLayout: React.FC<ICatalogLayout> = ({ onFilterChange }) => (
   <div className="shop_page">
     <div className="shop_title">
       <h1>Our products</h1>
@@ -15,7 +15,7 @@ export const CatalogLayout: React.FC<IPage> = () => (
       <Outlet />
     </div>
     <div className="shop_aside">
-      <FilterForm />
+      <FilterForm onFilterChange={onFilterChange} />
     </div>
   </div>
 );

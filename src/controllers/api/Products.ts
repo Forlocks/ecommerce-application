@@ -21,3 +21,27 @@ export async function getProductID(ID: string) {
     throw new Error((error as Error).message);
   }
 }
+
+export async function searchProduct(filters: string[], sort: string[], text: string) {
+  const apiRoot = user.createApiRoot(user.ctpClientFlow);
+  try {
+    const response = await apiRoot
+      .productProjections()
+      .search()
+      .get({
+        queryArgs: {
+          fuzzy: true,
+          filter: filters,
+          'text.EN-US': text,
+          staged: true,
+          //  limit: 10,
+          sort,
+        },
+      })
+      .execute();
+    return response.body.results;
+  } catch (error) {
+    // alert(error);
+    throw new Error((error as Error).message);
+  }
+}

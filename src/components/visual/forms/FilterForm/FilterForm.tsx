@@ -7,31 +7,30 @@ import { validateMinPrice, validateMaxPrice } from '../../../non-visual/validato
 import { SmallButton } from '../../buttons/SmallButton/SmallButton';
 import { Checkbox } from '../../checkbox/Checkbox';
 
-export const FilterForm: React.FC<IFilterFormProps> = () => {
+export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
   const clear = <img src="./assets/icons/clear.svg" alt="clear" />;
   const colorNames = [
-    'Red',
-    'Green',
-    'Blue',
-    'Yellow',
-    'Black',
-    'White',
-    'Orange',
-    'Purple',
-    'Pink',
-    'Brown',
+    'gray',
+    'green',
+    'blue',
+    'yellow',
+    'black',
+    'white',
+    'orange',
+    'purple',
+    'pink',
+    'brown',
   ];
 
-  const materialNames = ['Ceramic', 'Glass', 'Metal', 'Plastic', 'Wood'];
+  const materialNames = ['ceramic', 'glass', 'resin', 'metal'];
 
   const [search, setSearch] = useState('');
-  const [sortByprice, setSortByPrice] = useState('');
+  const [sortByPrice, setSortByPrice] = useState('');
   const [sortByName, setSortByName] = useState('');
-  //   const [materialFilter, setMaterialFilter] = useState('');
   const [styleFilter, setStyleFilter] = useState('');
 
-  const [minPrice, setMinPrice] = useState('');
-  const [maxPrice, setMaxPrice] = useState('');
+  const [minPrice, setMinPrice] = useState<string>('');
+  const [maxPrice, setMaxPrice] = useState<string>('');
   const [minPriceError, setMinPriceError] = useState('');
   const [maxPriceError, setMaxPriceError] = useState('');
 
@@ -40,9 +39,8 @@ export const FilterForm: React.FC<IFilterFormProps> = () => {
 
   const isFormEmpty =
     !search &&
-    !sortByprice &&
+    !sortByPrice &&
     !sortByName &&
-    // !materialFilter &&
     !styleFilter &&
     !minPrice &&
     !maxPrice &&
@@ -59,47 +57,73 @@ export const FilterForm: React.FC<IFilterFormProps> = () => {
   ): void => {
     event.preventDefault();
     console.log('Search value:', search);
-    // Здесь будет код для отправки значения на сервер для сортировки
-    // Например:
-    // sendSearchRequest(search);
+    if (onFilterChange) {
+      onFilterChange(
+        selectedColors,
+        styleFilter,
+        selectedMaterials,
+        parseFloat(minPrice),
+        parseFloat(maxPrice),
+        sortByPrice,
+        sortByName,
+        search,
+      );
+    }
   };
 
   // ------ Sort by --------
   const handlePriceChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newPrice = event.target.value;
     setSortByPrice(newPrice);
-    console.log('sortByprice value:', newPrice);
-    // Здесь будет код для отправки значения на сервер для сортировки
-    // Например:
-    // sendSortRequest(newPrice);
+    console.log('sortByPrice value:', newPrice);
+    if (onFilterChange) {
+      onFilterChange(
+        selectedColors,
+        styleFilter,
+        selectedMaterials,
+        minPrice ? parseFloat(minPrice) : null,
+        maxPrice ? parseFloat(maxPrice) : null,
+        newPrice,
+        sortByName,
+        search,
+      );
+    }
   };
 
   const handleSortByNameChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newSortOrder = event.target.value;
     setSortByName(newSortOrder);
     console.log('sortByName value:', newSortOrder);
-    // Код для отправки запроса на сервер, чтобы отсортировать продукты
-    // по названию в выбранном порядке
-    // sendNameSortRequest(newSortOrder);
+    if (onFilterChange) {
+      onFilterChange(
+        selectedColors,
+        styleFilter,
+        selectedMaterials,
+        parseFloat(minPrice),
+        parseFloat(maxPrice),
+        sortByPrice,
+        newSortOrder,
+        search,
+      );
+    }
   };
-
-  // ------ Filter by --------
-  //   const handleMaterialFilterChange = (event: ChangeEvent<HTMLInputElement>): void => {
-  //     const newMaterialFilter = event.target.value;
-  //     setMaterialFilter(newMaterialFilter);
-  //     console.log('setMaterial value:', newMaterialFilter);
-  //     // Код для отправки запроса на сервер, чтобы отфильтровать продукты
-  //     // по выбранному материалу
-  //     // sendMaterialFilterRequest(newMaterialFilter);
-  //   };
 
   const handleStyleFilterChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newStyleFilter = event.target.value;
     setStyleFilter(newStyleFilter);
     console.log('setStyle value:', newStyleFilter);
-    // Код для отправки запроса на сервер, чтобы отфильтровать продукты
-    // по выбранному стилю
-    // sendStyleFilterRequest(newStyleFilter);
+    if (onFilterChange) {
+      onFilterChange(
+        selectedColors,
+        newStyleFilter,
+        selectedMaterials,
+        parseFloat(minPrice),
+        parseFloat(maxPrice),
+        sortByPrice,
+        sortByName,
+        search,
+      );
+    }
   };
 
   const onMinPriceChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -134,14 +158,21 @@ export const FilterForm: React.FC<IFilterFormProps> = () => {
       const minPriceToSend = minPriceValue * 100;
       const maxPriceToSend = maxPriceValue * 100;
       console.log(`Мин. цена - ${minPriceToSend}, Макс. цена - ${maxPriceToSend}`);
-      // Код для отправки запроса на сервер, чтобы отфильтровать продукты по цене
-      // sendPriceFilterRequest(minPriceValue, maxPriceValue);
-
-      if (minPriceValue === 0) setMinPrice('0');
-      if (maxPriceValue === 1000) setMaxPrice('1000');
     } else {
       setMinPriceError('max < min');
       setMaxPriceError('');
+    }
+    if (onFilterChange) {
+      onFilterChange(
+        selectedColors,
+        styleFilter,
+        selectedMaterials,
+        parseFloat(minPrice),
+        parseFloat(maxPrice),
+        sortByPrice,
+        sortByName,
+        search,
+      );
     }
   };
 
@@ -150,11 +181,20 @@ export const FilterForm: React.FC<IFilterFormProps> = () => {
       ? [...selectedColors, color]
       : selectedColors.filter((c) => c !== color);
     setSelectedColors(updatedColors);
+    if (onFilterChange) {
+      onFilterChange(
+        updatedColors,
+        styleFilter,
+        selectedMaterials,
+        parseFloat(minPrice),
+        parseFloat(maxPrice),
+        sortByPrice,
+        sortByName,
+        search,
+      );
+    }
 
     console.log(`Filtered by colors: ${updatedColors.join(', ')}`);
-    // Здесь будет код для отправки значения на сервер для фильтрации
-    // Например:
-    // sendColorFilterRequest(updatedColors);
   };
 
   const handleMaterialChange = (material: string) => (checked: boolean) => {
@@ -162,18 +202,25 @@ export const FilterForm: React.FC<IFilterFormProps> = () => {
       ? [...selectedMaterials, material]
       : selectedMaterials.filter((c) => c !== material);
     setSelectedMaterials(updatedMaterials);
-
+    if (onFilterChange) {
+      onFilterChange(
+        selectedColors,
+        styleFilter,
+        updatedMaterials,
+        parseFloat(minPrice),
+        parseFloat(maxPrice),
+        sortByPrice,
+        sortByName,
+        search,
+      );
+    }
     console.log(`Filtered by materials: ${updatedMaterials.join(', ')}`);
-    // Здесь будет код для отправки значения на сервер для фильтрации
-    // Например:
-    // sendMaterialFilterRequest(updatedMaterial);
   };
 
   const handleClear = () => {
     setSearch('');
     setSortByPrice('');
     setSortByName('');
-    // setMaterialFilter('');
     setStyleFilter('');
     setMinPrice('');
     setMaxPrice('');
@@ -182,6 +229,9 @@ export const FilterForm: React.FC<IFilterFormProps> = () => {
     setSelectedColors([]);
     setSelectedMaterials([]);
     console.log('Filters cleared');
+    if (onFilterChange) {
+      onFilterChange([], '', [], null, null, '', '', '');
+    }
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -214,7 +264,7 @@ export const FilterForm: React.FC<IFilterFormProps> = () => {
           label="Price"
           placeholder="Sort by price"
           options={['Min price', 'Max price']}
-          value={sortByprice}
+          value={sortByPrice}
           onChange={handlePriceChange}
           name="priceSort"
         />
@@ -232,7 +282,7 @@ export const FilterForm: React.FC<IFilterFormProps> = () => {
         <ListInput
           label="Style"
           placeholder="Choose a style"
-          options={['Modern', 'Classic']}
+          options={['modern', 'classic', 'minimalism']}
           value={styleFilter}
           onChange={handleStyleFilterChange}
           name="styleFilter"
