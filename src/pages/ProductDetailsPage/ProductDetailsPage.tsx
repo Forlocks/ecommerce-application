@@ -8,7 +8,6 @@ import './ProductDetailsPage.scss';
 
 import { IPage } from '../IPage';
 
-
 export const ProductDetailsPage: React.FC<IPage> = () => {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<ProductProjection | null>(null);

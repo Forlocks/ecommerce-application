@@ -1,16 +1,49 @@
 import * as React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
 import { ErrorPage } from '../../pages/ErrorPage/ErrorPage';
 import { MainPage } from '../../pages/MainPage/MainPage';
 import { RegistrationPage } from '../../pages/RegistrationPage/RegistrationPage';
 import { LoginPage } from '../../pages/LoginPage/LoginPage';
 import { Layout } from '../../components/visual/layout/Layout';
 import { ProtectedRoute } from './ProtectedRoute/ProtectedRoute';
-import { ShopPage } from '../../pages/ShopPage/ShopPage';
+import { CatalogLayout } from '../../components/visual/catalog/catalogLayout/CatalogLayout';
+import { ProductsPage } from '../../pages/ShopPages/ProductsPage';
+import { VasesPage } from '../../pages/ShopPages/VasesPage';
+import { DecorationsPage } from '../../pages/ShopPages/DecorationsPage';
 import { ProfilePage } from '../../pages/ProfilePage/ProfilePage';
 import { ProductDetailsPage } from '../../pages/ProductDetailsPage/ProductDetailsPage';
 
 export const AppRouter = () => {
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [selectedStyle, setSelectedStyle] = useState<string>('');
+  const [selectedMaterials, setSelectedMaterials] = useState<string[]>([]);
+  const [minPrice, setMinPrice] = useState<number | null>(null);
+  const [maxPrice, setMaxPrice] = useState<number | null>(null);
+  const [sortByPrice, setSortByPrice] = useState<string>('');
+  const [sortByName, setSortByName] = useState<string>('');
+  const [search, setSearch] = useState('');
+
+  const handleFilterChange = (
+    colors: string[],
+    style: string,
+    materials: string[],
+    newMinPrice: number | null,
+    newMaxPrice: number | null,
+    newSortByPrice: string,
+    newSortByName: string,
+    newSearch: string,
+  ) => {
+    setSelectedColors(colors);
+    setSelectedStyle(style);
+    setSelectedMaterials(materials);
+    setMinPrice(newMinPrice);
+    setMaxPrice(newMaxPrice);
+    setSortByPrice(newSortByPrice);
+    setSortByName(newSortByName);
+    setSearch(newSearch);
+  };
+
   const [modalContent, setModalContent] = React.useState<React.ReactNode>(null);
   const [showModal, setShowModal] = React.useState(false);
 
@@ -58,7 +91,56 @@ export const AppRouter = () => {
             }
           />
           <Route path="product/:id" element={<ProductDetailsPage openModal={openModal} />} />
-          <Route path="shop" element={<ShopPage openModal={openModal} />} />
+          <Route
+            path="shop/"
+            element={<CatalogLayout onFilterChange={handleFilterChange} openModal={openModal} />}
+          >
+            <Route
+              index
+              element={
+                <ProductsPage
+                  selectedColors={selectedColors}
+                  selectedStyle={selectedStyle}
+                  selectedMaterials={selectedMaterials}
+                  minPrice={minPrice}
+                  maxPrice={maxPrice}
+                  sortByPrice={sortByPrice}
+                  sortByName={sortByName}
+                  search={search}
+                />
+              }
+            />
+            <Route
+              path="vases"
+              element={
+                <VasesPage
+                  selectedColors={selectedColors}
+                  selectedStyle={selectedStyle}
+                  selectedMaterials={selectedMaterials}
+                  minPrice={minPrice}
+                  maxPrice={maxPrice}
+                  sortByPrice={sortByPrice}
+                  sortByName={sortByName}
+                  search={search}
+                />
+              }
+            />
+            <Route
+              path="decorations"
+              element={
+                <DecorationsPage
+                  selectedColors={selectedColors}
+                  selectedStyle={selectedStyle}
+                  selectedMaterials={selectedMaterials}
+                  minPrice={minPrice}
+                  maxPrice={maxPrice}
+                  sortByPrice={sortByPrice}
+                  sortByName={sortByName}
+                  search={search}
+                />
+              }
+            />
+          </Route>
         </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>
