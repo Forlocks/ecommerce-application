@@ -27,7 +27,6 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
   const [search, setSearch] = useState('');
   const [sortByPrice, setSortByPrice] = useState('');
   const [sortByName, setSortByName] = useState('');
-  //   const [materialFilter, setMaterialFilter] = useState('');
   const [styleFilter, setStyleFilter] = useState('');
 
   const [minPrice, setMinPrice] = useState<string>('');
@@ -42,7 +41,6 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
     !search &&
     !sortByPrice &&
     !sortByName &&
-    // !materialFilter &&
     !styleFilter &&
     !minPrice &&
     !maxPrice &&
@@ -71,9 +69,6 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
         search,
       );
     }
-    // Здесь будет код для отправки значения на сервер для сортировки
-    // Например:
-    // sendSearchRequest(search);
   };
 
   // ------ Sort by --------
@@ -99,9 +94,6 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
     const newSortOrder = event.target.value;
     setSortByName(newSortOrder);
     console.log('sortByName value:', newSortOrder);
-    // Код для отправки запроса на сервер, чтобы отсортировать продукты
-    // по названию в выбранном порядке
-    // sendNameSortRequest(newSortOrder);
     if (onFilterChange) {
       onFilterChange(
         selectedColors,
@@ -116,23 +108,10 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
     }
   };
 
-  // ------ Filter by --------
-  //   const handleMaterialFilterChange = (event: ChangeEvent<HTMLInputElement>): void => {
-  //     const newMaterialFilter = event.target.value;
-  //     setMaterialFilter(newMaterialFilter);
-  //     console.log('setMaterial value:', newMaterialFilter);
-  //     // Код для отправки запроса на сервер, чтобы отфильтровать продукты
-  //     // по выбранному материалу
-  //     // sendMaterialFilterRequest(newMaterialFilter);
-  //   };
-
   const handleStyleFilterChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newStyleFilter = event.target.value;
     setStyleFilter(newStyleFilter);
     console.log('setStyle value:', newStyleFilter);
-    // Код для отправки запроса на сервер, чтобы отфильтровать продукты
-    // по выбранному стилю
-    // sendStyleFilterRequest(newStyleFilter);
     if (onFilterChange) {
       onFilterChange(
         selectedColors,
@@ -179,8 +158,6 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
       const minPriceToSend = minPriceValue * 100;
       const maxPriceToSend = maxPriceValue * 100;
       console.log(`Мин. цена - ${minPriceToSend}, Макс. цена - ${maxPriceToSend}`);
-      // Код для отправки запроса на сервер, чтобы отфильтровать продукты по цене
-      // sendPriceFilterRequest(minPriceValue, maxPriceValue);
     } else {
       setMinPriceError('max < min');
       setMaxPriceError('');
@@ -218,9 +195,6 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
     }
 
     console.log(`Filtered by colors: ${updatedColors.join(', ')}`);
-    // Здесь будет код для отправки значения на сервер для фильтрации
-    // Например:
-    // sendColorFilterRequest(updatedColors);
   };
 
   const handleMaterialChange = (material: string) => (checked: boolean) => {
@@ -241,16 +215,12 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
       );
     }
     console.log(`Filtered by materials: ${updatedMaterials.join(', ')}`);
-    // Здесь будет код для отправки значения на сервер для фильтрации
-    // Например:
-    // sendMaterialFilterRequest(updatedMaterial);
   };
 
   const handleClear = () => {
     setSearch('');
     setSortByPrice('');
     setSortByName('');
-    // setMaterialFilter('');
     setStyleFilter('');
     setMinPrice('');
     setMaxPrice('');
@@ -259,6 +229,9 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
     setSelectedColors([]);
     setSelectedMaterials([]);
     console.log('Filters cleared');
+    if (onFilterChange) {
+      onFilterChange([], '', [], null, null, '', '', '');
+    }
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
