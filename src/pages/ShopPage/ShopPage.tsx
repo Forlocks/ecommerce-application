@@ -8,7 +8,11 @@ export const ShopPage: React.FC<IPage> = function () {
   return (
     <div className="shop_page">
       <div className="shop_title">
-        <h1>Our products</h1>
+        <h1>
+          Our featured
+          <br />
+          products
+        </h1>
       </div>
       <div className="shop_container">
         <ProductList />

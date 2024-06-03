@@ -19,7 +19,7 @@ import { IRegistrationForm } from '../RegistrationForm/IRegistrationForm';
 import { UserAddresses } from './UserAddresses';
 import './ProfileForm.scss';
 import { IUserAddress } from './IUserAddresses';
-import { LargeButton } from '../../buttons/LargeButton/LargeButton';
+import { MediumButton } from '../../buttons/MediumButton/MediumButton';
 
 export const ProfileForm: React.FC = () => {
   const [state, setState] = useState<IRegistrationForm>({
@@ -547,7 +547,7 @@ export const ProfileForm: React.FC = () => {
             </div>
           </>
         )}
-        <LargeButton onClick={handleAddNewAddress} children={<div>Add new address</div>} />
+        <MediumButton onClick={handleAddNewAddress} children={<div>Add new address</div>} />
       </div>
     </div>
   );
