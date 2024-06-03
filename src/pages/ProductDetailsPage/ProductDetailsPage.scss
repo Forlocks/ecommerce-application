@@ -9,6 +9,7 @@
   row-gap: 16px;
   height: auto;
   margin-top: 48px;
+  margin-bottom: 48px;
   align-items: flex-start;
   h1 {
     white-space: nowrap;
@@ -22,13 +23,16 @@
   display: flex;
   flex-direction: column;
   gap: 48px;
+  .header__breadcrumb {
+    margin-bottom: 8px;
+  }
 }
 
 .product-info {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  margin-bottom: 24px;
+  margin-bottom: 48px;
 }
 
 .product-details-first {
@@ -48,17 +52,6 @@
   width: 100%;
 }
 
-.product-slider {
-  display: flex;
-  height: 24em;
-  overflow: hidden;
-  justify-content: center;
-  margin: 24px 32px 24px 32px;
-  img {
-    width: 100%;
-    align-self: center;
-  }
-}
 
 .product-details-third {
   grid-row: 2 / span 1;
@@ -153,7 +146,7 @@
 }
 
 .selected-variant {
-  border: 1px solid rgba($grey-color, 0.5);
+  border: 1px solid $grey-color;
   cursor: pointer;
 }
 
@@ -183,35 +176,43 @@
 }
 
 @media (max-width: 768px) {
-  .product-details-first {
-    order: 3;
-    grid-row: 4 / span 1;
-    grid-column: 1 / span 1;
-    padding: 0;
-  }
-
-  .product-details-second {
-    order: 1;
-    grid-row: 2 / span 1;
-    grid-column: 1 / span 1;
-    padding: 0;
-
-    .product-slider {
-      min-height: 400px;
-      margin: 0px;
-    }
-  }
-
-  .product-details-third {
-    order: 2;
-    grid-row: 3 / span 1;
-    grid-column: 1 / span 1;
-    padding: 0;
-  }
 
   .product-details_page {
-    gap: 32px;
+    gap: 16px;
     padding: 24px 16px 32px 16px;
     margin-top: 0px;
+    margin-bottom: 0px;
+    h1 {
+      white-space: wrap;
+    }
   }
+.product-details-first {
+  order: 3;
+  grid-row: 4 / span 1;
+  grid-column: 1 / span 2;
+  padding: 24px 32px 32px 32px;
+  padding: 0;
 }
+
+.product-details-second {
+  order: 1;
+  grid-row: 2 / span 1;
+  grid-column: 1 / span 2;
+  padding: 0;
+}
+
+.product-details-third {
+  order: 2;
+  grid-row: 3 / span 1;
+  grid-column: 1 / span 2;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0;
+  padding-bottom: 24px;
+}
+
+}
+
+
