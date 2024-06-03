@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../../components/visual/product/product.scss';
 import { ProductProjection } from '@commercetools/platform-sdk';
 import { ProductCard } from '../../components/visual/product/ProductCard/ProductCard';
@@ -16,6 +16,8 @@ export const VasesPage: React.FC<IShopPages> = ({
   search,
 }) => {
   const [products, setProducts] = useState<ProductProjection[]>([]);
+  const [availableProducts, setAvailableProducts] = useState<ProductProjection[]>([]);
+  const isInitialMount = useRef(true);
 
   useEffect(() => {
     const fetchFilteredProducts = async () => {
@@ -58,12 +60,18 @@ export const VasesPage: React.FC<IShopPages> = ({
 
       const searchString = search;
 
-      const result = await searchProduct(queryArr, sortOrderArr, searchString);
-      // const result = await searchProduct([], [], '"chicken"');
+      const sortedProducts = await searchProduct(queryArr, sortOrderArr, searchString);
+      const result = availableProducts.filter((element) =>
+        sortedProducts.some((product) => product.id === element.id),
+      );
       setProducts(result);
     };
 
-    fetchFilteredProducts();
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else if (availableProducts.length > 0) {
+      fetchFilteredProducts();
+    }
   }, [
     selectedColors,
     selectedStyle,
@@ -73,23 +81,23 @@ export const VasesPage: React.FC<IShopPages> = ({
     sortByPrice,
     sortByName,
     search,
+    availableProducts,
   ]);
 
   useEffect(() => {
-    async function fetchFilteredProducts() {
+    async function fetchInitialProducts() {
       const queryArr: string[] = [];
       const sortOrderArr: string[] = [];
       const searchString = '';
 
       queryArr.push('categories.id:"a57bf8df-df80-4b8c-81c1-2b7c5a8ff5f0"');
-      queryArr.push('variants.attributes.attribute-colour-03:exists');
 
-      const productsArr = await searchProduct(queryArr, sortOrderArr, searchString);
-
-      setProducts(productsArr);
+      const initialProducts = await searchProduct(queryArr, sortOrderArr, searchString);
+      setAvailableProducts(initialProducts);
+      setProducts(initialProducts);
     }
 
-    fetchFilteredProducts();
+    fetchInitialProducts();
   }, []);
 
   return (
