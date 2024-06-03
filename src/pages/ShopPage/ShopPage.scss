@@ -5,7 +5,7 @@
 .shop_page {
   @include grid-layout;
   grid-row: 1fr 1fr;
-  padding: 48px;
+  padding: 0 48px;
   row-gap: 16px;
   height: auto;
   h1 {
@@ -20,13 +20,12 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
+  padding: 0px 32px 0px 32px;
 }
 
 .shop_container {
   grid-column: 1 / span 4;
   grid-row: 2 / span 1;
-  display: flex;
-  flex-shrink: 2;
   width: 100%;
 }
 
@@ -54,8 +53,6 @@
   display: flex;
   flex-direction: row;
   gap: 16px;
-  align-items: baseline;
-
 }
 
 .base-price {

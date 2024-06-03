@@ -10,23 +10,24 @@ import { Checkbox } from '../../checkbox/Checkbox';
 export const FilterForm: React.FC<IFilterFormProps> = () => {
   const clear = <img src="./assets/icons/clear.svg" alt="clear" />;
   const colorNames = [
-    'grey',
-    'green',
-    'blue',
-    'yellow',
-    'black',
-    'white',
-    'orange',
-    'purple',
-    'pink',
-    'brown',
+    'Red',
+    'Green',
+    'Blue',
+    'Yellow',
+    'Black',
+    'White',
+    'Orange',
+    'Purple',
+    'Pink',
+    'Brown',
   ];
 
-  const materialNames = ['ceramic', 'glass', 'resin', 'metal'];
+  const materialNames = ['Ceramic', 'Glass', 'Metal', 'Plastic', 'Wood'];
 
   const [search, setSearch] = useState('');
   const [sortByprice, setSortByPrice] = useState('');
   const [sortByName, setSortByName] = useState('');
+  //   const [materialFilter, setMaterialFilter] = useState('');
   const [styleFilter, setStyleFilter] = useState('');
 
   const [minPrice, setMinPrice] = useState('');
@@ -41,6 +42,7 @@ export const FilterForm: React.FC<IFilterFormProps> = () => {
     !search &&
     !sortByprice &&
     !sortByName &&
+    // !materialFilter &&
     !styleFilter &&
     !minPrice &&
     !maxPrice &&
@@ -82,6 +84,14 @@ export const FilterForm: React.FC<IFilterFormProps> = () => {
   };
 
   // ------ Filter by --------
+  //   const handleMaterialFilterChange = (event: ChangeEvent<HTMLInputElement>): void => {
+  //     const newMaterialFilter = event.target.value;
+  //     setMaterialFilter(newMaterialFilter);
+  //     console.log('setMaterial value:', newMaterialFilter);
+  //     // Код для отправки запроса на сервер, чтобы отфильтровать продукты
+  //     // по выбранному материалу
+  //     // sendMaterialFilterRequest(newMaterialFilter);
+  //   };
 
   const handleStyleFilterChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newStyleFilter = event.target.value;
@@ -163,6 +173,7 @@ export const FilterForm: React.FC<IFilterFormProps> = () => {
     setSearch('');
     setSortByPrice('');
     setSortByName('');
+    // setMaterialFilter('');
     setStyleFilter('');
     setMinPrice('');
     setMaxPrice('');
@@ -210,10 +221,18 @@ export const FilterForm: React.FC<IFilterFormProps> = () => {
       </div>
       <div className="filter-container">
         <span>Filter by...</span>
+        {/* <ListInput
+          label="Material"
+          placeholder="Choose a material"
+          options={['Ceramic', 'Glass']}
+          value={materialFilter}
+          onChange={handleMaterialFilterChange}
+          name="materialFilter"
+        /> */}
         <ListInput
           label="Style"
           placeholder="Choose a style"
-          options={['modern', 'classic', 'minimalism']}
+          options={['Modern', 'Classic']}
           value={styleFilter}
           onChange={handleStyleFilterChange}
           name="styleFilter"
