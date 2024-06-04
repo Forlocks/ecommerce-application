@@ -62,9 +62,9 @@ export const VasesPage: React.FC<IShopPages> = ({
 
       const sortedProducts = await searchProduct(queryArr, sortOrderArr, searchString);
 
-      const result = availableProducts.filter((element) =>
-        sortedProducts.some((product) => product.id === element.id),
-      );
+      const result = availableProducts.filter((element) => {
+        return sortedProducts.some((product) => product.id === element.id);
+      });
 
       setProducts(result);
     };

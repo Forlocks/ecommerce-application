@@ -22,6 +22,7 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    "arrow-body-style": ["off"],
     "func-names": "off",
     "semi": "error",
     "no-console": "off",
