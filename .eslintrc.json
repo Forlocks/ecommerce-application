@@ -29,7 +29,7 @@
     "no-case-declarations": "off",
     "no-plusplus": "off",
     "eol-last": "off",
-    "max-len": ["error", 120],
+    "max-len": ["error", 115],
     "no-alert": "off",
     "prefer-destructuring": "off",
     "no-tabs": "off",
