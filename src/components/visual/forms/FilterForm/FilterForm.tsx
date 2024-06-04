@@ -10,7 +10,7 @@ import { Checkbox } from '../../checkbox/Checkbox';
 export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
   const clear = <img src="/assets/icons/clear.svg" alt="clear" />;
   const colorNames = [
-    'gray',
+    'grey',
     'green',
     'blue',
     'yellow',
