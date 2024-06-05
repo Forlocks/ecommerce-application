@@ -62,8 +62,8 @@ export const DecorationsPage: React.FC<IShopPages> = ({
 
       const sortedProducts = await searchProduct(queryArr, sortOrderArr, searchString);
 
-      const result = availableProducts.filter((element) => {
-        return sortedProducts.some((product) => product.id === element.id);
+      const result = sortedProducts.filter((element) => {
+        return availableProducts.some((product) => product.id === element.id);
       });
 
       setProducts(result);
