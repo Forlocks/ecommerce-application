@@ -10,6 +10,7 @@ export const InputBase: FC<IInputBase> = ({
   id,
   name,
   error,
+  disabled,
 }) => (
   <div className="input">
     {label && <label htmlFor={id || name}>{label}</label>}
@@ -20,6 +21,7 @@ export const InputBase: FC<IInputBase> = ({
       placeholder={placeholder}
       value={value}
       onChange={onChange}
+      disabled={disabled}
     />
     {error && <div className="error">{error}</div>}
   </div>

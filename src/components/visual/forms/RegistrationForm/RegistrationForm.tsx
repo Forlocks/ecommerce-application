@@ -18,7 +18,11 @@ import { Checkbox } from '../../checkbox/Checkbox';
 import { IRegistrationForm } from './IRegistrationForm';
 import { NameAndDateFields } from '../../fields/NameAndDateFields/NameAndDateFields';
 
-export const RegistrationForm: React.FC = () => {
+interface RegistrationFormProps {
+  openModal: (content: React.ReactNode) => void;
+}
+
+export const RegistrationForm: React.FC<RegistrationFormProps> = ({ openModal }) => {
   const [state, setState] = useState<IRegistrationForm>({
     email: '',
     emailError: '',
@@ -250,14 +254,14 @@ export const RegistrationForm: React.FC = () => {
         {
           country: 'US',
           city,
-          street,
-          postCode,
+          streetName: street,
+          postalCode: postCode,
         },
         {
           country: 'US',
           city: cityBilling,
-          street: streetBilling,
-          postCode: postCodeBilling,
+          streetName: streetBilling,
+          postalCode: postCodeBilling,
         },
       ],
       shippingAddresses: [0],
@@ -272,7 +276,7 @@ export const RegistrationForm: React.FC = () => {
       if (result.email === 'ok') {
         user.setUserState('true');
         navigate('/');
-        alert('Registration completed successfully!');
+        openModal(<p>Registration completed successfully!</p>);
       } else {
         setState((prevState) => ({
           ...prevState,
@@ -319,7 +323,7 @@ export const RegistrationForm: React.FC = () => {
         </div>
       </div>
       <div className="adress-container">
-        <span>Shipping adress</span>
+        <span>Shipping address</span>
         <div className="fields-container">
           <AdressFields
             prefix="shipping"
@@ -354,7 +358,7 @@ export const RegistrationForm: React.FC = () => {
 
         {!state.isSameAddresses && (
           <>
-            <span>Billing adress</span>
+            <span>Billing address</span>
             <div className="fields-container">
               <AdressFields
                 prefix="billing"

@@ -10,4 +10,12 @@ export interface INameAndDateFieldProps {
   dateOfBirth: string;
   dateOfBirthError: string;
   onDateOfBirthChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  firstNameDisabled?: boolean;
+  lastNameDisabled?: boolean;
+  dateOfBirthDisabled?: boolean;
+  onEditFirstName?: () => void;
+  onEditLastName?: () => void;
+  editMode?: boolean;
+  dateDisabled?: boolean;
+  onDateEdit?: () => void;
 }

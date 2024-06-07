@@ -1,0 +1,55 @@
+@import '../variables';
+
+.modal-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 5;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 70px 10px 40px 10px;
+  min-width: 300px;
+  max-width: 90%;
+  max-height: 90%;
+  background-color: $white-color;
+  overflow: hidden;
+
+  p {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 150%;
+    letter-spacing: 0.01em;
+    text-align: center;
+    color: $black-text;
+  }
+}
+
+.modal-close {
+  display: block;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 25px;
+  height: 25px;
+  transform: rotate(0deg);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: rotate(90deg);
+    transition: transform 0.3s ease;
+  }
+}

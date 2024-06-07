@@ -1,0 +1,43 @@
+.addresses-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 12px;
+}
+
+.addresses-table thead tr {
+  background-color: #f3f3f3;
+  color: #606060;
+  text-align: left;
+  font-weight: bold;
+  border-bottom: 1px solid #979292;
+}
+
+.addresses-table th,
+.addresses-table td {
+  padding: 12px 15px;
+
+  @media (max-width: 600px) {
+    padding: 12px 5px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 12px 1px;
+  }
+}
+
+.addresses-table tbody tr {
+  border-bottom: 1px solid #979292;
+}
+
+.addresses-table tbody tr:last-of-type {
+  border-bottom: 1px solid #606060;
+}
+
+.addresses-table tbody tr:hover {
+  background-color: #f0f0f0;
+}
+
+.edit-mode {
+  background-color: #feffe8;
+}

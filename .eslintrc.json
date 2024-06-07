@@ -22,13 +22,14 @@
     "project": "./tsconfig.json"
   },
   "rules": {
+    "arrow-body-style": ["off"],
     "func-names": "off",
     "semi": "error",
     "no-console": "off",
     "no-case-declarations": "off",
     "no-plusplus": "off",
     "eol-last": "off",
-    "max-len": ["error", 100],
+    "max-len": ["error", 115],
     "no-alert": "off",
     "prefer-destructuring": "off",
     "no-tabs": "off",
@@ -38,7 +39,8 @@
     "import/prefer-default-export": "off",
     "no-nested-ternary": "off",
     "operator-linebreak": "off",
-    "object-curly-newline": ["error", { "multiline": true, "consistent": true }]
+    "object-curly-newline": ["error", { "multiline": true, "consistent": true }],
+    "@typescript-eslint/indent": "off"
   },
   "noInlineConfig": true
 }

@@ -1,3 +1,5 @@
 export interface LayoutProps {
-  children: React.ReactNode;
+  closeModal: () => void;
+  showModal: boolean;
+  modalContent: React.ReactNode;
 }
