@@ -1,4 +1,5 @@
 import {
+  AnonymousAuthMiddlewareOptions,
   Client,
   ClientBuilder,
   ExistingTokenMiddlewareOptions,
@@ -13,21 +14,12 @@ import {
   MyCustomerUpdateAction,
   createApiBuilderFromCtpClient,
 } from '@commercetools/platform-sdk';
-import {
-  anonymousMiddlewareOptions,
-  authMiddlewareOptions,
-  httpMiddlewareOptions,
-} from './middlewareOptions';
+import { authMiddlewareOptions, httpMiddlewareOptions } from './middlewareOptions';
 import { userTokenCache } from '../..';
 
 export class User {
   ctpClientCredentialFlow = new ClientBuilder()
     .withClientCredentialsFlow(authMiddlewareOptions)
-    .withHttpMiddleware(httpMiddlewareOptions)
-    .build();
-
-  ctpClientAnonymousFlow = new ClientBuilder()
-    .withAnonymousSessionFlow(anonymousMiddlewareOptions)
     .withHttpMiddleware(httpMiddlewareOptions)
     .build();
 
@@ -46,7 +38,7 @@ export class User {
   }
 
   regainApiPasswordAuthClient() {
-    if (localStorage.getItem('userState') === 'true') {
+    if (localStorage.getItem('userTokenStorage') !== null) {
       const refreshTokenStr = localStorage.getItem('userTokenStorage');
       if (refreshTokenStr) {
         const authorization: string = `Bearer ${JSON.parse(refreshTokenStr).token}`;
@@ -72,6 +64,43 @@ export class User {
       }
     }
   }
+
+  // ----
+
+  async setAnonymousFlow() {
+    let anonymousId;
+    if (!localStorage.getItem('anonymousId') || localStorage.getItem('anonymousId') === null) {
+      anonymousId = this.setAnonymousId();
+      if (anonymousId) {
+        const anonymousMiddlewareOptions: AnonymousAuthMiddlewareOptions = {
+          host: process.env.CTP_AUTH_URL ?? '',
+          projectKey: process.env.CTP_PROJECT_KEY ?? '',
+          credentials: {
+            clientId: process.env.CTP_CLIENT_ID ?? '',
+            clientSecret: process.env.CTP_CLIENT_SECRET ?? '',
+            anonymousId,
+          },
+          scopes: [process.env.CTP_SCOPES ?? ''],
+          fetch,
+          tokenCache: userTokenCache,
+        };
+
+        const ctpClientAnonymousFlow = new ClientBuilder()
+          .withAnonymousSessionFlow(anonymousMiddlewareOptions)
+          .withHttpMiddleware(httpMiddlewareOptions)
+          .build();
+        this.ctpClientFlow = ctpClientAnonymousFlow;
+      }
+    }
+  }
+
+  setAnonymousId() {
+    const anonymousId = crypto.randomUUID();
+    localStorage.setItem('anonymousId', anonymousId);
+    return anonymousId;
+  }
+
+  // ----
 
   createApiPasswordAuthClient(customerData: CustomerSignin) {
     const passwordAuthMiddlewareOptions: PasswordAuthMiddlewareOptions = {
@@ -133,6 +162,7 @@ export class User {
     this.setUserState('false');
     this.ctpClientFlow = this.ctpClientCredentialFlow;
     localStorage.setItem('userTokenStorage', '');
+    localStorage.setItem('anonymousId', '');
     userTokenCache.set({
       token: '',
       expirationTime: 0,
