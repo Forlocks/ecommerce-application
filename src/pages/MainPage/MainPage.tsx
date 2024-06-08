@@ -2,6 +2,7 @@ import React from 'react';
 import './MainPage.scss';
 import { Logo } from '../../components/visual/logo/Logo';
 import { IPage } from '../IPage';
+import { TestCartFunctions } from '../../controllers/api/TEST-CART-TEMP'; // !---REMOVE
 
 export const MainPage: React.FC<IPage> = function () {
   return (
@@ -29,6 +30,7 @@ export const MainPage: React.FC<IPage> = function () {
           <img src="./assets/images/mainPage_small.webp" alt="Small image" />
         </div>
       </div>
+      <TestCartFunctions />
       <div className="new-arrivals"></div>
     </div>
   );
