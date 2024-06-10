@@ -43,34 +43,44 @@ export const ProductCard: React.FC<IProductCardProps> = ({ product, className, o
 
   const productUrl = `/product/${product.id}`;
 
+  const handleButtonClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    onButtonClick();
+  };
+
   return (
-    <Link to={productUrl} className={`product-card ${className}`}>
-      {masterVariant?.images?.[0] && (
-        <ProductImage url={masterVariant.images[1].url} alt="Product Image" />
-      )}
-      <h3 className="card-header">{name['en-US']}</h3>
-      {description && <ShortProductDescription description={description['en-US']} maxLength={80} />}
-      {mainPrice && (
-        <Price
-          price={
-            discountedPrice !== null
-              ? parseFloat(discountedPrice.toFixed(2))
-              : parseFloat((mainPrice.value.centAmount / 100).toFixed(2))
-          }
-          currencyCode={mainPrice.value.currencyCode}
-          discounted={!!discountedPrice}
-          discountPercentage={
-            discountPercentage !== null
-              ? parseInt(formatPercentage(discountPercentage), 10)
-              : undefined
-          }
-          className={discountedPrice !== null ? 'discounted-price' : 'main-price'}
-          oldPrice={oldPrice !== null ? parseFloat(oldPrice.toFixed(2)) : null}
-        />
-      )}
-      <MediumButton className="product-button" onClick={onButtonClick}>
+    <div className={`product-card ${className}`}>
+      <Link to={productUrl} className={`product-card ${className}`}>
+        {masterVariant?.images?.[0] && (
+          <ProductImage url={masterVariant.images[1].url} alt="Product Image" />
+        )}
+        <h3 className="card-header">{name['en-US']}</h3>
+        {description && (
+          <ShortProductDescription description={description['en-US']} maxLength={80} />
+        )}
+        {mainPrice && (
+          <Price
+            price={
+              discountedPrice !== null
+                ? parseFloat(discountedPrice.toFixed(2))
+                : parseFloat((mainPrice.value.centAmount / 100).toFixed(2))
+            }
+            currencyCode={mainPrice.value.currencyCode}
+            discounted={!!discountedPrice}
+            discountPercentage={
+              discountPercentage !== null
+                ? parseInt(formatPercentage(discountPercentage), 10)
+                : undefined
+            }
+            className={discountedPrice !== null ? 'discounted-price' : 'main-price'}
+            oldPrice={oldPrice !== null ? parseFloat(oldPrice.toFixed(2)) : null}
+          />
+        )}
+      </Link>
+      <MediumButton className="product-button" onClick={handleButtonClick}>
         Add to cart
       </MediumButton>
-    </Link>
+    </div>
   );
 };

@@ -4,6 +4,7 @@ import { ProductProjection } from '@commercetools/platform-sdk';
 import { ProductCard } from '../../components/visual/product/ProductCard/ProductCard';
 import { searchProduct } from '../../controllers/api/Products';
 import { IShopPages } from './IShopPages';
+import { cartAddLineItem } from '../../controllers/api/Cart';
 
 export const ProductsPage: React.FC<IShopPages> = ({
   selectedColors,
@@ -109,7 +110,10 @@ export const ProductsPage: React.FC<IShopPages> = ({
           className="shop"
           key={product.id}
           product={product}
-          onButtonClick={() => console.log(`Button click on shop card ${product.id}`)}
+          onButtonClick={() => {
+            console.log(`Button click on shop card ${product.id}`);
+            cartAddLineItem(product.id);
+          }}
         />
       ))}
     </div>
