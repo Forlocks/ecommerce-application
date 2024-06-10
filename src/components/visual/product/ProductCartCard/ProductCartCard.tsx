@@ -3,6 +3,7 @@ import { ProductImage } from '../ProductImage/ProductImage';
 import { Price } from '../ProductPrice/Price/Price';
 import { IProductCartCardProps } from './IProductCartCardProps';
 import { SmallButton } from '../../buttons/SmallButton/SmallButton';
+import { cartRemoveLineItem } from '../../../../controllers/api/Cart';
 
 const formatPercentage = (percentage: number) => Math.round(percentage).toString();
 
@@ -34,7 +35,7 @@ const calculateDiscountPercentage = (mainPrice?: {
 
 export const ProductCartCard: React.FC<IProductCartCardProps> = ({ product, className }) => {
   console.log(';;', product);
-  const { name, price, variant } = product;
+  const { name, price, variant, id } = product;
   const discountedPrice = calculateDiscountedPrice(price);
   const oldPrice = calculateOldPrice(price);
   const discountPercentage = calculateDiscountPercentage(price);
@@ -47,7 +48,12 @@ export const ProductCartCard: React.FC<IProductCartCardProps> = ({ product, clas
       <div className="card-cart-description">
         <div className="card-cart-header">
           <h3 className="card-header">{name['en-US']}</h3>
-          <SmallButton icon={closeIcon} />
+          <SmallButton
+            icon={closeIcon}
+            onClick={() => {
+              cartRemoveLineItem(id);
+            }}
+          />
         </div>
         {price && (
           <Price

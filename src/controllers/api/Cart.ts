@@ -79,3 +79,29 @@ export async function cartAddLineItem(productId: string, quantity?: number) {
     throw new Error((error as Error).message);
   }
 }
+
+export async function cartRemoveLineItem(lineItemId: string) {
+  const cartsArr = await getCart();
+
+  const cartId = cartsArr[cartsArr.length - 1].id;
+  const cartVersion = cartsArr[cartsArr.length - 1].version;
+  console.log(cartId);
+  const apiRoot = user.createApiRoot(user.ctpClientFlow);
+  apiRoot
+    .me()
+    .carts()
+    .withId({ ID: cartId })
+    .post({
+      body: {
+        version: cartVersion,
+        actions: [
+          {
+            action: 'removeLineItem',
+            lineItemId,
+            quantity: 1,
+          },
+        ],
+      },
+    })
+    .execute();
+}
