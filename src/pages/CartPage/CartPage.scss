@@ -1,0 +1,197 @@
+@import '../../components/visual/variables';
+@import '../../components/visual/grid-layout';
+@import '../../components/visual/mixins';
+
+.cart_page {
+  @include grid-layout;
+  grid-row: 1fr 1fr;
+  padding: 48px;
+  row-gap: 16px;
+  height: auto;
+  h1 {
+    white-space: nowrap;
+  }
+}
+
+.cart_title {
+  grid-column: 1 / -1;
+  grid-row: 1 / span 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.cart_container {
+  grid-column: 1 / span 3;
+  grid-row: 2 / span 1;
+  display: flex;
+  flex-shrink: 2;
+  width: 100%;
+}
+
+
+.cart_aside {
+  grid-column: 4 / span 2;
+  grid-row: 2 / span 1;
+  padding: 0 24px;
+  align-self: flex-start;
+  min-width: 180px;
+  form {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 24px;
+  }
+}
+
+.product-cart-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.product-card.cart {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  padding: 24px 32px;
+  border-top: 1px solid $grey-color;
+  transition: all 0.3s ease;
+
+  .card-cart-description {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+  }
+
+  &:before {
+    content: none;
+  }
+
+  .product-image{
+    height: 144px;
+    width: 144px;
+    transition: all 0.3s ease;
+  }
+
+  
+
+  h3 {
+    font-weight: 900;
+  }
+
+  .button {
+    margin-top: 12px;
+  }
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.01);
+
+    .product-image {
+      filter: blur(1px);
+    }
+  }
+}
+
+p {
+  max-width: 450px;
+}
+
+.card-cart-header {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  justify-content: space-between;
+    align-items: center;
+}
+
+.card-prices {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.card-prices {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: baseline;
+}
+
+.base-price {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  @include h3-style;
+
+  p {
+    &:first-child {
+      font-weight: 600;
+    }
+
+    &:nth-child(2) {
+      font-weight: 900;
+    }
+  }
+}
+
+.discounted-price {
+  @include h3-style;
+  display: flex;
+  gap: 4px;
+
+  .new {
+    @extend .base-price;
+  }
+
+  .old {
+    align-self: flex-end;
+
+    p {
+      &:first-child {
+        text-decoration: none;
+        color: $grey-color;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 150%;
+        letter-spacing: 0.01em;
+      }
+
+      &:nth-child(2) {
+        text-decoration: line-through;
+        color: $grey-color;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 150%;
+        letter-spacing: 0.01em;
+      }
+    }
+  }
+}
+
+.discount {
+  display: flex;
+
+  p {
+    align-self: flex-end;
+    margin-left: 2px;
+    text-decoration: none;
+    color: $grey-color;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: 0.01em;
+  }
+}
+
+.order-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+

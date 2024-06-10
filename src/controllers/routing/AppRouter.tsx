@@ -13,6 +13,7 @@ import { VasesPage } from '../../pages/ShopPages/VasesPage';
 import { DecorationsPage } from '../../pages/ShopPages/DecorationsPage';
 import { ProfilePage } from '../../pages/ProfilePage/ProfilePage';
 import { ProductDetailsPage } from '../../pages/ProductDetailsPage/ProductDetailsPage';
+import { CartPage } from '../../pages/CartPage/CartPage';
 
 export const AppRouter = () => {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
@@ -141,6 +142,7 @@ export const AppRouter = () => {
               }
             />
           </Route>
+          <Route path="cart" element={<CartPage openModal={openModal} />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>
