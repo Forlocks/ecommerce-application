@@ -4,6 +4,7 @@ import { ProductImage } from '../ProductImage/ProductImage';
 import { Price } from '../ProductPrice/Price/Price';
 import { IProductCartCardProps } from './IProductCartCardProps';
 import { SmallButton } from '../../buttons/SmallButton/SmallButton';
+// import { QuantityInput } from '../../inputs/QuantityInput/QuantityInput';
 
 const formatPercentage = (percentage: number) => Math.round(percentage).toString();
 
@@ -34,6 +35,18 @@ const calculateDiscountPercentage = (mainPrice?: {
 };
 
 export const ProductCartCard: React.FC<IProductCartCardProps> = ({ product, className }) => {
+  // const [quantity, setQuantity] = useState(product.quantity || 1);
+  // const handleIncrease = () => {
+  //     setQuantity((prevQuantity) => prevQuantity + 1);
+  //   };
+
+  //   const handleDecrease = () => {
+  //     setQuantity((prevQuantity) => (prevQuantity > 1 ? prevQuantity - 1 : 1));
+  //   };
+
+  //   const handleChange = (value: number) => {
+  //     setQuantity(value);
+  //   };
   const { name, masterVariant, description } = product;
   const mainPrice = masterVariant?.prices?.[0];
   const discountedPrice = calculateDiscountedPrice(mainPrice);
@@ -76,6 +89,12 @@ export const ProductCartCard: React.FC<IProductCartCardProps> = ({ product, clas
             oldPrice={oldPrice !== null ? parseFloat(oldPrice.toFixed(2)) : null}
           />
         )}
+        {/* <QuantityInput
+          value={quantity}
+          onChange={handleChange}
+          onIncrease={handleIncrease}
+          onDecrease={handleDecrease}
+        /> */}
       </div>
     </div>
   );
