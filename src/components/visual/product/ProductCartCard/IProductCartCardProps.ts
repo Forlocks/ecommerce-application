@@ -1,7 +1,7 @@
-import { ProductProjection } from '@commercetools/platform-sdk';
+import { LineItem } from '@commercetools/platform-sdk';
 
 export interface IProductCartCardProps {
-  product: ProductProjection;
+  product: LineItem;
   onButtonClick: () => void;
   className?: string;
 }

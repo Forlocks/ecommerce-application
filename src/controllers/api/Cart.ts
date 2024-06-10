@@ -42,7 +42,7 @@ export async function getCart() {
     ) {
       user.setUserToken(userTokenCache.get());
     }
-    return response.body;
+    return response.body.results;
   } catch (error) {
     throw new Error((error as Error).message);
   }
