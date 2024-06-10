@@ -87,21 +87,25 @@ export async function cartRemoveLineItem(lineItemId: string) {
   const cartVersion = cartsArr[cartsArr.length - 1].version;
   console.log(cartId);
   const apiRoot = user.createApiRoot(user.ctpClientFlow);
-  apiRoot
-    .me()
-    .carts()
-    .withId({ ID: cartId })
-    .post({
-      body: {
-        version: cartVersion,
-        actions: [
-          {
-            action: 'removeLineItem',
-            lineItemId,
-            quantity: 1,
-          },
-        ],
-      },
-    })
-    .execute();
+  try {
+    await apiRoot
+      .me()
+      .carts()
+      .withId({ ID: cartId })
+      .post({
+        body: {
+          version: cartVersion,
+          actions: [
+            {
+              action: 'removeLineItem',
+              lineItemId,
+              quantity: 1,
+            },
+          ],
+        },
+      })
+      .execute();
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
 }

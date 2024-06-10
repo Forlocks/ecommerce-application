@@ -7,16 +7,17 @@ import { getCart } from '../../../../controllers/api/Cart';
 export const ProductCartList = () => {
   const [cart, setCart] = useState<LineItem[]>([]);
 
-  useEffect(() => {
-    async function fetchProducts() {
-      try {
-        const cartArr = await getCart();
-        setCart(cartArr[cartArr.length - 1].lineItems);
-      } catch (error) {
-        console.error('Error:', (error as Error).message);
-      }
+  const fetchProducts = async () => {
+    try {
+      const cartArr = await getCart();
+      setCart(cartArr[cartArr.length - 1].lineItems);
+      console.log(444);
+    } catch (error) {
+      console.error('Error:', (error as Error).message);
     }
+  };
 
+  useEffect(() => {
     fetchProducts();
   }, []);
 
@@ -28,6 +29,7 @@ export const ProductCartList = () => {
           key={product.id}
           product={product}
           onButtonClick={() => console.log(`Button click on shop card ${product.id}`)}
+          onRemove={fetchProducts}
         />
       ))}
     </div>

@@ -33,7 +33,11 @@ const calculateDiscountPercentage = (mainPrice?: {
   return null;
 };
 
-export const ProductCartCard: React.FC<IProductCartCardProps> = ({ product, className }) => {
+export const ProductCartCard: React.FC<IProductCartCardProps> = ({
+  product,
+  className,
+  onRemove,
+}) => {
   console.log(';;', product);
   const { name, price, variant, id } = product;
   const discountedPrice = calculateDiscountedPrice(price);
@@ -50,8 +54,9 @@ export const ProductCartCard: React.FC<IProductCartCardProps> = ({ product, clas
           <h3 className="card-header">{name['en-US']}</h3>
           <SmallButton
             icon={closeIcon}
-            onClick={() => {
-              cartRemoveLineItem(id);
+            onClick={async () => {
+              await cartRemoveLineItem(id);
+              onRemove();
             }}
           />
         </div>

@@ -4,4 +4,5 @@ export interface IProductCartCardProps {
   product: LineItem;
   onButtonClick: () => void;
   className?: string;
+  onRemove: () => void;
 }
