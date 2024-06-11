@@ -80,7 +80,7 @@ export async function cartAddLineItem(productId: string, quantity?: number) {
   }
 }
 
-export async function cartRemoveLineItem(lineItemId: string) {
+export async function cartRemoveLineItem(lineItemId: string, quantity?: number) {
   const cartsArr = await getCart();
 
   const cartId = cartsArr[cartsArr.length - 1].id;
@@ -98,7 +98,7 @@ export async function cartRemoveLineItem(lineItemId: string) {
             {
               action: 'removeLineItem',
               lineItemId,
-              quantity: 1,
+              quantity,
             },
           ],
         },
