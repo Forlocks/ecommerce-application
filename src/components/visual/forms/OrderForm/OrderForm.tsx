@@ -1,9 +1,10 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { LargeButton } from '../../buttons/LargeButton/LargeButton';
 import { IOrderForm } from './IOrderForm';
 import { TextInput } from '../../inputs/TextInput/TextInput';
 import { MediumButton } from '../../buttons/MediumButton/MediumButton';
+import { getCart } from '../../../../controllers/api/Cart';
 
 const validatePromo = (promocode: string): string => {
   // Пример проверки промокода
@@ -24,8 +25,14 @@ export const OrderForm: React.FC = () => {
   const [state, setState] = useState<IOrderForm>({
     promocode: '',
     promoError: '',
-    totalAmount: 100.0,
+    totalPrice: 0,
   });
+
+  const getTotalPrice = async () => {
+    const cartsArr = await getCart();
+    const totalPrice = cartsArr[cartsArr.length - 1].totalPrice.centAmount / 100;
+    setState((prevState) => ({ ...prevState, totalPrice }));
+  };
 
   const handlePromoChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newPromo = event.target.value.trim();
@@ -35,8 +42,8 @@ export const OrderForm: React.FC = () => {
   const handleApplyPromo = () => {
     const promoError = validatePromo(state.promocode);
     if (promoError === '') {
-      const newTotalAmount = applyPromo(state.promocode, state.totalAmount);
-      setState((prevState) => ({ ...prevState, totalAmount: newTotalAmount, promoError: '' }));
+      const newTotalPrice = applyPromo(state.promocode, state.totalPrice);
+      setState((prevState) => ({ ...prevState, totalPrice: newTotalPrice, promoError: '' }));
     } else {
       setState((prevState) => ({ ...prevState, promoError }));
     }
@@ -47,10 +54,14 @@ export const OrderForm: React.FC = () => {
     console.log('Complete Order');
   };
 
+  useEffect(() => {
+    getTotalPrice();
+  }, []);
+
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <h2> ${state.totalAmount.toFixed(2)}</h2>
+        <h2> ${state.totalPrice.toFixed(2)}</h2>
         <span>
           If you have a promotional code, please enter it in the field below. Applying your promo
           code will allow you to see the discount applied to your total purchase. Don't miss out on
