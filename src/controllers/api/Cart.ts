@@ -42,7 +42,7 @@ export async function getCart() {
     ) {
       user.setUserToken(userTokenCache.get());
     }
-    return response.body;
+    return response.body.results;
   } catch (error) {
     throw new Error((error as Error).message);
   }
@@ -75,6 +75,36 @@ export async function cartAddLineItem(productId: string, quantity?: number) {
       user.setUserToken(userTokenCache.get());
     }
     return response.body;
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
+}
+
+export async function cartRemoveLineItem(lineItemId: string) {
+  const cartsArr = await getCart();
+
+  const cartId = cartsArr[cartsArr.length - 1].id;
+  const cartVersion = cartsArr[cartsArr.length - 1].version;
+  console.log(cartId);
+  const apiRoot = user.createApiRoot(user.ctpClientFlow);
+  try {
+    await apiRoot
+      .me()
+      .carts()
+      .withId({ ID: cartId })
+      .post({
+        body: {
+          version: cartVersion,
+          actions: [
+            {
+              action: 'removeLineItem',
+              lineItemId,
+              quantity: 1,
+            },
+          ],
+        },
+      })
+      .execute();
   } catch (error) {
     throw new Error((error as Error).message);
   }

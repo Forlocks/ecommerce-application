@@ -1,5 +1,9 @@
-export interface IOrderForm {
+export interface IOrderFormState {
   promocode: string;
   promoError: string;
-  totalAmount: number;
+  totalPrice: number;
+}
+
+export interface IOrderForm {
+  totalPrice: number;
 }
