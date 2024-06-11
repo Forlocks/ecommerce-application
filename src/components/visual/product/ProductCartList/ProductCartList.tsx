@@ -3,15 +3,16 @@ import React, { useState, useEffect } from 'react';
 import { LineItem } from '@commercetools/platform-sdk';
 import { ProductCartCard } from '../ProductCartCard/ProductCartCard';
 import { getCart } from '../../../../controllers/api/Cart';
+import { IProductCartList } from './IProductCartList';
 
-export const ProductCartList = () => {
+export const ProductCartList: React.FC<IProductCartList> = ({ updateTotalPrice }) => {
   const [cart, setCart] = useState<LineItem[]>([]);
 
   const fetchProducts = async () => {
     try {
       const cartArr = await getCart();
       setCart(cartArr[cartArr.length - 1].lineItems);
-      console.log(444);
+      updateTotalPrice();
     } catch (error) {
       console.error('Error:', (error as Error).message);
     }

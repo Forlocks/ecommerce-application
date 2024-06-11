@@ -1,10 +1,9 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { LargeButton } from '../../buttons/LargeButton/LargeButton';
-import { IOrderForm } from './IOrderForm';
+import { IOrderForm, IOrderFormState } from './IOrderForm';
 import { TextInput } from '../../inputs/TextInput/TextInput';
 import { MediumButton } from '../../buttons/MediumButton/MediumButton';
-import { getCart } from '../../../../controllers/api/Cart';
 
 const validatePromo = (promocode: string): string => {
   // Пример проверки промокода
@@ -21,18 +20,12 @@ const applyPromo = (promocode: string, currentAmount: number): number => {
   return currentAmount;
 };
 
-export const OrderForm: React.FC = () => {
-  const [state, setState] = useState<IOrderForm>({
+export const OrderForm: React.FC<IOrderForm> = ({ totalPrice }) => {
+  const [state, setState] = useState<IOrderFormState>({
     promocode: '',
     promoError: '',
-    totalPrice: 0,
+    totalPrice,
   });
-
-  const getTotalPrice = async () => {
-    const cartsArr = await getCart();
-    const totalPrice = cartsArr[cartsArr.length - 1].totalPrice.centAmount / 100;
-    setState((prevState) => ({ ...prevState, totalPrice }));
-  };
 
   const handlePromoChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newPromo = event.target.value.trim();
@@ -55,8 +48,8 @@ export const OrderForm: React.FC = () => {
   };
 
   useEffect(() => {
-    getTotalPrice();
-  }, []);
+    setState((prevState) => ({ ...prevState, totalPrice }));
+  }, [totalPrice]);
 
   return (
     <form onSubmit={handleSubmit}>
