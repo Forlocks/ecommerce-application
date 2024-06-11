@@ -80,12 +80,11 @@ export async function cartAddLineItem(productId: string, quantity?: number) {
   }
 }
 
-export async function cartRemoveLineItem(lineItemId: string) {
+export async function cartRemoveLineItem(lineItemId: string, quantity?: number) {
   const cartsArr = await getCart();
 
   const cartId = cartsArr[cartsArr.length - 1].id;
   const cartVersion = cartsArr[cartsArr.length - 1].version;
-  console.log(cartId);
   const apiRoot = user.createApiRoot(user.ctpClientFlow);
   try {
     await apiRoot
@@ -99,7 +98,7 @@ export async function cartRemoveLineItem(lineItemId: string) {
             {
               action: 'removeLineItem',
               lineItemId,
-              quantity: 1,
+              quantity,
             },
           ],
         },
