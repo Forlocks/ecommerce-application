@@ -85,7 +85,6 @@ export async function cartRemoveLineItem(lineItemId: string) {
 
   const cartId = cartsArr[cartsArr.length - 1].id;
   const cartVersion = cartsArr[cartsArr.length - 1].version;
-  console.log(cartId);
   const apiRoot = user.createApiRoot(user.ctpClientFlow);
   try {
     await apiRoot
