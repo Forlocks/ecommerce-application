@@ -4,7 +4,7 @@ import { Price } from '../ProductPrice/Price/Price';
 import { IProductCartCardProps } from './IProductCartCardProps';
 import { SmallButton } from '../../buttons/SmallButton/SmallButton';
 import { cartRemoveLineItem } from '../../../../controllers/api/Cart';
-
+import { QuantityInput } from '../../inputs/QuantityInput/QuantityInput';
 
 const formatPercentage = (percentage: number) => Math.round(percentage).toString();
 
@@ -45,6 +45,8 @@ export const ProductCartCard: React.FC<IProductCartCardProps> = ({
   const oldPrice = calculateOldPrice(price);
   const discountPercentage = calculateDiscountPercentage(price);
   const closeIcon = <img src="./assets/icons/cross.svg" alt="close" />;
+  const quantity = product.quantity;
+
   return (
     <div className={`product-card ${className}`}>
       {variant?.images?.[0] && (
@@ -79,12 +81,15 @@ export const ProductCartCard: React.FC<IProductCartCardProps> = ({
             }
           />
         )}
-        {/* <QuantityInput
+        <QuantityInput
           value={quantity}
-          onChange={handleChange}
-          onIncrease={handleIncrease}
-          onDecrease={handleDecrease}
-        /> */}
+          onChange={() => {}}
+          onIncrease={() => {}}
+          onDecrease={() => {}}
+          // onChange={handleChange}
+          // onIncrease={handleIncrease}
+          // onDecrease={handleDecrease}
+        />
       </div>
     </div>
   );
