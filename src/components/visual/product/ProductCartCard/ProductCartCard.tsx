@@ -39,7 +39,7 @@ export const ProductCartCard: React.FC<IProductCartCardProps> = ({
   className,
   onRemove,
 }) => {
-  //  console.log(';;', product);
+  // console.log(';;', product);
   const { name, price, variant, id, productId } = product;
   const discountedPrice = calculateDiscountedPrice(price);
   const oldPrice = calculateOldPrice(price);
@@ -93,7 +93,12 @@ export const ProductCartCard: React.FC<IProductCartCardProps> = ({
             }
           />
         )}
-        <QuantityInput value={quantity} onIncrease={handleIncrease} onDecrease={handleDecrease} />
+        <QuantityInput
+          value={quantity}
+          onChange={() => {}}
+          onIncrease={handleIncrease}
+          onDecrease={handleDecrease}
+        />
       </div>
     </div>
   );
