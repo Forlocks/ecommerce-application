@@ -5,6 +5,7 @@ import { IProductCartCardProps } from './IProductCartCardProps';
 import { SmallButton } from '../../buttons/SmallButton/SmallButton';
 import { cartRemoveLineItem } from '../../../../controllers/api/Cart';
 
+
 const formatPercentage = (percentage: number) => Math.round(percentage).toString();
 
 const calculateDiscountedPrice = (mainPrice?: {
@@ -78,6 +79,12 @@ export const ProductCartCard: React.FC<IProductCartCardProps> = ({
             }
           />
         )}
+        {/* <QuantityInput
+          value={quantity}
+          onChange={handleChange}
+          onIncrease={handleIncrease}
+          onDecrease={handleDecrease}
+        /> */}
       </div>
     </div>
   );
