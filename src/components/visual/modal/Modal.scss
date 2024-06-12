@@ -53,3 +53,14 @@
     transition: transform 0.3s ease;
   }
 }
+
+.accept-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  * {
+    font-weight: 800;
+    margin: auto
+  }
+}

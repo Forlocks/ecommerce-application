@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
-
 import { LineItem } from '@commercetools/platform-sdk';
 import { ProductCartCard } from '../ProductCartCard/ProductCartCard';
 import { cartRemoveLineItem, getCart } from '../../../../controllers/api/Cart';
 import { IProductCartList } from './IProductCartList';
 import { LargeButton } from '../../buttons/LargeButton/LargeButton';
 
-export const ProductCartList: React.FC<IProductCartList> = ({ updateTotalPrice }) => {
+export const ProductCartList: React.FC<IProductCartList> = ({
+  updateTotalPrice,
+  openModal,
+  closeModal,
+}) => {
   const [cart, setCart] = useState<LineItem[]>([]);
 
   const fetchProducts = async () => {
@@ -20,11 +23,23 @@ export const ProductCartList: React.FC<IProductCartList> = ({ updateTotalPrice }
   };
 
   const cleanCart = async () => {
+    if (closeModal) {
+      closeModal();
+    }
     await cart.reduce(async (promise, cartItem) => {
       await promise;
       return cartRemoveLineItem(cartItem.id);
     }, Promise.resolve());
     fetchProducts();
+  };
+
+  const handleButtonCleanClick = () => {
+    openModal(
+      <div className="accept-modal">
+        <p>Are you sure you want to remove all items from your cart?</p>
+        <LargeButton onClick={cleanCart}>YES</LargeButton>
+      </div>,
+    );
   };
 
   useEffect(() => {
@@ -42,7 +57,9 @@ export const ProductCartList: React.FC<IProductCartList> = ({ updateTotalPrice }
           onRemove={fetchProducts}
         />
       ))}
-      {cart.length !== 0 && <LargeButton onClick={cleanCart}>Clean the cart</LargeButton>}
+      {cart.length !== 0 && (
+        <LargeButton onClick={handleButtonCleanClick}>Clean the cart</LargeButton>
+      )}
     </div>
   );
 };
