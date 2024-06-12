@@ -4,20 +4,14 @@ import { LargeButton } from '../../buttons/LargeButton/LargeButton';
 import { IOrderForm, IOrderFormState } from './IOrderForm';
 import { TextInput } from '../../inputs/TextInput/TextInput';
 import { MediumButton } from '../../buttons/MediumButton/MediumButton';
+import { addDiscountCode } from '../../../../controllers/api/Cart';
 
 const validatePromo = (promocode: string): string => {
   // Пример проверки промокода
-  if (promocode === 'DISCOUNT10') {
+  if (promocode === 'DISCOUNT10' || promocode === 'DECORATION35') {
     return '';
   }
   return 'Invalid promocode';
-};
-
-const applyPromo = (promocode: string, currentAmount: number): number => {
-  if (promocode === 'DISCOUNT10') {
-    return currentAmount * 0.9; // Скидка 10%
-  }
-  return currentAmount;
 };
 
 export const OrderForm: React.FC<IOrderForm> = ({ totalPrice }) => {
@@ -27,6 +21,14 @@ export const OrderForm: React.FC<IOrderForm> = ({ totalPrice }) => {
     totalPrice,
   });
 
+  const applyPromo = async (promocode: string) => {
+    if (promocode === 'DISCOUNT10' || promocode === 'DECORATION35') {
+      const response = await addDiscountCode(promocode);
+      const newTotalPrice = response.body.totalPrice.centAmount / 100;
+      setState((prevState) => ({ ...prevState, totalPrice: newTotalPrice }));
+    }
+  };
+
   const handlePromoChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const newPromo = event.target.value.trim();
     setState((prevState) => ({ ...prevState, promocode: newPromo, promoError: '' }));
@@ -35,8 +37,7 @@ export const OrderForm: React.FC<IOrderForm> = ({ totalPrice }) => {
   const handleApplyPromo = () => {
     const promoError = validatePromo(state.promocode);
     if (promoError === '') {
-      const newTotalPrice = applyPromo(state.promocode, state.totalPrice);
-      setState((prevState) => ({ ...prevState, totalPrice: newTotalPrice, promoError: '' }));
+      applyPromo(state.promocode);
     } else {
       setState((prevState) => ({ ...prevState, promoError }));
     }

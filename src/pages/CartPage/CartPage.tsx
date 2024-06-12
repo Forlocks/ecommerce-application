@@ -22,9 +22,7 @@ export const CartPage: React.FC<IPage> = function () {
       <div className="cart_container">
         <ProductCartList updateTotalPrice={updateTotalPrice} />
       </div>
-      <div className="cart_aside">
-        <OrderForm totalPrice={totalPrice} />
-      </div>
+      <div className="cart_aside">{totalPrice > 0 && <OrderForm totalPrice={totalPrice} />}</div>
     </div>
   );
 };
