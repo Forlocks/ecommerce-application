@@ -50,7 +50,7 @@ export const AboutUsPage: React.FC<IPage> = function () {
             <p>Front-End Developer, UI/UX Designer, Content Manager</p>
             <h3>Collaboration:</h3>
             <p>
-              She worked closely with the development team on GitHub, routing, and integrating with
+              Worked closely with the development team on GitHub, routing, and integrating with
               commercetools.
             </p>
             <h3>Contributions:</h3>
