@@ -3,7 +3,7 @@ import { ProductImage } from '../ProductImage/ProductImage';
 import { Price } from '../ProductPrice/Price/Price';
 import { IProductCartCardProps } from './IProductCartCardProps';
 import { SmallButton } from '../../buttons/SmallButton/SmallButton';
-import { cartAddLineItem, cartRemoveLineItem } from '../../../../controllers/api/Cart';
+import { cartAddLineItem, cartRemoveLineItem, getCart } from '../../../../controllers/api/Cart';
 import { QuantityInput } from '../../inputs/QuantityInput/QuantityInput';
 
 const formatPercentage = (percentage: number) => Math.round(percentage).toString();
@@ -39,7 +39,6 @@ export const ProductCartCard: React.FC<IProductCartCardProps> = ({
   className,
   onRemove,
 }) => {
-  // console.log(';;', product);
   const { name, price, variant, id, productId } = product;
   const discountedPrice = calculateDiscountedPrice(price);
   const oldPrice = calculateOldPrice(price);
@@ -48,9 +47,18 @@ export const ProductCartCard: React.FC<IProductCartCardProps> = ({
   let quantity = product.quantity;
 
   const handleDecrease = async () => {
-    quantity--;
-    await cartRemoveLineItem(id, 1);
-    onRemove();
+    const currentCart = await getCart();
+    const currentLineItems = currentCart[currentCart.length - 1].lineItems;
+    const containsId = currentLineItems.some((item) => item.id === id);
+    if (containsId) {
+      quantity--;
+      try {
+        await cartRemoveLineItem(id, 1);
+        onRemove();
+      } catch (error) {
+        throw new Error((error as Error).message);
+      }
+    }
   };
 
   const handleIncrease = async () => {
