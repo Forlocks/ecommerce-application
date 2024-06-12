@@ -82,7 +82,6 @@ export async function cartAddLineItem(productId: string, quantity?: number) {
 
 export async function cartRemoveLineItem(lineItemId: string, quantity?: number) {
   const cartsArr = await getCart();
-
   const cartId = cartsArr[cartsArr.length - 1].id;
   const cartVersion = cartsArr[cartsArr.length - 1].version;
   const apiRoot = user.createApiRoot(user.ctpClientFlow);
@@ -99,6 +98,33 @@ export async function cartRemoveLineItem(lineItemId: string, quantity?: number) 
               action: 'removeLineItem',
               lineItemId,
               quantity,
+            },
+          ],
+        },
+      })
+      .execute();
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
+}
+
+export async function addDiscountCode(discountCode: string) {
+  const cartsArr = await getCart();
+  const cartId = cartsArr[cartsArr.length - 1].id;
+  const cartVersion = cartsArr[cartsArr.length - 1].version;
+  const apiRoot = user.createApiRoot(user.ctpClientFlow);
+  try {
+    return await apiRoot
+      .me()
+      .carts()
+      .withId({ ID: cartId })
+      .post({
+        body: {
+          version: cartVersion,
+          actions: [
+            {
+              action: 'addDiscountCode',
+              code: discountCode,
             },
           ],
         },
