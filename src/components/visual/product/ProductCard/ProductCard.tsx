@@ -50,7 +50,7 @@ export const ProductCard: React.FC<IProductCardProps> = ({ product, className, o
   };
 
   return (
-    <div className={`product-card ${className}`}>
+    <div>
       <Link to={productUrl} className={`product-card ${className}`}>
         {masterVariant?.images?.[0] && (
           <ProductImage url={masterVariant.images[1].url} alt="Product Image" />
