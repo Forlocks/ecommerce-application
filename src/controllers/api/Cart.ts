@@ -48,7 +48,7 @@ export async function getCart() {
   }
 }
 
-export async function cartAddLineItem(productId: string, quantity?: number) {
+export async function cartAddLineItem(productId?: string, quantity?: number, variantId?: number) {
   if (localStorage.getItem('userState') === 'false' || !localStorage.getItem('userState')) {
     await user.setAnonymousFlow();
   }
@@ -64,7 +64,7 @@ export async function cartAddLineItem(productId: string, quantity?: number) {
       .post({
         body: {
           version,
-          actions: [{ action: 'addLineItem', productId, quantity }],
+          actions: [{ action: 'addLineItem', productId, quantity, variantId }],
         },
       })
       .execute();
