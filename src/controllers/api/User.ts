@@ -65,8 +65,6 @@ export class User {
     }
   }
 
-  // ----
-
   async setAnonymousFlow() {
     let anonymousId;
     if (!localStorage.getItem('anonymousId') || localStorage.getItem('anonymousId') === null) {
@@ -99,8 +97,6 @@ export class User {
     localStorage.setItem('anonymousId', anonymousId);
     return anonymousId;
   }
-
-  // ----
 
   createApiPasswordAuthClient(customerData: CustomerSignin) {
     const passwordAuthMiddlewareOptions: PasswordAuthMiddlewareOptions = {
@@ -144,6 +140,12 @@ export class User {
           this.createApiPasswordAuthClient(customerData);
           const apiRoot = this.createApiRoot(this.ctpClientFlow);
           try {
+            userTokenCache.set({
+              token: '',
+              expirationTime: 0,
+              refreshToken: '',
+            });
+            localStorage.setItem('anonymousId', '');
             await apiRoot.me().login().post({ body: customerData }).execute();
 
             this.setUserToken(userTokenCache.get());
