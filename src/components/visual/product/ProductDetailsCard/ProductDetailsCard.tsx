@@ -15,6 +15,7 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
   product,
   className,
   onButtonClick,
+  cartProductList,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
     return null;
   };
 
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(!!cartProductList?.includes(product.id));
   const handleButtonClick = () => {
     onButtonClick();
     setIsButtonDisabled(true);
