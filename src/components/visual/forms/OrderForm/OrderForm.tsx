@@ -8,7 +8,7 @@ import { addDiscountCode } from '../../../../controllers/api/Cart';
 
 const validatePromo = (promocode: string): string => {
   // Пример проверки промокода
-  if (promocode === 'DISCOUNT10' || promocode === 'DECORATION35') {
+  if (promocode === 'DISCOUNT10' || promocode === 'DISCOUNT35') {
     return '';
   }
   return 'Invalid promocode';
@@ -22,7 +22,7 @@ export const OrderForm: React.FC<IOrderForm> = ({ totalPrice }) => {
   });
 
   const applyPromo = async (promocode: string) => {
-    if (promocode === 'DISCOUNT10' || promocode === 'DECORATION35') {
+    if (promocode === 'DISCOUNT10' || promocode === 'DISCOUNT35') {
       const response = await addDiscountCode(promocode);
       const newTotalPrice = response.body.totalPrice.centAmount / 100;
       setState((prevState) => ({ ...prevState, totalPrice: newTotalPrice }));
