@@ -8,6 +8,7 @@ import './ProductDetailsPage.scss';
 
 import { IPage } from '../IPage';
 import { getCart } from '../../controllers/api/Cart';
+import { CartProduct } from '../../components/visual/product/ProductCard/IProductCardProps';
 
 export const ProductDetailsPage: React.FC<IPage> = () => {
   const { id } = useParams<{ id: string }>();
@@ -15,15 +16,15 @@ export const ProductDetailsPage: React.FC<IPage> = () => {
 
   // ---
 
-  const [cartProductList, setCartProductList] = useState<string[]>([]);
+  const [cartProductList, setCartProductList] = useState<CartProduct[]>([]);
   const getCartProducts = async () => {
     const carts = await getCart();
     if (carts.length) {
       const cartProducts = carts[carts.length - 1].lineItems;
-      const cartProductsIds: string[] = [];
-      cartProducts.forEach((productCart) => {
-        cartProductsIds.push(productCart.productId);
-      });
+      const cartProductsIds = cartProducts.map((productCart) => ({
+        id: productCart.productId,
+        variant: productCart.variant.id,
+      }));
       setCartProductList(cartProductsIds);
     }
   };
@@ -40,7 +41,6 @@ export const ProductDetailsPage: React.FC<IPage> = () => {
         if (id) {
           const fetchedProduct = await getProductID(id);
           setProduct(fetchedProduct);
-          console.log(fetchedProduct);
         }
       } catch (error) {
         console.error('Error:', (error as Error).message);
@@ -60,6 +60,7 @@ export const ProductDetailsPage: React.FC<IPage> = () => {
       className="product-details_page"
       onButtonClick={() => {
         console.log('Button clicked!');
+        getCartProducts();
       }}
       cartProductList={cartProductList}
     />

@@ -11,12 +11,13 @@ import { ProductImage } from '../ProductImage/ProductImage';
 import { Price } from '../ProductPrice/Price/Price';
 import { ImageGallery } from '../../slider/SliderProductPage/SliderProductPage';
 import { cartAddLineItem } from '../../../../controllers/api/Cart';
+import { CartProduct } from '../ProductCard/IProductCardProps';
 
 export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
   product,
   className,
-  onButtonClick,
   cartProductList,
+  onButtonClick,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -38,9 +39,16 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
     return null;
   };
 
-  const [isButtonDisabled, setIsButtonDisabled] = useState(!!cartProductList.includes(product.id));
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  useEffect(() => {
+    const isProductInCart = cartProductList.some(
+      (item) =>
+        (item as CartProduct).id === product.id &&
+        (item as CartProduct).variant === selectedVariant.id,
+    );
+    setIsButtonDisabled(isProductInCart);
+  }, [cartProductList, product.id, selectedVariant.id]);
   const handleButtonClick = () => {
-    onButtonClick();
     cartAddLineItem(product.id, undefined, selectedVariant.id);
     setIsButtonDisabled(true);
   };
@@ -80,6 +88,7 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
   const handleVariantClick = (variant: ProductVariant) => {
     setSelectedVariant(variant);
     setImages(variant.images?.map((image) => image.url) || []);
+    onButtonClick();
   };
 
   const variantsWithMaster = [product.masterVariant, ...product.variants];

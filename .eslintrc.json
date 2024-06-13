@@ -40,7 +40,8 @@
     "no-nested-ternary": "off",
     "operator-linebreak": "off",
     "object-curly-newline": ["error", { "multiline": true, "consistent": true }],
-    "@typescript-eslint/indent": "off"
+    "@typescript-eslint/indent": "off",
+    "implicit-arrow-linebreak": "off"
   },
   "noInlineConfig": true
 }
