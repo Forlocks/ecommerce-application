@@ -131,46 +131,37 @@ export const AboutUsPage: React.FC<IPage> = function () {
           <div className="bio_container">
             <img src="./assets/images/Forlocks.webp" alt="Forlocks" />
             <div className="bio_name">
-              <h3>Alexey</h3>
+              <h3>Aleksey</h3>
               <a href="https://github.com/Forlocks">
                 <h3>Forlocks</h3>
               </a>
             </div>
             <h4>Biography:</h4>
             <span>
-              Anna lives in the city of Saratov. She graduated from the Physics Faculty of Saratov
-              State University and later completed her studies at the Bogolyubov Art School. Anna
-              has been working as a UI/UX designer.
+              Aleksey lives in St. Petersburg, completing his 4th year of studies at the State
+              University of Aerospace Instrumentation.
             </span>
           </div>
           <div className="role_container">
             <h3>Role:</h3>
-            <p>Front-End Developer, UI/UX Designer, Content Manager</p>
+            <p>Front-End Developer, Team Leader</p>
             <h3>Collaboration:</h3>
             <p>
-              She worked closely with the development team on GitHub, routing, and integrating with
-              commercetools.
+              Aleksey was the leader along with everyone else. Worked with the team using GitHub and
+              YouGile.
             </p>
             <h3>Contributions:</h3>
             <ul>
               <li>
                 <p>
-                  UI/UX Design: Anna played a crucial role in creating the visual elements of our
-                  website. Her designs focus on enhancing user experience through intuitive and
-                  attractive interfaces.
+                  Visual Components: Created separate visual components, such as sliders or modal
+                  windows.
                 </p>
               </li>
               <li>
                 <p>
-                  Front-End Development: She was responsible for implementing her designs into the
-                  actual website, ensuring that the visual aspects were perfectly aligned with the
-                  functional components.
-                </p>
-              </li>
-              <li>
-                <p>
-                  Content Management: Anna also managed the content and product listings for our
-                  e-commerce platform, ensuring that all information was accurate and up-to-date.
+                  Routing: Responsible for routing and accessing application pages, from main pages
+                  to their subcategories.
                 </p>
               </li>
             </ul>

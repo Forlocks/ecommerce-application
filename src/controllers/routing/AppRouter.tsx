@@ -143,7 +143,7 @@ export const AppRouter = () => {
               }
             />
           </Route>
-          <Route path="cart" element={<CartPage openModal={openModal} />} />
+          <Route path="cart" element={<CartPage openModal={openModal} closeModal={closeModal} />} />
           <Route path="about" element={<AboutUsPage openModal={openModal} />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />

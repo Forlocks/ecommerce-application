@@ -5,7 +5,7 @@ import { OrderForm } from '../../components/visual/forms/OrderForm/OrderForm';
 import { ProductCartList } from '../../components/visual/product/ProductCartList/ProductCartList';
 import { getCart } from '../../controllers/api/Cart';
 
-export const CartPage: React.FC<IPage> = function () {
+export const CartPage: React.FC<IPage> = function ({ openModal, closeModal }) {
   const [totalPrice, setTotalPrice] = useState(0);
 
   const updateTotalPrice = async () => {
@@ -20,7 +20,11 @@ export const CartPage: React.FC<IPage> = function () {
         <h1>Shoping cart</h1>
       </div>
       <div className="cart_container">
-        <ProductCartList updateTotalPrice={updateTotalPrice} />
+        <ProductCartList
+          updateTotalPrice={updateTotalPrice}
+          openModal={openModal}
+          closeModal={closeModal}
+        />
       </div>
       <div className="cart_aside">{totalPrice > 0 && <OrderForm totalPrice={totalPrice} />}</div>
     </div>
