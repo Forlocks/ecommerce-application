@@ -49,7 +49,6 @@ export const ProductCard: React.FC<IProductCardProps> = ({
   const productUrl = `/product/${product.id}`;
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(!!cartProductList?.includes(product.id));
-  // if (cartProductList?.includes(product.id)) setIsButtonDisabled(true);
   const handleButtonClick = (event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();

@@ -7,10 +7,32 @@ import { getProductID } from '../../controllers/api/Products';
 import './ProductDetailsPage.scss';
 
 import { IPage } from '../IPage';
+import { cartAddLineItem, getCart } from '../../controllers/api/Cart';
 
 export const ProductDetailsPage: React.FC<IPage> = () => {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<ProductProjection | null>(null);
+
+  // ---
+
+  const [cartProductList, setCartProductList] = useState<string[]>([]);
+  const getCartProducts = async () => {
+    const carts = await getCart();
+    if (carts.length) {
+      const cartProducts = carts[carts.length - 1].lineItems;
+      const cartProductsIds: string[] = [];
+      cartProducts.forEach((productCart) => {
+        cartProductsIds.push(productCart.productId);
+      });
+      setCartProductList(cartProductsIds);
+    }
+  };
+
+  useEffect(() => {
+    getCartProducts();
+  }, []);
+
+  // ---
 
   useEffect(() => {
     async function fetchProduct() {
@@ -37,8 +59,10 @@ export const ProductDetailsPage: React.FC<IPage> = () => {
       product={product}
       className="product-details_page"
       onButtonClick={() => {
+        cartAddLineItem(product.id);
         console.log('Button clicked!');
       }}
+      cartProductList={cartProductList}
     />
   );
 };

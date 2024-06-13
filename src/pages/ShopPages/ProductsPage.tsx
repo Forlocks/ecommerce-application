@@ -31,7 +31,6 @@ export const ProductsPage: React.FC<IShopPages> = ({
         cartProductsIds.push(product.productId);
       });
       setCartProductList(cartProductsIds);
-      console.log(cartProductsIds);
     }
   };
 
