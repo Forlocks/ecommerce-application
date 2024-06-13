@@ -36,6 +36,12 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
     return null;
   };
 
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const handleButtonClick = () => {
+    onButtonClick();
+    setIsButtonDisabled(true);
+  };
+
   const calculateDiscountPercentage = (mainPrice?: {
     discounted?: { value: { centAmount: number } };
     value: { centAmount: number };
@@ -151,7 +157,12 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
             ))}
           </div>
         </div>
-        <LargeButton className="product-details-button" onClick={onButtonClick}>
+        <LargeButton
+          className="product-details-button"
+          disabled={isButtonDisabled}
+          disabledText="In Cart"
+          onClick={handleButtonClick}
+        >
           Add to cart
         </LargeButton>
       </div>

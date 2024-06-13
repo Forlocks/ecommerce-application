@@ -58,14 +58,16 @@ export const MainPage: React.FC<IPage> = function () {
       </div>
       <div className="discount-second">
         <div className="discount-second-info">
-          <h2>Get 35% off on decorations</h2>
+          <h2>Get a 35% off on every 3rd Item</h2>
           <span>
-            Unlock a 35% discount on all decor items in your cart with the promo code DECORATION35,
-            available for a month. This one-time offer activates upon code application, bringing a
-            touch of elegance to your space at an unbeatable price. Don't let this opportunity slip
-            away—enhance your surroundings with our exquisite decor collection today!
+            Receive a 35% discount on the least expensive decor item in your cart with the promo
+            code DISCOUNT35 when you have three or more items. This offer invites you to save more
+            as you beautify your space with our elegant decor selection. Take advantage of this deal
+            time after time, and add a touch of sophistication to your home with our diverse range
+            of decor pieces. Don't miss this opportunity to elevate your interior with a special
+            touch at an exceptional value.
           </span>
-          <h3>DECORATION35</h3>
+          <h3>DISCOUNT35</h3>
           <LargeButton onClick={apply35ProsentDiscountCode}>use discount</LargeButton>
         </div>
         <div className="discount-second-image">
