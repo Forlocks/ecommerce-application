@@ -2,10 +2,15 @@ import React, { FC } from 'react';
 import { BasicButton } from '../BasicButton/BasicButton';
 import { ILargeButtonProps } from './ILargeButton';
 
-export const LargeButton: FC<ILargeButtonProps> = ({ children, disabled, ...props }) => (
+export const LargeButton: FC<ILargeButtonProps> = ({
+  children,
+  disabled,
+  disabledText,
+  ...props
+}) => (
   <BasicButton {...props} className="button button--large" disabled={disabled}>
     <div className="button__content">
-      {children}
+      {disabled ? disabledText : children}
       <div className="button__arrow">
         <svg
           width="69"

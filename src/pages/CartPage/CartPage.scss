@@ -130,11 +130,11 @@ p {
 
   p {
     &:first-child {
-      font-weight: 600;
+      font-weight: 500;
     }
 
     &:nth-child(2) {
-      font-weight: 700;
+      font-weight: 600;
     }
   }
 }
