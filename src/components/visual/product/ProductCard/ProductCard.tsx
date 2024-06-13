@@ -34,7 +34,12 @@ const calculateDiscountPercentage = (mainPrice?: {
   return null;
 };
 
-export const ProductCard: React.FC<IProductCardProps> = ({ product, className, onButtonClick }) => {
+export const ProductCard: React.FC<IProductCardProps> = ({
+  product,
+  className,
+  onButtonClick,
+  cartProductList,
+}) => {
   const { name, masterVariant, description } = product;
   const mainPrice = masterVariant?.prices?.[0];
   const discountedPrice = calculateDiscountedPrice(mainPrice);
@@ -43,7 +48,8 @@ export const ProductCard: React.FC<IProductCardProps> = ({ product, className, o
 
   const productUrl = `/product/${product.id}`;
 
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(!!cartProductList?.includes(product.id));
+  // if (cartProductList?.includes(product.id)) setIsButtonDisabled(true);
   const handleButtonClick = (event: React.MouseEvent) => {
     event.preventDefault();
     event.stopPropagation();

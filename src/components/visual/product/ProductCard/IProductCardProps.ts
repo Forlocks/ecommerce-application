@@ -4,4 +4,5 @@ export interface IProductCardProps {
   product: ProductProjection;
   onButtonClick: () => void;
   className?: string;
+  cartProductList?: string[];
 }

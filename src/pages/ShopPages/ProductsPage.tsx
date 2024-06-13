@@ -4,7 +4,7 @@ import { ProductProjection } from '@commercetools/platform-sdk';
 import { ProductCard } from '../../components/visual/product/ProductCard/ProductCard';
 import { searchProduct } from '../../controllers/api/Products';
 import { IShopPages } from './IShopPages';
-import { cartAddLineItem } from '../../controllers/api/Cart';
+import { cartAddLineItem, getCart } from '../../controllers/api/Cart';
 
 export const ProductsPage: React.FC<IShopPages> = ({
   selectedColors,
@@ -18,7 +18,27 @@ export const ProductsPage: React.FC<IShopPages> = ({
 }) => {
   const [products, setProducts] = useState<ProductProjection[]>([]);
   const [availableProducts, setAvailableProducts] = useState<ProductProjection[]>([]);
+  const [cartProductList, setCartProductList] = useState<string[]>([]);
   const isInitialMount = useRef(true);
+
+  // ---
+  const getCartProducts = async () => {
+    const carts = await getCart();
+    if (carts.length) {
+      const cartProducts = carts[carts.length - 1].lineItems;
+      const cartProductsIds: string[] = [];
+      cartProducts.forEach((product) => {
+        cartProductsIds.push(product.productId);
+      });
+      setCartProductList(cartProductsIds);
+      console.log(cartProductsIds);
+    }
+  };
+
+  useEffect(() => {
+    getCartProducts();
+  }, []);
+  // ---
 
   useEffect(() => {
     const fetchFilteredProducts = async () => {
@@ -114,6 +134,7 @@ export const ProductsPage: React.FC<IShopPages> = ({
             console.log(`Button click on shop card ${product.id}`);
             cartAddLineItem(product.id);
           }}
+          cartProductList={cartProductList}
         />
       ))}
     </div>
