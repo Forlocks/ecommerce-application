@@ -7,7 +7,7 @@ import { getProductID } from '../../controllers/api/Products';
 import './ProductDetailsPage.scss';
 
 import { IPage } from '../IPage';
-import { cartAddLineItem, getCart } from '../../controllers/api/Cart';
+import { getCart } from '../../controllers/api/Cart';
 
 export const ProductDetailsPage: React.FC<IPage> = () => {
   const { id } = useParams<{ id: string }>();
@@ -59,7 +59,6 @@ export const ProductDetailsPage: React.FC<IPage> = () => {
       product={product}
       className="product-details_page"
       onButtonClick={() => {
-        cartAddLineItem(product.id);
         console.log('Button clicked!');
       }}
       cartProductList={cartProductList}

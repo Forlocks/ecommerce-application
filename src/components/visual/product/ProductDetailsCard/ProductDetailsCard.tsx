@@ -10,6 +10,7 @@ import { LargeButton } from '../../buttons/LargeButton/LargeButton';
 import { ProductImage } from '../ProductImage/ProductImage';
 import { Price } from '../ProductPrice/Price/Price';
 import { ImageGallery } from '../../slider/SliderProductPage/SliderProductPage';
+import { cartAddLineItem } from '../../../../controllers/api/Cart';
 
 export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
   product,
@@ -37,9 +38,10 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
     return null;
   };
 
-  const [isButtonDisabled, setIsButtonDisabled] = useState(!!cartProductList?.includes(product.id));
+  const [isButtonDisabled, setIsButtonDisabled] = useState(!!cartProductList.includes(product.id));
   const handleButtonClick = () => {
     onButtonClick();
+    cartAddLineItem(product.id, undefined, selectedVariant.id);
     setIsButtonDisabled(true);
   };
 
@@ -149,7 +151,9 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
                 key={index}
                 className={` ${variant === selectedVariant ? 'selected-variant' : ''}`}
                 // className={`${index + 1}`}
-                onClick={() => handleVariantClick(variant)}
+                onClick={() => {
+                  handleVariantClick(variant);
+                }}
               >
                 {variant.images && variant.images.length > 0 && (
                   <ProductImage url={variant.images[0].url} alt={`Variant ${index + 1} Image`} />

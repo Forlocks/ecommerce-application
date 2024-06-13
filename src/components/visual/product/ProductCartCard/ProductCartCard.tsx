@@ -49,6 +49,7 @@ export const ProductCartCard: React.FC<IProductCartCardProps> = ({
   const handleDecrease = async () => {
     const currentCart = await getCart();
     const currentLineItems = currentCart[currentCart.length - 1].lineItems;
+    console.log(currentLineItems);
     const containsId = currentLineItems.some((item) => item.id === id);
     if (containsId) {
       quantity--;
@@ -63,7 +64,7 @@ export const ProductCartCard: React.FC<IProductCartCardProps> = ({
 
   const handleIncrease = async () => {
     quantity++;
-    await cartAddLineItem(productId);
+    await cartAddLineItem(productId, undefined, product.variant.id);
     onRemove();
   };
 
