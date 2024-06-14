@@ -89,40 +89,35 @@ export const AboutUsPage: React.FC<IPage> = function () {
             </div>
             <h4>Biography:</h4>
             <span>
-              Anna lives in the city of Saratov. She graduated from the Physics Faculty of Saratov
-              State University and later completed her studies at the Bogolyubov Art School. Anna
-              has been working as a UI/UX designer.
+              Alexey is from Minsk but currently is based in Sofia. He graduated from Belarusian
+              State University of Informatics and Radioelectronics, Faculty of Information
+              Technology and Control.
             </span>
           </div>
           <div className="role_container">
             <h3>Role:</h3>
-            <p>Front-End Developer, UI/UX Designer, Content Manager</p>
+            <p>Front-End Developer</p>
             <h3>Collaboration:</h3>
             <p>
-              She worked closely with the development team on GitHub, routing, and integrating with
-              commercetools.
+              Worked with the development team on GitHub, contributed significantly to the
+              integration with CommerceTools.
             </p>
             <h3>Contributions:</h3>
             <ul>
               <li>
                 <p>
-                  UI/UX Design: Anna played a crucial role in creating the visual elements of our
-                  website. Her designs focus on enhancing user experience through intuitive and
-                  attractive interfaces.
+                  Integration with commercetools: Installed, customized and used the TypeScript SDK
+                  to integrate our commerce application with Composable Commerce APIs.
                 </p>
               </li>
               <li>
                 <p>
-                  Front-End Development: She was responsible for implementing her designs into the
-                  actual website, ensuring that the visual aspects were perfectly aligned with the
-                  functional components.
+                  Front-End Development: Created and extended visual components. Designed and
+                  implemented the component for displaying, adding and editing customer addresses.
                 </p>
               </li>
               <li>
-                <p>
-                  Content Management: Anna also managed the content and product listings for our
-                  e-commerce platform, ensuring that all information was accurate and up-to-date.
-                </p>
+                <p>CommerceTools Project: Created and configured the project's customization.</p>
               </li>
             </ul>
           </div>
