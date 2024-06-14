@@ -159,7 +159,6 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
               <div
                 key={index}
                 className={` ${variant === selectedVariant ? 'selected-variant' : ''}`}
-                // className={`${index + 1}`}
                 onClick={() => {
                   handleVariantClick(variant);
                 }}

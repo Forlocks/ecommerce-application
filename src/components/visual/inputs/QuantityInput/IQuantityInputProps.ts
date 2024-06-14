@@ -3,4 +3,5 @@ export interface IQuantityInputProps {
   onChange: (value: number) => void;
   onIncrease: () => void;
   onDecrease: () => void;
+  className?: string;
 }
