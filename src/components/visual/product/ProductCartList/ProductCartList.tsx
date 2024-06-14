@@ -15,8 +15,10 @@ export const ProductCartList: React.FC<IProductCartList> = ({
   const fetchProducts = async () => {
     try {
       const cartArr = await getCart();
-      setCart(cartArr[cartArr.length - 1].lineItems);
-      updateTotalPrice();
+      if (cartArr.length) {
+        setCart(cartArr[cartArr.length - 1].lineItems);
+        updateTotalPrice();
+      }
     } catch (error) {
       console.error('Error:', (error as Error).message);
     }
