@@ -30,6 +30,16 @@
   flex-shrink: 2;
   width: 100%;
   align-self: flex-start;
+  .button {
+    margin-left: 24px;
+    margin-top: 24px;
+  }
+  .quantity-input {
+    .button {
+      margin-left: 0px;
+    margin-top: 0px;
+    }
+  }
 }
 
 
@@ -68,9 +78,9 @@
   ::before {
     content: '';
     position: absolute;
-    left: 32px; /* Ширина паддинга слева */
-    right: 32px; /* Ширина паддинга справа */
-    top: -1px; /* Отступ подчеркивания от нижней границы элемента */
+    left: 32px;
+    right: 32px;
+    top: -1px; 
     border-top: 1px solid $grey-color;
   }
 
@@ -211,6 +221,8 @@ p {
   justify-content: space-between;
   align-items: center;
   margin-top: 8px;
+  white-space: nowrap;
+  gap: 16px;
 }
 
 .price-container {
@@ -218,15 +230,18 @@ p {
   flex-direction: row;
   gap: 12px;
   align-items: baseline;
+  white-space: nowrap;
 
   & h3:nth-child(2){
     margin-left: 24px;
     color: $grey-color;
     text-decoration: line-through;
+    white-space: nowrap;
   }
 
   & h3:nth-child(3){
     color: $grey-color;
+    white-space: nowrap;
   }
 }
 
@@ -244,4 +259,83 @@ p {
   flex-direction: column;
   gap: 4px;
 }
+
+.empty-cart-message {
+  color: $grey-color;
+}
+
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .cart_page {
+    grid-template-columns: 1fr;
+  
+  }
+  .cart_container {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+  }
+  
+  
+  .cart_aside {
+    width: 100%;
+    margin-top: 24px;
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
+   
+    form {
+           span {
+         max-width: 100%;
+      }
+    }
+  }
+ }
+
+@media (max-width: 768px) {
+  .cart_page {
+    grid-template-columns: 1fr;
+  padding: 32px 16px;
+  }
+  .cart_container {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+    padding: 0px;
+    .button {
+      margin-left: 0px;
+      margin-top: 24px;
+    }
+  }
+  
+  
+  .cart_aside {
+    width: 100%;
+    min-width: 100%;
+    margin-top: 24px;
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
+   padding: 0px;
+    form {
+           span {
+         max-width: 100%;
+      }
+    }
+  }
+
+  .product-card.cart{
+    padding: 24px 0px;
+    ::before {
+      
+      left: 0px;
+      right: 0px;
+      top: -1px; 
+      border-top: 1px solid $grey-color;
+    }
+  }
+
+  .order-buttons {
+    flex-direction: column;
+    align-items: start;
+  }
+ }
+
+
 

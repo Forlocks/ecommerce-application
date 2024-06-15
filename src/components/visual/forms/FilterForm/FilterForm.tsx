@@ -271,14 +271,6 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
       </div>
       <div className="filter-container">
         <span>Filter by...</span>
-        {/* <ListInput
-          label="Material"
-          placeholder="Choose a material"
-          options={['Ceramic', 'Glass']}
-          value={materialFilter}
-          onChange={handleMaterialFilterChange}
-          name="materialFilter"
-        /> */}
         <ListInput
           label="Style"
           placeholder="Choose a style"

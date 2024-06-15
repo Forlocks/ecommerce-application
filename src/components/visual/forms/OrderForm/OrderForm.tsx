@@ -11,7 +11,7 @@ const validatePromo = (promocode: string, appliedPromoCodes: string[]): string =
   if (promocode === 'DISCOUNT10' || promocode === 'DISCOUNT35') {
     // Проверка, что промокод еще не был применен
     if (appliedPromoCodes.includes(promocode)) {
-      return 'This promocode has already been applied';
+      return 'аlready applied';
     }
     return '';
   }
@@ -49,16 +49,13 @@ export const OrderForm: React.FC<IOrderForm> = ({
     if (promocode === 'DISCOUNT10' || promocode === 'DISCOUNT35') {
       const response = await addDiscountCode(promocode);
       const newTotalPrice = response.body.totalPrice.centAmount / 100;
-      // const newOriginalTotalPrice = response.body.originalTotalPrice.centAmount / 100;
-      // const discountPercentage = ((newOriginalTotalPrice - newTotalPrice) / newOriginalTotalPrice) * 100;
       const discountPercentage = ((originalTotalPrice - newTotalPrice) / originalTotalPrice) * 100;
 
       setState((prevState) => ({
         ...prevState,
         totalPrice: newTotalPrice,
-        // originalTotalPrice: newOriginalTotalPrice, // Обновление originalTotalPrice
         appliedPromoCodes: [...prevState.appliedPromoCodes, promocode],
-        discountPercentage, // Обновление процента скидки
+        discountPercentage,
       }));
     }
   };
@@ -111,7 +108,12 @@ export const OrderForm: React.FC<IOrderForm> = ({
           <h3>Order summary for {state.cartItemsQuantity} items</h3>
         </div>
         <div className="promo-codes-container">
-          <h5>Applied Promo Codes: {getReadablePromoCodes(state.appliedPromoCodes).join(', ')}</h5>
+          <h5>
+            Applied promo codes:{' '}
+            {state.appliedPromoCodes.length > 0
+              ? getReadablePromoCodes(state.appliedPromoCodes).join(', ')
+              : 'no promo'}
+          </h5>
         </div>
       </div>
       <span>

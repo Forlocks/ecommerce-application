@@ -94,7 +94,9 @@ export const ProductCartCard: React.FC<IProductCartCardProps> = ({
           />
         </div>
 
-        <p>Variant: {variantId}</p>
+        <p>
+          Variant: {variantId} in {colorAttribute} color
+        </p>
         {/* <p>Color: {colorAttribute}</p>
         <p>Style: {styleAttribute}</p>
         <p>Material: {materialAttribute}</p> */}
