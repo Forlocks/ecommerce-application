@@ -29,20 +29,35 @@
   display: flex;
   flex-shrink: 2;
   width: 100%;
+  align-self: flex-start;
+  .button {
+    margin-left: 24px;
+    margin-top: 24px;
+  }
+  .quantity-input {
+    .button {
+      margin-left: 0px;
+    margin-top: 0px;
+    }
+  }
 }
 
 
 .cart_aside {
   grid-column: 4 / span 2;
   grid-row: 2 / span 1;
-  padding: 0 24px;
+  padding: 0px 24px;
+  margin-top: -12px;
   align-self: flex-start;
   min-width: 180px;
   form {
     display: flex;
     width: 100%;
     flex-direction: column;
-    gap: 24px;
+    gap: 16px;
+    span {
+      max-width: 440px;
+    }
   }
 }
 
@@ -57,8 +72,17 @@
   flex-direction: row;
   gap: 24px;
   padding: 24px 32px;
-  border-top: 1px solid $grey-color;
   transition: all 0.3s ease;
+  position: relative;
+
+  ::before {
+    content: '';
+    position: absolute;
+    left: 32px;
+    right: 32px;
+    top: -1px; 
+    border-top: 1px solid $grey-color;
+  }
 
   .card-cart-description {
     display: flex;
@@ -71,9 +95,16 @@
     content: none;
   }
 
-  .product-image{
+  .product-image-container {
     height: 144px;
     width: 144px;
+    flex-shrink: 0;
+  }
+
+  .product-image{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     transition: all 0.3s ease;
   }
 
@@ -81,10 +112,6 @@
 
   h3 {
     font-weight: 700;
-  }
-
-  .button {
-    margin-top: 12px;
   }
 
   &:hover {
@@ -101,12 +128,13 @@ p {
   max-width: 450px;
 }
 
-.card-cart-header {
+.card-cart-header,
+.card-cart-footer {
   display: flex;
   flex-direction: row;
   gap: 24px;
   justify-content: space-between;
-    align-items: center;
+  align-items: center;
 }
 
 .card-prices {
@@ -192,6 +220,122 @@ p {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-top: 8px;
+  white-space: nowrap;
+  gap: 16px;
 }
+
+.price-container {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  align-items: baseline;
+  white-space: nowrap;
+
+  & h3:nth-child(2){
+    margin-left: 24px;
+    color: $grey-color;
+    text-decoration: line-through;
+    white-space: nowrap;
+  }
+
+  & h3:nth-child(3){
+    color: $grey-color;
+    white-space: nowrap;
+  }
+}
+
+.quantity-container {
+  margin-top: -2px;
+  color: $grey-color;
+}
+
+.promo-codes-container {
+  color: $grey-color;
+}
+
+.price-quantity-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.empty-cart-message {
+  color: $grey-color;
+}
+
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .cart_page {
+    grid-template-columns: 1fr;
+  
+  }
+  .cart_container {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+  }
+  
+  
+  .cart_aside {
+    width: 100%;
+    margin-top: 24px;
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
+   
+    form {
+           span {
+         max-width: 100%;
+      }
+    }
+  }
+ }
+
+@media (max-width: 768px) {
+  .cart_page {
+    grid-template-columns: 1fr;
+  padding: 32px 16px;
+  }
+  .cart_container {
+    grid-column: 1 / span 1;
+    grid-row: 2 / span 1;
+    padding: 0px;
+    .button {
+      margin-left: 0px;
+      margin-top: 24px;
+    }
+  }
+  
+  
+  .cart_aside {
+    width: 100%;
+    min-width: 100%;
+    margin-top: 24px;
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
+   padding: 0px;
+    form {
+           span {
+         max-width: 100%;
+      }
+    }
+  }
+
+  .product-card.cart{
+    padding: 24px 0px;
+    ::before {
+      
+      left: 0px;
+      right: 0px;
+      top: -1px; 
+      border-top: 1px solid $grey-color;
+    }
+  }
+
+  .order-buttons {
+    flex-direction: column;
+    align-items: start;
+  }
+ }
+
 
 

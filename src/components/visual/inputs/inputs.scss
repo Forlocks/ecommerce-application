@@ -60,3 +60,38 @@ $green-color: #e3fd16;
 .input__wrapper {
   position: relative;
 }
+
+.quantity-input {
+  display: flex;
+  white-space: nowrap;
+  .button {
+    align-self: center;
+  }
+ 
+  input[type="number"] {
+    appearance: none;
+    width: 32px; 
+    flex: 1;
+    padding: 8px 0px;
+    font-family: 'Roboto Regular', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+    background-color: $white-color;
+    border: 1px solid;
+    border-color: transparent;
+    transition: border-color 0.3s ease;
+    border-radius: 0px;
+    outline: none;
+    text-align: center;
+    min-width: 0;
+  }
+  
+}
+
+.quantity-input input[type="number"]::-webkit-outer-spin-button,
+.quantity-input input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+

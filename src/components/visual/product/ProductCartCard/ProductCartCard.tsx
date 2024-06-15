@@ -45,6 +45,13 @@ export const ProductCartCard: React.FC<IProductCartCardProps> = ({
   const discountPercentage = calculateDiscountPercentage(price);
   const closeIcon = <img src="./assets/icons/cross.svg" alt="close" />;
   let quantity = product.quantity;
+  const variantId = variant?.id || null;
+  const colorAttribute =
+    variant?.attributes?.find((attr) => attr.name === 'attribute-colour-03')?.value || '';
+  const styleAttribute =
+    variant?.attributes?.find((attr) => attr.name === 'attribute-style-01')?.value || '';
+  const materialAttribute =
+    variant?.attributes?.find((attr) => attr.name === 'attribute-material-02')?.value || '';
 
   const handleDecrease = async () => {
     const currentCart = await getCart();
@@ -70,9 +77,11 @@ export const ProductCartCard: React.FC<IProductCartCardProps> = ({
 
   return (
     <div className={`product-card ${className}`}>
-      {variant?.images?.[0] && (
-        <ProductImage url={variant.images[1].url} alt="Product Image" className="product-image" />
-      )}
+      <div className="product-image-container">
+        {variant?.images?.[0] && (
+          <ProductImage url={variant.images[0].url} alt="Product Image" className="product-image" />
+        )}
+      </div>
       <div className="card-cart-description">
         <div className="card-cart-header">
           <h3 className="card-header">{name['en-US']}</h3>
@@ -84,30 +93,44 @@ export const ProductCartCard: React.FC<IProductCartCardProps> = ({
             }}
           />
         </div>
-        {price && (
-          <Price
-            price={
-              discountedPrice !== null
-                ? parseFloat(discountedPrice.toFixed(2))
-                : parseFloat((price.value.centAmount / 100).toFixed(2))
-            }
-            discounted={!!discountedPrice}
-            className={discountedPrice !== null ? 'discounted-price' : 'main-price'}
-            oldPrice={oldPrice !== null ? parseFloat(oldPrice.toFixed(2)) : null}
-            currencyCode={price.value.currencyCode}
-            discountPercentage={
-              discountPercentage !== null
-                ? parseInt(formatPercentage(discountPercentage), 10)
-                : undefined
-            }
+
+        <p>
+          Variant: {variantId} in {colorAttribute} color
+        </p>
+        {/* <p>Color: {colorAttribute}</p>
+        <p>Style: {styleAttribute}</p>
+        <p>Material: {materialAttribute}</p> */}
+        <p>
+          This is {name['en-US']}, a {styleAttribute} style masterpiece in {colorAttribute} color,
+          made of {materialAttribute}. A superb choice.
+        </p>
+        <div className="card-cart-footer">
+          {price && (
+            <Price
+              price={
+                discountedPrice !== null
+                  ? parseFloat(discountedPrice.toFixed(2))
+                  : parseFloat((price.value.centAmount / 100).toFixed(2))
+              }
+              discounted={!!discountedPrice}
+              className={discountedPrice !== null ? 'discounted-price' : 'main-price'}
+              oldPrice={oldPrice !== null ? parseFloat(oldPrice.toFixed(2)) : null}
+              currencyCode={price.value.currencyCode}
+              discountPercentage={
+                discountPercentage !== null
+                  ? parseInt(formatPercentage(discountPercentage), 10)
+                  : undefined
+              }
+            />
+          )}
+          <QuantityInput
+            className={className}
+            value={quantity}
+            onChange={() => {}}
+            onIncrease={handleIncrease}
+            onDecrease={handleDecrease}
           />
-        )}
-        <QuantityInput
-          value={quantity}
-          onChange={() => {}}
-          onIncrease={handleIncrease}
-          onDecrease={handleDecrease}
-        />
+        </div>
       </div>
     </div>
   );
