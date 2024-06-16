@@ -55,6 +55,13 @@
   flex-grow: 0;
 }
 
+#cart-link {
+  a {
+  display: flex;
+  gap: 4px;
+  }
+}
+
 .logo-header {
   display: flex;
   flex-direction: row;
@@ -71,6 +78,7 @@
       text-decoration: none;
   }
 }
+
 
 @media (max-width: 768px) {
   .burger-menu_inactive {

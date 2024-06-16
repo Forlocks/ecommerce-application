@@ -97,9 +97,6 @@ export const ProductCartCard: React.FC<IProductCartCardProps> = ({
         <p>
           Variant: {variantId} in {colorAttribute} color
         </p>
-        {/* <p>Color: {colorAttribute}</p>
-        <p>Style: {styleAttribute}</p>
-        <p>Material: {materialAttribute}</p> */}
         <p>
           This is {name['en-US']}, a {styleAttribute} style masterpiece in {colorAttribute} color,
           made of {materialAttribute}. A superb choice.

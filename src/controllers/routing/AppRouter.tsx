@@ -26,6 +26,12 @@ export const AppRouter = () => {
   const [sortByName, setSortByName] = useState<string>('');
   const [search, setSearch] = useState('');
 
+  const [cartItemsQuantity, setCartItemsQuantity] = useState(0);
+
+  const updateCartItemsQuantity = (newQuantity: number) => {
+    setCartItemsQuantity(newQuantity);
+  };
+
   const handleFilterChange = (
     colors: string[],
     style: string,
@@ -64,7 +70,13 @@ export const AppRouter = () => {
         <Route
           path="/"
           element={
-            <Layout closeModal={closeModal} showModal={showModal} modalContent={modalContent} />
+            <Layout
+              cartItemsQuantity={cartItemsQuantity}
+              updateCartItemsQuantity={updateCartItemsQuantity}
+              closeModal={closeModal}
+              showModal={showModal}
+              modalContent={modalContent}
+            />
           }
         >
           <Route index element={<MainPage openModal={openModal} />} />
@@ -101,6 +113,7 @@ export const AppRouter = () => {
               index
               element={
                 <ProductsPage
+                  updateCartItemsQuantity={updateCartItemsQuantity}
                   selectedColors={selectedColors}
                   selectedStyle={selectedStyle}
                   selectedMaterials={selectedMaterials}
@@ -116,6 +129,7 @@ export const AppRouter = () => {
               path="vases"
               element={
                 <VasesPage
+                  updateCartItemsQuantity={updateCartItemsQuantity}
                   selectedColors={selectedColors}
                   selectedStyle={selectedStyle}
                   selectedMaterials={selectedMaterials}
@@ -131,6 +145,7 @@ export const AppRouter = () => {
               path="decorations"
               element={
                 <DecorationsPage
+                  updateCartItemsQuantity={updateCartItemsQuantity}
                   selectedColors={selectedColors}
                   selectedStyle={selectedStyle}
                   selectedMaterials={selectedMaterials}
@@ -143,7 +158,16 @@ export const AppRouter = () => {
               }
             />
           </Route>
-          <Route path="cart" element={<CartPage openModal={openModal} closeModal={closeModal} />} />
+          <Route
+            path="cart"
+            element={
+              <CartPage
+                openModal={openModal}
+                closeModal={closeModal}
+                updateCartItemsQuantity={updateCartItemsQuantity}
+              />
+            }
+          />
           <Route path="about" element={<AboutUsPage openModal={openModal} />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />
