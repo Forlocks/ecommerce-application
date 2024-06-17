@@ -29,11 +29,15 @@ export const VasesPage: React.FC<IShopPages> = ({
     if (carts.length) {
       const cartProducts = carts[carts.length - 1].lineItems;
       const cartProductsIds: string[] = [];
+      let totalQuantity = 0;
+
       cartProducts.forEach((product) => {
         cartProductsIds.push(product.productId);
+        totalQuantity += product.quantity;
       });
+
       setCartProductList(cartProductsIds);
-      updateCartItemsQuantity(cartProducts.length);
+      updateCartItemsQuantity(totalQuantity);
     }
   };
 

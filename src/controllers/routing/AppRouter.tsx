@@ -104,7 +104,15 @@ export const AppRouter = () => {
               </ProtectedRoute>
             }
           />
-          <Route path="product/:id" element={<ProductDetailsPage openModal={openModal} />} />
+          <Route
+            path="product/:id"
+            element={
+              <ProductDetailsPage
+                openModal={openModal}
+                updateCartItemsQuantity={updateCartItemsQuantity}
+              />
+            }
+          />
           <Route
             path="shop/"
             element={<CatalogLayout onFilterChange={handleFilterChange} openModal={openModal} />}

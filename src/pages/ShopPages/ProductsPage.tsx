@@ -36,7 +36,7 @@ export const ProductsPage: React.FC<IShopPages> = ({
       });
 
       setCartProductList(cartProductsIds);
-      updateCartItemsQuantity(totalQuantity); // Обновление общего количества товаров
+      updateCartItemsQuantity(totalQuantity);
     }
   };
 
