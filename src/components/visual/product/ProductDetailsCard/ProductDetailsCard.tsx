@@ -10,7 +10,7 @@ import { LargeButton } from '../../buttons/LargeButton/LargeButton';
 import { ProductImage } from '../ProductImage/ProductImage';
 import { Price } from '../ProductPrice/Price/Price';
 import { ImageGallery } from '../../slider/SliderProductPage/SliderProductPage';
-import { cartAddLineItem } from '../../../../controllers/api/Cart';
+import { cartAddLineItem, cartRemoveLineItem } from '../../../../controllers/api/Cart';
 import { CartProduct } from '../ProductCard/IProductCardProps';
 
 export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
@@ -22,6 +22,7 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
   const location = useLocation();
   const navigate = useNavigate();
   const [selectedVariant, setSelectedVariant] = useState(product.masterVariant);
+  const [addedProduct, setAddedProduct] = useState<CartProduct | null>(null);
   const formatPercentage = (percentage: number) => Math.round(percentage).toString();
   const calculateDiscountedPrice = (mainPrice?: {
     discounted?: { value: { centAmount: number } };
@@ -48,9 +49,37 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
     );
     setIsButtonDisabled(isProductInCart);
   }, [cartProductList, product.id, selectedVariant.id]);
-  const handleButtonClick = () => {
-    cartAddLineItem(product.id, undefined, selectedVariant.id);
+
+  const handleButtonAddClick = () => {
     setIsButtonDisabled(true);
+
+    cartAddLineItem(product.id, undefined, selectedVariant.id).then((result) => {
+      setAddedProduct({
+        id: product.id,
+        variant: selectedVariant.id,
+        lineItemId: result.lineItems[0].id,
+      });
+    });
+  };
+
+  const handleButtonRemoveClick = () => {
+    setIsButtonDisabled(false);
+
+    const itemToRemove = cartProductList.find(
+      (item) =>
+        (item as CartProduct).id === product.id &&
+        (item as CartProduct).variant === selectedVariant.id,
+    ) as CartProduct | undefined;
+
+    if (addedProduct) {
+      cartRemoveLineItem(addedProduct.lineItemId).then(() => {
+        setAddedProduct(null);
+      });
+    } else if (itemToRemove) {
+      cartRemoveLineItem(itemToRemove.lineItemId).then(() => {
+        setAddedProduct(null);
+      });
+    }
   };
 
   const calculateDiscountPercentage = (mainPrice?: {
@@ -175,9 +204,17 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
           className="product-details-button"
           disabled={isButtonDisabled}
           disabledText="In Cart"
-          onClick={handleButtonClick}
+          onClick={handleButtonAddClick}
         >
           Add to cart
+        </LargeButton>
+        <LargeButton
+          className="product-details-button"
+          disabled={!isButtonDisabled}
+          disabledText=""
+          onClick={handleButtonRemoveClick}
+        >
+          Remove from cart
         </LargeButton>
       </div>
 

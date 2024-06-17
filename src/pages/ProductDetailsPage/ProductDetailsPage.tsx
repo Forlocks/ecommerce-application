@@ -24,6 +24,7 @@ export const ProductDetailsPage: React.FC<IPage> = () => {
       const cartProductsIds = cartProducts.map((productCart) => ({
         id: productCart.productId,
         variant: productCart.variant.id,
+        lineItemId: productCart.id,
       }));
       setCartProductList(cartProductsIds);
     }

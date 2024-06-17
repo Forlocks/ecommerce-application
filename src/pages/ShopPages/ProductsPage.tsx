@@ -5,6 +5,7 @@ import { ProductCard } from '../../components/visual/product/ProductCard/Product
 import { searchProduct } from '../../controllers/api/Products';
 import { IShopPages } from './IShopPages';
 import { cartAddLineItem, getCart } from '../../controllers/api/Cart';
+import { SmallButton } from '../../components/visual/buttons/SmallButton/SmallButton';
 
 export const ProductsPage: React.FC<IShopPages> = ({
   selectedColors,
@@ -16,10 +17,23 @@ export const ProductsPage: React.FC<IShopPages> = ({
   sortByName,
   search,
 }) => {
-  const [products, setProducts] = useState<ProductProjection[]>([]);
-  const [availableProducts, setAvailableProducts] = useState<ProductProjection[]>([]);
+  const mq = window.matchMedia('(max-width: 1600px)');
+  let downloadableProductsCount: number;
+
+  if (mq.matches) {
+    downloadableProductsCount = 10;
+  } else {
+    downloadableProductsCount = 8;
+  }
+
+  const [filteredProducts, setFilteredProducts] = useState<ProductProjection[]>([]);
+  const [visibleProductsCount, setVisibleProductsCount] =
+    useState<number>(downloadableProductsCount);
   const [cartProductList, setCartProductList] = useState<string[]>([]);
   const isInitialMount = useRef(true);
+  const loadArrow = (
+    <img className="load-arrow" src="/assets/icons/load-arrow.svg" alt="load-arrow" />
+  );
 
   // ---
   const getCartProducts = async () => {
@@ -82,16 +96,12 @@ export const ProductsPage: React.FC<IShopPages> = ({
 
       const sortedProducts = await searchProduct(queryArr, sortOrderArr, searchString);
 
-      const result = sortedProducts.filter((element) => {
-        return availableProducts.some((product) => product.id === element.id);
-      });
-
-      setProducts(result);
+      setFilteredProducts(sortedProducts);
     };
 
     if (isInitialMount.current) {
       isInitialMount.current = false;
-    } else if (availableProducts.length > 0) {
+    } else {
       fetchFilteredProducts();
     }
   }, [
@@ -103,7 +113,6 @@ export const ProductsPage: React.FC<IShopPages> = ({
     sortByPrice,
     sortByName,
     search,
-    availableProducts,
   ]);
 
   useEffect(() => {
@@ -115,27 +124,38 @@ export const ProductsPage: React.FC<IShopPages> = ({
       queryArr.push('categories.id:"9aa3a7ae-8e1b-4748-a9fd-2ec56ed7db5b"');
 
       const initialProducts = await searchProduct(queryArr, sortOrderArr, searchString);
-      setAvailableProducts(initialProducts);
-      setProducts(initialProducts);
+      setFilteredProducts(initialProducts);
     }
 
     fetchInitialProducts();
   }, []);
 
+  function loadMore() {
+    const newVisibleProductsCount = visibleProductsCount + downloadableProductsCount;
+    setVisibleProductsCount(newVisibleProductsCount);
+  }
+
   return (
-    <div className="product-list">
-      {products.map((product) => (
-        <ProductCard
-          className="shop"
-          key={product.id}
-          product={product}
-          onButtonClick={() => {
-            console.log(`Button click on shop card ${product.id}`);
-            cartAddLineItem(product.id);
-          }}
-          cartProductList={cartProductList}
-        />
-      ))}
-    </div>
+    <>
+      <div className="product-container">
+        <div className="product-list">
+          {filteredProducts.slice(0, visibleProductsCount).map((product) => (
+            <ProductCard
+              className="shop"
+              key={product.id}
+              product={product}
+              onButtonClick={() => {
+                console.log(`Button click on shop card ${product.id}`);
+                cartAddLineItem(product.id);
+              }}
+              cartProductList={cartProductList}
+            />
+          ))}
+        </div>
+      </div>
+      {filteredProducts.length > visibleProductsCount && (
+        <SmallButton onClick={loadMore} icon={loadArrow}></SmallButton>
+      )}
+    </>
   );
 };
