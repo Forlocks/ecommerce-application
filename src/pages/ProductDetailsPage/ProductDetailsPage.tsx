@@ -5,12 +5,11 @@ import { useParams } from 'react-router-dom';
 import { ProductDetailsCard } from '../../components/visual/product/ProductDetailsCard/ProductDetailsCard';
 import { getProductID } from '../../controllers/api/Products';
 import './ProductDetailsPage.scss';
-
-import { IPage } from '../IPage';
 import { getCart } from '../../controllers/api/Cart';
 import { CartProduct } from '../../components/visual/product/ProductCard/IProductCardProps';
+import { IProductDetailsPage } from './IProductDetailsPage';
 
-export const ProductDetailsPage: React.FC<IPage> = () => {
+export const ProductDetailsPage: React.FC<IProductDetailsPage> = ({ updateCartItemsQuantity }) => {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<ProductProjection | null>(null);
 
@@ -25,7 +24,11 @@ export const ProductDetailsPage: React.FC<IPage> = () => {
         id: productCart.productId,
         variant: productCart.variant.id,
       }));
+
+      const totalQuantity = cartProducts.reduce((acc, prod) => acc + prod.quantity, 0);
+
       setCartProductList(cartProductsIds);
+      updateCartItemsQuantity(totalQuantity);
     }
   };
 
@@ -63,6 +66,7 @@ export const ProductDetailsPage: React.FC<IPage> = () => {
         getCartProducts();
       }}
       cartProductList={cartProductList}
+      updateCartItemsQuantity={updateCartItemsQuantity}
     />
   );
 };

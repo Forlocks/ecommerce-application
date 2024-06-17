@@ -7,6 +7,7 @@ import { IShopPages } from './IShopPages';
 import { cartAddLineItem, getCart } from '../../controllers/api/Cart';
 
 export const DecorationsPage: React.FC<IShopPages> = ({
+  updateCartItemsQuantity,
   selectedColors,
   selectedStyle,
   selectedMaterials,
@@ -28,10 +29,15 @@ export const DecorationsPage: React.FC<IShopPages> = ({
     if (carts.length) {
       const cartProducts = carts[carts.length - 1].lineItems;
       const cartProductsIds: string[] = [];
+      let totalQuantity = 0;
+
       cartProducts.forEach((product) => {
         cartProductsIds.push(product.productId);
+        totalQuantity += product.quantity;
       });
+
       setCartProductList(cartProductsIds);
+      updateCartItemsQuantity(totalQuantity);
     }
   };
 
@@ -124,6 +130,16 @@ export const DecorationsPage: React.FC<IShopPages> = ({
     fetchInitialProducts();
   }, []);
 
+  const handleAddToCart = async (productId: string) => {
+    try {
+      const updatedCart = await cartAddLineItem(productId);
+      await getCartProducts();
+      updateCartItemsQuantity(updatedCart.lineItems.length);
+    } catch (error) {
+      console.error('Error adding product to cart:', error);
+    }
+  };
+
   return (
     <div className="product-list">
       {products.map((product) => (
@@ -132,7 +148,7 @@ export const DecorationsPage: React.FC<IShopPages> = ({
           key={product.id}
           product={product}
           onButtonClick={() => {
-            cartAddLineItem(product.id);
+            handleAddToCart(product.id);
             console.log(`Button click on shop card ${product.id}`);
           }}
           cartProductList={cartProductList}

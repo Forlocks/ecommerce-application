@@ -5,18 +5,7 @@ import { IOrderForm, IOrderFormState } from './IOrderForm';
 import { TextInput } from '../../inputs/TextInput/TextInput';
 import { MediumButton } from '../../buttons/MediumButton/MediumButton';
 import { addDiscountCode } from '../../../../controllers/api/Cart';
-
-const validatePromo = (promocode: string, appliedPromoCodes: string[]): string => {
-  // Проверка, что промокод действителен
-  if (promocode === 'DISCOUNT10' || promocode === 'DISCOUNT35') {
-    // Проверка, что промокод еще не был применен
-    if (appliedPromoCodes.includes(promocode)) {
-      return 'аlready applied';
-    }
-    return '';
-  }
-  return 'Invalid promocode';
-};
+import { validatePromo } from '../../../non-visual/validators/validators';
 
 const promoCodesMap: { [key: string]: string } = {
   'f8dcaf30-651d-4f59-9767-c5a8f433a904': 'DISCOUNT10',
@@ -36,7 +25,7 @@ export const OrderForm: React.FC<IOrderForm> = ({
     originalTotalPrice,
     appliedPromoCodes,
     cartItemsQuantity,
-    discountPercentage: 0, // Начальное значение процента скидки
+    discountPercentage: 0,
   });
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -49,14 +38,17 @@ export const OrderForm: React.FC<IOrderForm> = ({
     if (promocode === 'DISCOUNT10' || promocode === 'DISCOUNT35') {
       const response = await addDiscountCode(promocode);
       const newTotalPrice = response.body.totalPrice.centAmount / 100;
-      const discountPercentage = ((originalTotalPrice - newTotalPrice) / originalTotalPrice) * 100;
+      const discountPercentage =
+        ((state.originalTotalPrice - newTotalPrice) / state.originalTotalPrice) * 100;
 
       setState((prevState) => ({
         ...prevState,
         totalPrice: newTotalPrice,
         appliedPromoCodes: [...prevState.appliedPromoCodes, promocode],
         discountPercentage,
+        promocode: '',
       }));
+      setIsButtonDisabled(true);
     }
   };
 
@@ -109,7 +101,7 @@ export const OrderForm: React.FC<IOrderForm> = ({
         </div>
         <div className="promo-codes-container">
           <h5>
-            Applied promo codes:{' '}
+            Applied promo code:{' '}
             {state.appliedPromoCodes.length > 0
               ? getReadablePromoCodes(state.appliedPromoCodes).join(', ')
               : 'no promo'}
@@ -118,8 +110,8 @@ export const OrderForm: React.FC<IOrderForm> = ({
       </div>
       <span>
         If you have a promotional code, please enter it in the field below. Applying your promo code
-        will allow you to see the discount applied to your total purchase. Don't miss out on the
-        opportunity to save on your order!
+        will allow you to see the discount applied to your total purchase. Please note that you can
+        apply only one promo code at a time.
       </span>
 
       <TextInput

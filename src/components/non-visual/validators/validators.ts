@@ -162,3 +162,19 @@ export const validateMaxPrice = (value: string, minPrice: string | null): string
 
   return '';
 };
+
+export const validatePromo = (promocode: string, appliedPromoCodes: string[]): string => {
+  // Проверка, что промокод действителен
+  if (promocode === 'DISCOUNT10' || promocode === 'DISCOUNT35') {
+    // Проверка, что промокод еще не был применен
+    if (appliedPromoCodes.includes(promocode)) {
+      return 'already applied';
+    }
+    // Проверка, что уже есть активный промокод
+    if (appliedPromoCodes.length > 0) {
+      return 'one promo code can be applied at a time';
+    }
+    return '';
+  }
+  return 'invalid promocode';
+};

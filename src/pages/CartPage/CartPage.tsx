@@ -1,21 +1,15 @@
 import React, { useState } from 'react';
-import { IPage } from '../IPage';
 import './CartPage.scss';
 import { OrderForm } from '../../components/visual/forms/OrderForm/OrderForm';
 import { ProductCartList } from '../../components/visual/product/ProductCartList/ProductCartList';
 import { getCart } from '../../controllers/api/Cart';
+import { ICartPage } from './ICartPage';
 
-// export const CartPage: React.FC<IPage> = function ({ openModal, closeModal }) {
-//   const [totalPrice, setTotalPrice] = useState(0);
-
-// const updateTotalPrice = async () => {
-//   const cartsArr = await getCart();
-//   const cart = cartsArr[cartsArr.length - 1];
-//   const newTotalPrice = cart.totalPrice.centAmount / 100;
-//   setTotalPrice(newTotalPrice);
-// };
-
-export const CartPage: React.FC<IPage> = ({ openModal, closeModal }) => {
+export const CartPage: React.FC<ICartPage> = ({
+  openModal,
+  closeModal,
+  updateCartItemsQuantity,
+}) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [originalTotalPrice, setOriginalTotalPrice] = useState(0);
   const [cartItemsQuantity, setCartItemsQuantity] = useState(0);
@@ -46,6 +40,7 @@ export const CartPage: React.FC<IPage> = ({ openModal, closeModal }) => {
       setOriginalTotalPrice(newOriginalTotalPrice / 100);
       if (itemQuantity !== undefined) {
         setCartItemsQuantity(itemQuantity);
+        updateCartItemsQuantity(itemQuantity);
       }
       setAppliedPromoCodes(PromoCodes);
     } catch (error) {
@@ -63,6 +58,7 @@ export const CartPage: React.FC<IPage> = ({ openModal, closeModal }) => {
           updateTotalPrice={updateTotalPrice}
           openModal={openModal}
           closeModal={closeModal}
+          updateCartItemsQuantity={updateCartItemsQuantity}
         />
       </div>
       <div className="cart_aside">

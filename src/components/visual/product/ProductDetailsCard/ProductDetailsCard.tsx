@@ -10,7 +10,7 @@ import { LargeButton } from '../../buttons/LargeButton/LargeButton';
 import { ProductImage } from '../ProductImage/ProductImage';
 import { Price } from '../ProductPrice/Price/Price';
 import { ImageGallery } from '../../slider/SliderProductPage/SliderProductPage';
-import { cartAddLineItem } from '../../../../controllers/api/Cart';
+import { cartAddLineItem, getCart } from '../../../../controllers/api/Cart';
 import { CartProduct } from '../ProductCard/IProductCardProps';
 
 export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
@@ -18,6 +18,7 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
   className,
   cartProductList,
   onButtonClick,
+  updateCartItemsQuantity,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -48,9 +49,20 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
     );
     setIsButtonDisabled(isProductInCart);
   }, [cartProductList, product.id, selectedVariant.id]);
-  const handleButtonClick = () => {
-    cartAddLineItem(product.id, undefined, selectedVariant.id);
-    setIsButtonDisabled(true);
+  // Обработчик клика по кнопке "Add to cart"
+  const handleButtonClick = async () => {
+    try {
+      await cartAddLineItem(product.id, undefined, selectedVariant.id); // Добавляем товар в корзину
+      onButtonClick(); // Вызываем функцию из пропсов, если нужно выполнить дополнительные действия при клике
+      const cartsArr = await getCart(); // Получаем обновленную корзину
+      const cart = cartsArr[cartsArr.length - 1];
+      const itemQuantity = cart.totalLineItemQuantity; // Получаем количество товаров в корзине
+      if (itemQuantity !== undefined) {
+        updateCartItemsQuantity(itemQuantity); // Обновляем счетчик товаров в корзине
+      }
+    } catch (error) {
+      console.error('Error adding product to cart:', error);
+    }
   };
 
   const calculateDiscountPercentage = (mainPrice?: {
@@ -87,7 +99,6 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
 
   const handleVariantClick = (variant: ProductVariant) => {
     setSelectedVariant(variant);
-    setImages(variant.images?.map((image) => image.url) || []);
     onButtonClick();
   };
 

@@ -11,6 +11,7 @@ export const ProductCartList: React.FC<IProductCartList> = ({
   updateTotalPrice,
   openModal,
   closeModal,
+  updateCartItemsQuantity,
 }) => {
   const [cart, setCart] = useState<LineItem[]>([]);
 
@@ -20,6 +21,14 @@ export const ProductCartList: React.FC<IProductCartList> = ({
       if (cartArr.length) {
         setCart(cartArr[cartArr.length - 1].lineItems);
         updateTotalPrice();
+        const totalQuantity = cartArr[cartArr.length - 1].lineItems.reduce(
+          (acc, item) => acc + item.quantity,
+          0,
+        );
+        updateCartItemsQuantity(totalQuantity);
+      } else {
+        setCart([]);
+        updateCartItemsQuantity(0);
       }
     } catch (error) {
       console.error('Error:', (error as Error).message);
@@ -34,7 +43,7 @@ export const ProductCartList: React.FC<IProductCartList> = ({
       await promise;
       return cartRemoveLineItem(cartItem.id);
     }, Promise.resolve());
-    fetchProducts();
+    await fetchProducts();
   };
 
   const handleButtonCleanClick = () => {
