@@ -162,6 +162,11 @@
   cursor: pointer;
 }
 
+.product-details-buttons { 
+  display: flex;
+  gap: 16px;
+}
+
 @media (max-width: 1024px) and (min-width: 769px) {
   .product-details-first {
     grid-row: 2 / span 2;

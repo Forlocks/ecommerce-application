@@ -140,7 +140,7 @@ export const ProductsPage: React.FC<IShopPages> = ({
     const newVisibleProductsCount = visibleProductsCount + downloadableProductsCount;
     setVisibleProductsCount(newVisibleProductsCount);
   }
-        
+
   const handleAddToCart = async (productId: string) => {
     try {
       const updatedCart = await cartAddLineItem(productId);
@@ -162,7 +162,7 @@ export const ProductsPage: React.FC<IShopPages> = ({
               product={product}
               onButtonClick={() => {
                 console.log(`Button click on shop card ${product.id}`);
-                cartAddLineItem(product.id);
+                handleAddToCart(product.id);
               }}
               cartProductList={cartProductList}
             />

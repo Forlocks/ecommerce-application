@@ -137,7 +137,7 @@ export const VasesPage: React.FC<IShopPages> = ({
     const newVisibleProductsCount = visibleProductsCount + 8;
     setVisibleProductsCount(newVisibleProductsCount);
   }
-        
+
   const handleAddToCart = async (productId: string) => {
     try {
       const updatedCart = await cartAddLineItem(productId);
@@ -158,7 +158,7 @@ export const VasesPage: React.FC<IShopPages> = ({
               key={product.id}
               product={product}
               onButtonClick={() => {
-                cartAddLineItem(product.id);
+                handleAddToCart(product.id);
                 console.log(`Button click on shop card ${product.id}`);
               }}
               cartProductList={cartProductList}

@@ -80,7 +80,7 @@ export const Header: React.FC<IHeaderProps> = ({ cartItemsQuantity }) => {
                   className={({ isActive }) => (isActive ? 'active' : undefined)}
                   onClick={closeBurgerMenu}
                 >
-                  <img src="./assets/icons/shopping-cart.svg" alt="shopping cart" />
+                  <img src="/assets/icons/shopping-cart.svg" alt="shopping cart" />
                   Cart: {cartItemsQuantity}
                 </NavLink>
               </li>

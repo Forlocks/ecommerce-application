@@ -51,26 +51,31 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
     setIsButtonDisabled(isProductInCart);
   }, [cartProductList, product.id, selectedVariant.id]);
 
-  const handleButtonAddClick = () => {
+  const handleButtonAddClick = async () => {
     setIsButtonDisabled(true);
 
-    cartAddLineItem(product.id, undefined, selectedVariant.id).then((result) => {
+    try {
+      const result = await cartAddLineItem(product.id, undefined, selectedVariant.id);
       setAddedProduct({
         id: product.id,
         variant: selectedVariant.id,
         lineItemId: result.lineItems[0].id,
       });
-    });
-    
-    const cartsArr = await getCart();
-    const cart = cartsArr[cartsArr.length - 1];
-    const itemQuantity = cart.totalLineItemQuantity;
-    if (itemQuantity !== undefined) {
-      updateCartItemsQuantity(itemQuantity);
+
+      const cartsArr = await getCart();
+      if (cartsArr && cartsArr.length > 0) {
+        const cart = cartsArr[cartsArr.length - 1];
+        const itemQuantity = cart.totalLineItemQuantity;
+        if (itemQuantity !== undefined) {
+          updateCartItemsQuantity(itemQuantity);
+        }
+      }
+    } catch (error) {
+      console.error('Error adding item to cart:', error);
     }
   };
 
-  const handleButtonRemoveClick = () => {
+  const handleButtonRemoveClick = async () => {
     setIsButtonDisabled(false);
 
     const itemToRemove = cartProductList.find(
@@ -79,21 +84,25 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
         (item as CartProduct).variant === selectedVariant.id,
     ) as CartProduct | undefined;
 
-    if (addedProduct) {
-      cartRemoveLineItem(addedProduct.lineItemId).then(() => {
+    try {
+      if (addedProduct) {
+        await cartRemoveLineItem(addedProduct.lineItemId);
         setAddedProduct(null);
-      });
-    } else if (itemToRemove) {
-      cartRemoveLineItem(itemToRemove.lineItemId).then(() => {
+      } else if (itemToRemove) {
+        await cartRemoveLineItem(itemToRemove.lineItemId);
         setAddedProduct(null);
-      });
-    }
-    
-    const cartsArr = await getCart();
-    const cart = cartsArr[cartsArr.length - 1];
-    const itemQuantity = cart.totalLineItemQuantity;
-    if (itemQuantity !== undefined) {
-      updateCartItemsQuantity(itemQuantity);
+      }
+
+      const cartsArr = await getCart();
+      if (cartsArr && cartsArr.length > 0) {
+        const cart = cartsArr[cartsArr.length - 1];
+        const itemQuantity = cart.totalLineItemQuantity;
+        if (itemQuantity !== undefined) {
+          updateCartItemsQuantity(itemQuantity);
+        }
+      }
+    } catch (error) {
+      console.error('Error removing item from cart:', error);
     }
   };
 
@@ -213,22 +222,24 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
             ))}
           </div>
         </div>
-        <LargeButton
-          className="product-details-button"
-          disabled={isButtonDisabled}
-          disabledText="In Cart"
-          onClick={handleButtonAddClick}
-        >
-          Add to cart
-        </LargeButton>
-        <LargeButton
-          className="product-details-button"
-          disabled={!isButtonDisabled}
-          disabledText=""
-          onClick={handleButtonRemoveClick}
-        >
-          Remove from cart
-        </LargeButton>
+        <div className="product-details-buttons">
+          <LargeButton
+            className="product-details-button"
+            disabled={isButtonDisabled}
+            disabledText="In Cart"
+            onClick={handleButtonAddClick}
+          >
+            Add to cart
+          </LargeButton>
+          <LargeButton
+            className="product-details-button"
+            disabled={!isButtonDisabled}
+            disabledText=""
+            onClick={handleButtonRemoveClick}
+          >
+            Remove
+          </LargeButton>
+        </div>
       </div>
 
       <div className="product-details-second">
