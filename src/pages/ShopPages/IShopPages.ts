@@ -7,4 +7,5 @@ export interface IShopPages {
   sortByPrice: string;
   sortByName: string;
   search: string;
+  updateCartItemsQuantity: (newQuantity: number) => void;
 }

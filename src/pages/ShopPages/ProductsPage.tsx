@@ -8,6 +8,7 @@ import { cartAddLineItem, getCart } from '../../controllers/api/Cart';
 import { SmallButton } from '../../components/visual/buttons/SmallButton/SmallButton';
 
 export const ProductsPage: React.FC<IShopPages> = ({
+  updateCartItemsQuantity,
   selectedColors,
   selectedStyle,
   selectedMaterials,
@@ -41,10 +42,15 @@ export const ProductsPage: React.FC<IShopPages> = ({
     if (carts.length) {
       const cartProducts = carts[carts.length - 1].lineItems;
       const cartProductsIds: string[] = [];
+      let totalQuantity = 0;
+
       cartProducts.forEach((product) => {
         cartProductsIds.push(product.productId);
+        totalQuantity += product.quantity;
       });
+
       setCartProductList(cartProductsIds);
+      updateCartItemsQuantity(totalQuantity);
     }
   };
 
@@ -134,6 +140,16 @@ export const ProductsPage: React.FC<IShopPages> = ({
     const newVisibleProductsCount = visibleProductsCount + downloadableProductsCount;
     setVisibleProductsCount(newVisibleProductsCount);
   }
+        
+  const handleAddToCart = async (productId: string) => {
+    try {
+      const updatedCart = await cartAddLineItem(productId);
+      await getCartProducts();
+      updateCartItemsQuantity(updatedCart.lineItems.length);
+    } catch (error) {
+      console.error('Error adding product to cart:', error);
+    }
+  };
 
   return (
     <>

@@ -10,7 +10,7 @@ import { LargeButton } from '../../buttons/LargeButton/LargeButton';
 import { ProductImage } from '../ProductImage/ProductImage';
 import { Price } from '../ProductPrice/Price/Price';
 import { ImageGallery } from '../../slider/SliderProductPage/SliderProductPage';
-import { cartAddLineItem, cartRemoveLineItem } from '../../../../controllers/api/Cart';
+import { cartAddLineItem, cartRemoveLineItem, getCart } from '../../../../controllers/api/Cart';
 import { CartProduct } from '../ProductCard/IProductCardProps';
 
 export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
@@ -18,6 +18,7 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
   className,
   cartProductList,
   onButtonClick,
+  updateCartItemsQuantity,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -60,6 +61,13 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
         lineItemId: result.lineItems[0].id,
       });
     });
+    
+    const cartsArr = await getCart();
+    const cart = cartsArr[cartsArr.length - 1];
+    const itemQuantity = cart.totalLineItemQuantity;
+    if (itemQuantity !== undefined) {
+      updateCartItemsQuantity(itemQuantity);
+    }
   };
 
   const handleButtonRemoveClick = () => {
@@ -79,6 +87,13 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
       cartRemoveLineItem(itemToRemove.lineItemId).then(() => {
         setAddedProduct(null);
       });
+    }
+    
+    const cartsArr = await getCart();
+    const cart = cartsArr[cartsArr.length - 1];
+    const itemQuantity = cart.totalLineItemQuantity;
+    if (itemQuantity !== undefined) {
+      updateCartItemsQuantity(itemQuantity);
     }
   };
 
@@ -116,7 +131,6 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
 
   const handleVariantClick = (variant: ProductVariant) => {
     setSelectedVariant(variant);
-    setImages(variant.images?.map((image) => image.url) || []);
     onButtonClick();
   };
 
@@ -188,7 +202,6 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
               <div
                 key={index}
                 className={` ${variant === selectedVariant ? 'selected-variant' : ''}`}
-                // className={`${index + 1}`}
                 onClick={() => {
                   handleVariantClick(variant);
                 }}

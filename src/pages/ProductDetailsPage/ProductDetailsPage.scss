@@ -89,6 +89,10 @@
   padding-bottom: 8px;
   border-bottom: 1px solid $grey-text;
   align-items: baseline;
+  h4 {
+    font-weight: 500;
+  }
+
   h5 {
     color: $grey-text;
   }
@@ -110,6 +114,12 @@
     }
   }
 
+  .discounted-price.new {
+    p:nth-child(2) {
+    font-weight: 500;
+    }
+  }
+
   .base-price.old {
     display: flex;
     gap: 4px;
@@ -127,6 +137,7 @@
     }
   }
   .discount {
+    align-self: center;
     p {
       @include h3-style;
       color: $grey-color;

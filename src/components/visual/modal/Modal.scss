@@ -19,7 +19,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  padding: 70px 10px 40px 10px;
+  padding: 24px 32px;
   min-width: 300px;
   max-width: 90%;
   max-height: 90%;
@@ -40,10 +40,10 @@
 .modal-close {
   display: block;
   position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 25px;
-  height: 25px;
+  top: 24px;
+  right: 32px;
+  width: 14px;
+  height: 14px;
   transform: rotate(0deg);
   transition: transform 0.3s ease;
   cursor: pointer;
@@ -57,10 +57,5 @@
 .accept-modal {
   display: flex;
   flex-direction: column;
-  gap: 30px;
-
-  * {
-    font-weight: 800;
-    margin: auto
-  }
+  gap: 16px;
 }

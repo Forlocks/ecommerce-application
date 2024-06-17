@@ -1,18 +1,19 @@
 import React from 'react';
 import './MainPage.scss';
+import { NavLink } from 'react-router-dom';
 import { Logo } from '../../components/visual/logo/Logo';
 import { IPage } from '../IPage';
 import { LargeButton } from '../../components/visual/buttons/LargeButton/LargeButton';
 
-const applyTenProsentDiscountCode = () => {
-  console.log('Discount applied 10 to all');
-  // Здесь будет логика для применения скидочного кода
-};
+// const applyTenProsentDiscountCode = () => {
+//   console.log('Discount applied 10 to all');
+//   // Здесь будет логика для применения скидочного кода
+// };
 
-const apply35ProsentDiscountCode = () => {
-  console.log('Discount applied 35 to decor');
-  // Здесь будет логика для применения скидочного кода
-};
+// const apply35ProsentDiscountCode = () => {
+//   console.log('Discount applied 35 to decor');
+//   // Здесь будет логика для применения скидочного кода
+// };
 
 export const MainPage: React.FC<IPage> = function () {
   return (
@@ -44,7 +45,7 @@ export const MainPage: React.FC<IPage> = function () {
         <div className="discount-first-small-image">
           <img src="./assets/images/mainPage_discount_1-2.webp" alt="discount first smal" />
         </div>
-        <div className="discount-first-info">
+        <div className="discount-first-info" id="promo-section">
           <h2>Get 10% off on all</h2>
           <span>
             Take advantage of our special offer and save on your next purchase! Use the code
@@ -53,7 +54,9 @@ export const MainPage: React.FC<IPage> = function () {
             saving can go a long way!
           </span>
           <h3>DISCOUNT10</h3>
-          <LargeButton onClick={applyTenProsentDiscountCode}>use discount</LargeButton>
+          <LargeButton>
+            <NavLink to="/cart">Use Discount</NavLink>
+          </LargeButton>
         </div>
       </div>
       <div className="discount-second">
@@ -68,7 +71,9 @@ export const MainPage: React.FC<IPage> = function () {
             touch at an exceptional value.
           </span>
           <h3>DISCOUNT35</h3>
-          <LargeButton onClick={apply35ProsentDiscountCode}>use discount</LargeButton>
+          <LargeButton>
+            <NavLink to="/cart">Use Discount</NavLink>
+          </LargeButton>
         </div>
         <div className="discount-second-image">
           <img src="./assets/images/mainPage_discount_2.webp" alt="discount second image" />
