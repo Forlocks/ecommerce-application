@@ -38,7 +38,10 @@ export class User {
   }
 
   regainApiPasswordAuthClient() {
-    if (localStorage.getItem('userTokenStorage') !== null) {
+    if (
+      localStorage.getItem('userTokenStorage') !== null &&
+      localStorage.getItem('userState') === 'true'
+    ) {
       const refreshTokenStr = localStorage.getItem('userTokenStorage');
       if (refreshTokenStr) {
         const authorization: string = `Bearer ${JSON.parse(refreshTokenStr).token}`;
@@ -61,6 +64,35 @@ export class User {
           .withExistingTokenFlow(authorization, existingTokenMiddlewareOptions)
           .withHttpMiddleware(httpMiddlewareOptions)
           .build();
+      }
+    } else if (
+      localStorage.getItem('userTokenStorage') !== null &&
+      localStorage.getItem('userState') === 'false'
+    ) {
+      const anonymousMiddlewareOptions: AnonymousAuthMiddlewareOptions = {
+        host: process.env.CTP_AUTH_URL ?? '',
+        projectKey: process.env.CTP_PROJECT_KEY ?? '',
+        credentials: {
+          clientId: process.env.CTP_CLIENT_ID ?? '',
+          clientSecret: process.env.CTP_CLIENT_SECRET ?? '',
+          anonymousId: localStorage.getItem('anonymousId') as string,
+        },
+        scopes: [process.env.CTP_SCOPES ?? ''],
+        fetch,
+        tokenCache: userTokenCache,
+      };
+      const refreshTokenStr = localStorage.getItem('userTokenStorage');
+      if (refreshTokenStr) {
+        const authorization: string = `Bearer ${JSON.parse(refreshTokenStr).token}`;
+        const existingTokenMiddlewareOptions: ExistingTokenMiddlewareOptions = {
+          force: true,
+        };
+        const ctpClientAnonymousFlow = new ClientBuilder()
+          .withAnonymousSessionFlow(anonymousMiddlewareOptions)
+          .withHttpMiddleware(httpMiddlewareOptions)
+          .withExistingTokenFlow(authorization, existingTokenMiddlewareOptions)
+          .build();
+        this.ctpClientFlow = ctpClientAnonymousFlow;
       }
     }
   }
