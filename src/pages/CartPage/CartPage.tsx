@@ -51,7 +51,7 @@ export const CartPage: React.FC<ICartPage> = ({
   return (
     <div className="cart_page">
       <div className="cart_title">
-        <h1>Shoping cart</h1>
+        <h1>Shopping cart</h1>
       </div>
       <div className="cart_container">
         <ProductCartList
