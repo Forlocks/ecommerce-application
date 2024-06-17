@@ -23,6 +23,7 @@ export const ProductDetailsPage: React.FC<IProductDetailsPage> = ({ updateCartIt
       const cartProductsIds = cartProducts.map((productCart) => ({
         id: productCart.productId,
         variant: productCart.variant.id,
+        lineItemId: productCart.id,
       }));
 
       const totalQuantity = cartProducts.reduce((acc, prod) => acc + prod.quantity, 0);

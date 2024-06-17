@@ -5,6 +5,7 @@ import { ProductCard } from '../../components/visual/product/ProductCard/Product
 import { searchProduct } from '../../controllers/api/Products';
 import { IShopPages } from './IShopPages';
 import { cartAddLineItem, getCart } from '../../controllers/api/Cart';
+import { SmallButton } from '../../components/visual/buttons/SmallButton/SmallButton';
 
 export const DecorationsPage: React.FC<IShopPages> = ({
   updateCartItemsQuantity,
@@ -17,13 +18,16 @@ export const DecorationsPage: React.FC<IShopPages> = ({
   sortByName,
   search,
 }) => {
-  const [products, setProducts] = useState<ProductProjection[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<ProductProjection[]>([]);
   const [availableProducts, setAvailableProducts] = useState<ProductProjection[]>([]);
+  const [visibleProductsCount, setVisibleProductsCount] = useState<number>(8);
+  const [cartProductList, setCartProductList] = useState<string[]>([]);
   const isInitialMount = useRef(true);
+  const loadArrow = (
+    <img className="load-arrow" src="/assets/icons/load-arrow.svg" alt="load-arrow" />
+  );
 
   // ---
-
-  const [cartProductList, setCartProductList] = useState<string[]>([]);
   const getCartProducts = async () => {
     const carts = await getCart();
     if (carts.length) {
@@ -44,7 +48,6 @@ export const DecorationsPage: React.FC<IShopPages> = ({
   useEffect(() => {
     getCartProducts();
   }, []);
-
   // ---
 
   useEffect(() => {
@@ -94,7 +97,7 @@ export const DecorationsPage: React.FC<IShopPages> = ({
         return availableProducts.some((product) => product.id === element.id);
       });
 
-      setProducts(result);
+      setFilteredProducts(result);
     };
 
     if (isInitialMount.current) {
@@ -124,12 +127,17 @@ export const DecorationsPage: React.FC<IShopPages> = ({
 
       const initialProducts = await searchProduct(queryArr, sortOrderArr, searchString);
       setAvailableProducts(initialProducts);
-      setProducts(initialProducts);
+      setFilteredProducts(initialProducts);
     }
 
     fetchInitialProducts();
   }, []);
 
+  function loadMore() {
+    const newVisibleProductsCount = visibleProductsCount + 8;
+    setVisibleProductsCount(newVisibleProductsCount);
+  }
+        
   const handleAddToCart = async (productId: string) => {
     try {
       const updatedCart = await cartAddLineItem(productId);
@@ -141,19 +149,26 @@ export const DecorationsPage: React.FC<IShopPages> = ({
   };
 
   return (
-    <div className="product-list">
-      {products.map((product) => (
-        <ProductCard
-          className="shop"
-          key={product.id}
-          product={product}
-          onButtonClick={() => {
-            handleAddToCart(product.id);
-            console.log(`Button click on shop card ${product.id}`);
-          }}
-          cartProductList={cartProductList}
-        />
-      ))}
-    </div>
+    <>
+      <div className="product-container">
+        <div className="product-list">
+          {filteredProducts.slice(0, visibleProductsCount).map((product) => (
+            <ProductCard
+              className="shop"
+              key={product.id}
+              product={product}
+              onButtonClick={() => {
+                cartAddLineItem(product.id);
+                console.log(`Button click on shop card ${product.id}`);
+              }}
+              cartProductList={cartProductList}
+            />
+          ))}
+        </div>
+      </div>
+      {filteredProducts.length > visibleProductsCount && (
+        <SmallButton onClick={loadMore} icon={loadArrow}></SmallButton>
+      )}
+    </>
   );
 };
