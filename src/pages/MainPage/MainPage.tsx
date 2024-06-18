@@ -1,21 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './MainPage.scss';
 import { NavLink } from 'react-router-dom';
 import { Logo } from '../../components/visual/logo/Logo';
-import { IPage } from '../IPage';
 import { LargeButton } from '../../components/visual/buttons/LargeButton/LargeButton';
+import { getCart } from '../../controllers/api/Cart';
+import { ICartPage } from '../CartPage/ICartPage';
 
-// const applyTenProsentDiscountCode = () => {
-//   console.log('Discount applied 10 to all');
-//   // Здесь будет логика для применения скидочного кода
-// };
+export const MainPage: React.FC<ICartPage> = ({ updateCartItemsQuantity }) => {
+  useEffect(() => {
+    const fetchCartItems = async () => {
+      const cartsArr = await getCart();
+      if (cartsArr && cartsArr.length > 0) {
+        const cart = cartsArr[cartsArr.length - 1];
+        const itemQuantity = cart.totalLineItemQuantity;
+        if (itemQuantity !== undefined) {
+          updateCartItemsQuantity(itemQuantity);
+        }
+      }
+    };
 
-// const apply35ProsentDiscountCode = () => {
-//   console.log('Discount applied 35 to decor');
-//   // Здесь будет логика для применения скидочного кода
-// };
+    fetchCartItems();
+  }, [updateCartItemsQuantity]);
 
-export const MainPage: React.FC<IPage> = function () {
   return (
     <div className="main_page">
       <div className="hero-section">

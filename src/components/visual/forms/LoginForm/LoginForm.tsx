@@ -75,7 +75,9 @@ export const LoginForm: React.FC = () => {
         togglePasswordVisibility={togglePasswordVisibility}
       />
       <div className="login-buttons">
-        <LargeButton disabled={isButtonDisabled}>Login</LargeButton>
+        <LargeButton disabled={isButtonDisabled} disabledText="Login">
+          Login
+        </LargeButton>
 
         <div className="link">
           <span>
