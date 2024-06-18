@@ -79,7 +79,12 @@ export const AppRouter = () => {
             />
           }
         >
-          <Route index element={<MainPage openModal={openModal} />} />
+          <Route
+            index
+            element={
+              <MainPage openModal={openModal} updateCartItemsQuantity={updateCartItemsQuantity} />
+            }
+          />
           <Route
             path="registration"
             element={
