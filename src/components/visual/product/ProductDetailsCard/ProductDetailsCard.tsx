@@ -55,10 +55,11 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
   const handleButtonAddClick = async () => {
     try {
       const result = await cartAddLineItem(product.id, undefined, selectedVariant.id);
+      console.log(result);
       setAddedProduct({
         id: product.id,
         variant: selectedVariant.id,
-        lineItemId: result.lineItems[0].id,
+        lineItemId: result.lineItems[result.lineItems.length - 1].id,
       });
 
       setIsButtonDisabled(true);
