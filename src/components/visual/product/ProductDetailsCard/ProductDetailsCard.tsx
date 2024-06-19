@@ -101,6 +101,8 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
       updateCartItemsQuantity(countProducts);
 
       setIsButtonDisabled(false);
+
+      openModal(<p>The item was successfully removed from the cart</p>);
     } catch (error) {
       if (error instanceof Error) {
         openModal(
