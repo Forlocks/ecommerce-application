@@ -18,9 +18,19 @@ export const DecorationsPage: React.FC<IShopPages> = ({
   sortByName,
   search,
 }) => {
+  const mq = window.matchMedia('(max-width: 1600px)');
+  let downloadableProductsCount: number;
+
+  if (mq.matches) {
+    downloadableProductsCount = 10;
+  } else {
+    downloadableProductsCount = 8;
+  }
+
   const [filteredProducts, setFilteredProducts] = useState<ProductProjection[]>([]);
   const [availableProducts, setAvailableProducts] = useState<ProductProjection[]>([]);
-  const [visibleProductsCount, setVisibleProductsCount] = useState<number>(8);
+  const [visibleProductsCount, setVisibleProductsCount] =
+    useState<number>(downloadableProductsCount);
   const [cartProductList, setCartProductList] = useState<string[]>([]);
   const isInitialMount = useRef(true);
   const loadArrow = (
@@ -134,7 +144,7 @@ export const DecorationsPage: React.FC<IShopPages> = ({
   }, []);
 
   function loadMore() {
-    const newVisibleProductsCount = visibleProductsCount + 8;
+    const newVisibleProductsCount = visibleProductsCount + downloadableProductsCount;
     setVisibleProductsCount(newVisibleProductsCount);
   }
 

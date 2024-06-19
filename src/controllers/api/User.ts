@@ -217,7 +217,7 @@ export class User {
           body: customerData,
         })
         .execute();
-      this.login({ email: customerData.email, password: customerData.password });
+      await this.login({ email: customerData.email, password: customerData.password });
     } catch (error) {
       responseObj.email = (error as Error).message;
     }

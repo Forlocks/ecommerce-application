@@ -9,7 +9,10 @@ import { getCart } from '../../controllers/api/Cart';
 import { CartProduct } from '../../components/visual/product/ProductCard/IProductCardProps';
 import { IProductDetailsPage } from './IProductDetailsPage';
 
-export const ProductDetailsPage: React.FC<IProductDetailsPage> = ({ updateCartItemsQuantity }) => {
+export const ProductDetailsPage: React.FC<IProductDetailsPage> = ({
+  updateCartItemsQuantity,
+  openModal,
+}) => {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<ProductProjection | null>(null);
 
@@ -68,6 +71,7 @@ export const ProductDetailsPage: React.FC<IProductDetailsPage> = ({ updateCartIt
       }}
       cartProductList={cartProductList}
       updateCartItemsQuantity={updateCartItemsQuantity}
+      openModal={openModal}
     />
   );
 };
