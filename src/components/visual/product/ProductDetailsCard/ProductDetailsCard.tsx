@@ -65,10 +65,8 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
       const cartsArr = await getCart();
       if (cartsArr && cartsArr.length > 0) {
         const cart = cartsArr[cartsArr.length - 1];
-        const itemQuantity = cart.totalLineItemQuantity;
-        if (itemQuantity !== undefined) {
-          updateCartItemsQuantity(itemQuantity);
-        }
+        const totalQuantity = cart.lineItems.reduce((acc, item) => acc + item.quantity, 0);
+        updateCartItemsQuantity(totalQuantity);
       }
     } catch (error) {
       console.error('Error adding item to cart:', error);
@@ -96,10 +94,10 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
       const cartsArr = await getCart();
       if (cartsArr && cartsArr.length > 0) {
         const cart = cartsArr[cartsArr.length - 1];
-        const itemQuantity = cart.totalLineItemQuantity;
-        if (itemQuantity !== undefined) {
-          updateCartItemsQuantity(itemQuantity);
-        }
+        const totalQuantity = cart.lineItems.reduce((acc, item) => acc + item.quantity, 0);
+        updateCartItemsQuantity(totalQuantity);
+      } else {
+        updateCartItemsQuantity(0);
       }
     } catch (error) {
       console.error('Error removing item from cart:', error);
