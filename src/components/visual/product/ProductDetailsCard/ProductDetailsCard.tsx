@@ -19,6 +19,7 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
   cartProductList,
   onButtonClick,
   updateCartItemsQuantity,
+  openModal,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -52,32 +53,34 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
   }, [cartProductList, product.id, selectedVariant.id]);
 
   const handleButtonAddClick = async () => {
-    setIsButtonDisabled(true);
-
     try {
       const result = await cartAddLineItem(product.id, undefined, selectedVariant.id);
+      console.log(result);
       setAddedProduct({
         id: product.id,
         variant: selectedVariant.id,
-        lineItemId: result.lineItems[0].id,
+        lineItemId: result.lineItems[result.lineItems.length - 1].id,
       });
 
+      setIsButtonDisabled(true);
+
       const cartsArr = await getCart();
-      if (cartsArr && cartsArr.length > 0) {
-        const cart = cartsArr[cartsArr.length - 1];
-        const itemQuantity = cart.totalLineItemQuantity;
-        if (itemQuantity !== undefined) {
-          updateCartItemsQuantity(itemQuantity);
-        }
-      }
+      const countProducts = cartsArr[cartsArr.length - 1].lineItems.length;
+      updateCartItemsQuantity(countProducts);
     } catch (error) {
-      console.error('Error adding item to cart:', error);
+      if (error instanceof Error) {
+        openModal(
+          <p>
+            Failed to add item from cart
+            <br />
+            Please check your internet connection and reload the page
+          </p>,
+        );
+      }
     }
   };
 
   const handleButtonRemoveClick = async () => {
-    setIsButtonDisabled(false);
-
     const itemToRemove = cartProductList.find(
       (item) =>
         (item as CartProduct).id === product.id &&
@@ -94,15 +97,22 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
       }
 
       const cartsArr = await getCart();
-      if (cartsArr && cartsArr.length > 0) {
-        const cart = cartsArr[cartsArr.length - 1];
-        const itemQuantity = cart.totalLineItemQuantity;
-        if (itemQuantity !== undefined) {
-          updateCartItemsQuantity(itemQuantity);
-        }
-      }
+      const countProducts = cartsArr[cartsArr.length - 1].lineItems.length;
+      updateCartItemsQuantity(countProducts);
+
+      setIsButtonDisabled(false);
+
+      openModal(<p>The item was successfully removed from the cart</p>);
     } catch (error) {
-      console.error('Error removing item from cart:', error);
+      if (error instanceof Error) {
+        openModal(
+          <p>
+            Failed to remove item from cart
+            <br />
+            Please check your internet connection and reload the page
+          </p>,
+        );
+      }
     }
   };
 

@@ -106,8 +106,8 @@ export const ProductCartCard: React.FC<IProductCartCardProps> = ({
             <Price
               price={
                 discountedPrice !== null
-                  ? parseFloat(discountedPrice.toFixed(2))
-                  : parseFloat((price.value.centAmount / 100).toFixed(2))
+                  ? +(parseFloat(discountedPrice.toFixed(2)) * quantity).toFixed(2)
+                  : +(parseFloat((price.value.centAmount / 100).toFixed(2)) * quantity).toFixed(2)
               }
               discounted={!!discountedPrice}
               className={discountedPrice !== null ? 'discounted-price' : 'main-price'}

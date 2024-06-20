@@ -8,7 +8,7 @@ export const Modal: React.FC<IModal> = ({ isShow, onClose, children }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <img src="./assets/icons/cross.svg" className="modal-close" onClick={onClose} />
+        <img src="/assets/icons/cross.svg" className="modal-close" onClick={onClose} />
         {children}
       </div>
     </div>
