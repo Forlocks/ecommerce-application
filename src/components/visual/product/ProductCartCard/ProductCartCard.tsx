@@ -111,7 +111,9 @@ export const ProductCartCard: React.FC<IProductCartCardProps> = ({
               }
               discounted={!!discountedPrice}
               className={discountedPrice !== null ? 'discounted-price' : 'main-price'}
-              oldPrice={oldPrice !== null ? parseFloat(oldPrice.toFixed(2)) : null}
+              oldPrice={
+                oldPrice !== null ? +(parseFloat(oldPrice.toFixed(2)) * quantity).toFixed(2) : null
+              }
               currencyCode={price.value.currencyCode}
               discountPercentage={
                 discountPercentage !== null
