@@ -1,0 +1,38 @@
+
+@mixin h2-style {
+  font-family: 'Craftwork Grotesk Medium', sans-serif;
+  font-weight: 500;
+  font-size: 3em;
+  line-height: 125%;
+}
+
+@mixin h3-style {
+    font-family: 'Craftwork Grotesk Semi Bold', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: 0.01em;
+  }
+  
+  @mixin h4-style {
+    font-family: 'Roboto Regular', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+  }
+  
+  @mixin h5-style {
+    font-family: 'Roboto Regular', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+  
+  @mixin p-style {
+    font-family: 'Roboto Regular', sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 130%;
+    letter-spacing: -0.03em;
+    color: $black-text;
+  }

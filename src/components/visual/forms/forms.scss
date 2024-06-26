@@ -1,0 +1,81 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;  
+}
+
+button {
+    align-self: flex-start;
+}
+
+.login-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.fields-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: -8px;
+    margin-bottom: 16px;
+}
+
+.minmax-container {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+    &> :last-child {
+        padding-top:23px ;
+    }
+}
+
+.dash {
+    padding-top:28px ; 
+}
+
+.sort-container,
+.filter-container {
+    display: flex;
+    flex-direction: column;
+gap: 16px;
+span {
+    margin-bottom: -8px;
+}
+}
+
+.color-container {
+    display: grid;
+    grid-template-rows: repeat(auto, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 12px;
+    column-gap: 12px;
+    height: 120px;
+    max-width: 180px;
+  }
+
+  .material-container {
+    display: grid;
+    grid-template-rows: repeat(auto, 1fr);
+    grid-template-columns: repeat(1, 1fr);
+    row-gap: 12px;
+    column-gap: 12px;
+    height: 96px;
+    max-width: 180px;
+  }
+
+  label {
+    display: block;
+    color: $black-text;
+    font-family: "Roboto Regular", sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    margin-bottom: -4px;
+}
+
+.material {
+    margin-top: 1px;
+}

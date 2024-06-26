@@ -1,0 +1,153 @@
+@import '../../components/visual/variables';
+@import '../../components/visual/grid-layout';
+@import '../../components/visual/mixins';
+
+.about_page {
+  @include grid-layout;
+  grid-row: 1fr 1fr;
+  padding: 48px;
+  row-gap: 16px;
+  height: auto;
+  span {
+    max-width: 440px;
+  
+  }
+  h1 {
+    white-space: nowrap;
+  }
+ 
+}
+
+.about_title {
+  grid-column: 1 / -1;
+  grid-row: 1 / span 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.about_container {
+  grid-column: 3 / span 3;
+  grid-row: 2 / span 1;
+  width: 100%;
+}
+
+.developer_container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 24px;
+  padding: 32px 0px;
+  .bio_container {
+    grid-column: 1 / span 1;
+    display: flex;
+    flex-direction: column;
+    padding-left: 24px;
+    gap: 8px;
+    color: $black-text;
+    img {
+      width: 100%;
+      margin-bottom: 8px;
+    }
+    .bio_name {
+      display: flex;
+      gap: 8px;
+    }
+  }
+  .role_container {
+    grid-column: 2 / span 2;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-right: 24px;
+    h3 {
+      font-weight: 400;
+      color: $black-text;
+      font-family: 'Craftwork Grotesk Heavy', sans-serif;
+    }
+    p {
+      margin-top: -4px;
+      font-weight: 100;
+    }
+    ul {
+      list-style-type: disc;
+      padding-left: 16px;
+    }
+    li {
+      padding-bottom: 8px;
+    }
+  }
+}
+
+.about_aside {
+  grid-column: 1 / span 2;
+  grid-row: 2 / span 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 32px;
+  align-self: flex-start;
+  min-width: 180px;
+  a {
+    margin-top: -6px;
+    img {
+      width: 48px;
+      opacity: 0.6;
+    
+    }
+  }
+  a::before {
+    background-color: transparent;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .about_page {
+    grid-template-columns: 1fr;
+  }
+.about_container {
+  grid-column: 1 / span 1;
+  grid-row: 3 / span 1;
+  width: 100%;
+  order:2;
+}
+
+.about_aside {
+  grid-column: 1 / span 1;
+ order: 1;
+ width: 100%;
+}
+}
+
+@media (max-width: 768px) {
+  .developer_container {
+    grid-template-columns: 1fr;
+    
+    .role_container {
+      grid-column: 1 / span 1;
+      
+    }
+    .bio_container {
+      padding: 0;
+      margin-bottom: 16px;
+    }
+  }
+  .about_page {
+    padding: 24px 16px;
+    grid-template-columns: 1fr;
+  }
+.about_container {
+  grid-column: 1 / span 1;
+  grid-row: 3 / span 1;
+  width: 100%;
+  order:2;
+}
+
+.about_aside {
+  grid-column: 1 / span 1;
+ order: 1;
+ width: 100%;
+ padding: 0;
+}
+}
