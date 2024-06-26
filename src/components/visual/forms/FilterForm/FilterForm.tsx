@@ -1,11 +1,11 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { IFilterFormProps } from './IFilterFormProps';
-import { SearchInput } from '../../inputs/SearchInput/SearchInput';
 import { ListInput } from '../../inputs/ListInput/ListInput';
 import { MinMaxPriceField } from '../../fields/MinMaxPriceFields/MinMaxPriceFields';
 import { validateMinPrice, validateMaxPrice } from '../../../non-visual/validators/validators';
 import { SmallButton } from '../../buttons/SmallButton/SmallButton';
 import { Checkbox } from '../../checkbox/Checkbox';
+import { SearchInput } from '../../inputs/SearchInput/SearchInput';
 
 export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
   const clear = <img src="/assets/icons/clear.svg" alt="clear" />;
@@ -271,14 +271,6 @@ export const FilterForm: React.FC<IFilterFormProps> = ({ onFilterChange }) => {
       </div>
       <div className="filter-container">
         <span>Filter by...</span>
-        {/* <ListInput
-          label="Material"
-          placeholder="Choose a material"
-          options={['Ceramic', 'Glass']}
-          value={materialFilter}
-          onChange={handleMaterialFilterChange}
-          name="materialFilter"
-        /> */}
         <ListInput
           label="Style"
           placeholder="Choose a style"

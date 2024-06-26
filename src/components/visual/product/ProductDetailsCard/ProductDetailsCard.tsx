@@ -10,15 +10,21 @@ import { LargeButton } from '../../buttons/LargeButton/LargeButton';
 import { ProductImage } from '../ProductImage/ProductImage';
 import { Price } from '../ProductPrice/Price/Price';
 import { ImageGallery } from '../../slider/SliderProductPage/SliderProductPage';
+import { cartAddLineItem, cartRemoveLineItem, getCart } from '../../../../controllers/api/Cart';
+import { CartProduct } from '../ProductCard/IProductCardProps';
 
 export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
   product,
   className,
+  cartProductList,
   onButtonClick,
+  updateCartItemsQuantity,
+  openModal,
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [selectedVariant, setSelectedVariant] = useState(product.masterVariant);
+  const [addedProduct, setAddedProduct] = useState<CartProduct | null>(null);
   const formatPercentage = (percentage: number) => Math.round(percentage).toString();
   const calculateDiscountedPrice = (mainPrice?: {
     discounted?: { value: { centAmount: number } };
@@ -34,6 +40,80 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
       return mainPrice.value.centAmount / 100;
     }
     return null;
+  };
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  useEffect(() => {
+    const isProductInCart = cartProductList.some(
+      (item) =>
+        (item as CartProduct).id === product.id &&
+        (item as CartProduct).variant === selectedVariant.id,
+    );
+    setIsButtonDisabled(isProductInCart);
+  }, [cartProductList, product.id, selectedVariant.id]);
+
+  const handleButtonAddClick = async () => {
+    try {
+      const result = await cartAddLineItem(product.id, undefined, selectedVariant.id);
+      console.log(result);
+      setAddedProduct({
+        id: product.id,
+        variant: selectedVariant.id,
+        lineItemId: result.lineItems[result.lineItems.length - 1].id,
+      });
+
+      setIsButtonDisabled(true);
+
+      const cartsArr = await getCart();
+      const countProducts = cartsArr[cartsArr.length - 1].lineItems.length;
+      updateCartItemsQuantity(countProducts);
+    } catch (error) {
+      if (error instanceof Error) {
+        openModal(
+          <p>
+            Failed to add item from cart
+            <br />
+            Please check your internet connection and reload the page
+          </p>,
+        );
+      }
+    }
+  };
+
+  const handleButtonRemoveClick = async () => {
+    const itemToRemove = cartProductList.find(
+      (item) =>
+        (item as CartProduct).id === product.id &&
+        (item as CartProduct).variant === selectedVariant.id,
+    ) as CartProduct | undefined;
+
+    try {
+      if (addedProduct) {
+        await cartRemoveLineItem(addedProduct.lineItemId);
+        setAddedProduct(null);
+      } else if (itemToRemove) {
+        await cartRemoveLineItem(itemToRemove.lineItemId);
+        setAddedProduct(null);
+      }
+
+      const cartsArr = await getCart();
+      const countProducts = cartsArr[cartsArr.length - 1].lineItems.length;
+      updateCartItemsQuantity(countProducts);
+
+      setIsButtonDisabled(false);
+
+      openModal(<p>The item was successfully removed from the cart</p>);
+    } catch (error) {
+      if (error instanceof Error) {
+        openModal(
+          <p>
+            Failed to remove item from cart
+            <br />
+            Please check your internet connection and reload the page
+          </p>,
+        );
+      }
+    }
   };
 
   const calculateDiscountPercentage = (mainPrice?: {
@@ -70,7 +150,7 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
 
   const handleVariantClick = (variant: ProductVariant) => {
     setSelectedVariant(variant);
-    setImages(variant.images?.map((image) => image.url) || []);
+    onButtonClick();
   };
 
   const variantsWithMaster = [product.masterVariant, ...product.variants];
@@ -141,8 +221,9 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
               <div
                 key={index}
                 className={` ${variant === selectedVariant ? 'selected-variant' : ''}`}
-                // className={`${index + 1}`}
-                onClick={() => handleVariantClick(variant)}
+                onClick={() => {
+                  handleVariantClick(variant);
+                }}
               >
                 {variant.images && variant.images.length > 0 && (
                   <ProductImage url={variant.images[0].url} alt={`Variant ${index + 1} Image`} />
@@ -151,9 +232,24 @@ export const ProductDetailsCard: React.FC<IProductDetailsCardProps> = ({
             ))}
           </div>
         </div>
-        <LargeButton className="product-details-button" onClick={onButtonClick}>
-          Add to cart
-        </LargeButton>
+        <div className="product-details-buttons">
+          <LargeButton
+            className="product-details-button"
+            disabled={isButtonDisabled}
+            disabledText="In Cart"
+            onClick={handleButtonAddClick}
+          >
+            Add to cart
+          </LargeButton>
+          <LargeButton
+            className="product-details-button"
+            disabled={!isButtonDisabled}
+            disabledText=""
+            onClick={handleButtonRemoveClick}
+          >
+            Remove
+          </LargeButton>
+        </div>
       </div>
 
       <div className="product-details-second">

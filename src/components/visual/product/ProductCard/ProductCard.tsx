@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Price } from '../ProductPrice/Price/Price';
 import { MediumButton } from '../../buttons/MediumButton/MediumButton';
@@ -34,7 +34,12 @@ const calculateDiscountPercentage = (mainPrice?: {
   return null;
 };
 
-export const ProductCard: React.FC<IProductCardProps> = ({ product, className, onButtonClick }) => {
+export const ProductCard: React.FC<IProductCardProps> = ({
+  product,
+  className,
+  onButtonClick,
+  cartProductList,
+}) => {
   const { name, masterVariant, description } = product;
   const mainPrice = masterVariant?.prices?.[0];
   const discountedPrice = calculateDiscountedPrice(mainPrice);
@@ -42,6 +47,16 @@ export const ProductCard: React.FC<IProductCardProps> = ({ product, className, o
   const discountPercentage = calculateDiscountPercentage(mainPrice);
 
   const productUrl = `/product/${product.id}`;
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState(
+    !!(cartProductList as string[]).includes(product.id),
+  );
+  const handleButtonClick = (event: React.MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
+    onButtonClick();
+    setIsButtonDisabled(true);
+  };
 
   return (
     <Link to={productUrl} className={`product-card ${className}`}>
@@ -68,7 +83,12 @@ export const ProductCard: React.FC<IProductCardProps> = ({ product, className, o
           oldPrice={oldPrice !== null ? parseFloat(oldPrice.toFixed(2)) : null}
         />
       )}
-      <MediumButton className="product-button" onClick={onButtonClick}>
+      <MediumButton
+        disabled={isButtonDisabled}
+        disabledText="In Cart"
+        className="product-button"
+        onClick={handleButtonClick}
+      >
         Add to cart
       </MediumButton>
     </Link>

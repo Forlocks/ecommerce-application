@@ -395,7 +395,9 @@ export const RegistrationForm: React.FC<RegistrationFormProps> = ({ openModal })
         />
 
         <div className="login-buttons">
-          <LargeButton disabled={isButtonDisabled}>Register</LargeButton>
+          <LargeButton disabled={isButtonDisabled} disabledText="Register">
+            Register
+          </LargeButton>
 
           <div className="link">
             <span>

@@ -13,6 +13,8 @@ import { VasesPage } from '../../pages/ShopPages/VasesPage';
 import { DecorationsPage } from '../../pages/ShopPages/DecorationsPage';
 import { ProfilePage } from '../../pages/ProfilePage/ProfilePage';
 import { ProductDetailsPage } from '../../pages/ProductDetailsPage/ProductDetailsPage';
+import { CartPage } from '../../pages/CartPage/CartPage';
+import { AboutUsPage } from '../../pages/AboutUsPage/AboutUsPage';
 
 export const AppRouter = () => {
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
@@ -23,6 +25,12 @@ export const AppRouter = () => {
   const [sortByPrice, setSortByPrice] = useState<string>('');
   const [sortByName, setSortByName] = useState<string>('');
   const [search, setSearch] = useState('');
+
+  const [cartItemsQuantity, setCartItemsQuantity] = useState(0);
+
+  const updateCartItemsQuantity = (newQuantity: number) => {
+    setCartItemsQuantity(newQuantity);
+  };
 
   const handleFilterChange = (
     colors: string[],
@@ -62,10 +70,21 @@ export const AppRouter = () => {
         <Route
           path="/"
           element={
-            <Layout closeModal={closeModal} showModal={showModal} modalContent={modalContent} />
+            <Layout
+              cartItemsQuantity={cartItemsQuantity}
+              updateCartItemsQuantity={updateCartItemsQuantity}
+              closeModal={closeModal}
+              showModal={showModal}
+              modalContent={modalContent}
+            />
           }
         >
-          <Route index element={<MainPage openModal={openModal} />} />
+          <Route
+            index
+            element={
+              <MainPage openModal={openModal} updateCartItemsQuantity={updateCartItemsQuantity} />
+            }
+          />
           <Route
             path="registration"
             element={
@@ -90,7 +109,15 @@ export const AppRouter = () => {
               </ProtectedRoute>
             }
           />
-          <Route path="product/:id" element={<ProductDetailsPage openModal={openModal} />} />
+          <Route
+            path="product/:id"
+            element={
+              <ProductDetailsPage
+                openModal={openModal}
+                updateCartItemsQuantity={updateCartItemsQuantity}
+              />
+            }
+          />
           <Route
             path="shop/"
             element={<CatalogLayout onFilterChange={handleFilterChange} openModal={openModal} />}
@@ -99,6 +126,7 @@ export const AppRouter = () => {
               index
               element={
                 <ProductsPage
+                  updateCartItemsQuantity={updateCartItemsQuantity}
                   selectedColors={selectedColors}
                   selectedStyle={selectedStyle}
                   selectedMaterials={selectedMaterials}
@@ -114,6 +142,7 @@ export const AppRouter = () => {
               path="vases"
               element={
                 <VasesPage
+                  updateCartItemsQuantity={updateCartItemsQuantity}
                   selectedColors={selectedColors}
                   selectedStyle={selectedStyle}
                   selectedMaterials={selectedMaterials}
@@ -129,6 +158,7 @@ export const AppRouter = () => {
               path="decorations"
               element={
                 <DecorationsPage
+                  updateCartItemsQuantity={updateCartItemsQuantity}
                   selectedColors={selectedColors}
                   selectedStyle={selectedStyle}
                   selectedMaterials={selectedMaterials}
@@ -141,6 +171,17 @@ export const AppRouter = () => {
               }
             />
           </Route>
+          <Route
+            path="cart"
+            element={
+              <CartPage
+                openModal={openModal}
+                closeModal={closeModal}
+                updateCartItemsQuantity={updateCartItemsQuantity}
+              />
+            }
+          />
+          <Route path="about" element={<AboutUsPage openModal={openModal} />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />
       </Routes>

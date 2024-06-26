@@ -1,4 +1,5 @@
 import {
+  AnonymousAuthMiddlewareOptions,
   Client,
   ClientBuilder,
   ExistingTokenMiddlewareOptions,
@@ -13,21 +14,12 @@ import {
   MyCustomerUpdateAction,
   createApiBuilderFromCtpClient,
 } from '@commercetools/platform-sdk';
-import {
-  anonymousMiddlewareOptions,
-  authMiddlewareOptions,
-  httpMiddlewareOptions,
-} from './middlewareOptions';
+import { authMiddlewareOptions, httpMiddlewareOptions } from './middlewareOptions';
 import { userTokenCache } from '../..';
 
 export class User {
   ctpClientCredentialFlow = new ClientBuilder()
     .withClientCredentialsFlow(authMiddlewareOptions)
-    .withHttpMiddleware(httpMiddlewareOptions)
-    .build();
-
-  ctpClientAnonymousFlow = new ClientBuilder()
-    .withAnonymousSessionFlow(anonymousMiddlewareOptions)
     .withHttpMiddleware(httpMiddlewareOptions)
     .build();
 
@@ -46,31 +38,88 @@ export class User {
   }
 
   regainApiPasswordAuthClient() {
-    if (localStorage.getItem('userState') === 'true') {
-      const refreshTokenStr = localStorage.getItem('userTokenStorage');
-      if (refreshTokenStr) {
-        const authorization: string = `Bearer ${JSON.parse(refreshTokenStr).token}`;
-        const existingTokenMiddlewareOptions: ExistingTokenMiddlewareOptions = {
-          force: true,
-        };
-        const refreshAuthMiddlewareOptions: RefreshAuthMiddlewareOptions = {
-          host: process.env.CTP_AUTH_URL ?? '',
-          projectKey: process.env.CTP_PROJECT_KEY ?? '',
-          credentials: {
-            clientId: process.env.CTP_CLIENT_ID ?? '',
-            clientSecret: process.env.CTP_CLIENT_SECRET ?? '',
-          },
-          refreshToken: JSON.parse(refreshTokenStr).refreshToken,
-          tokenCache: userTokenCache,
-          fetch,
-        };
+    const userTokenStorage = localStorage.getItem('userTokenStorage');
+    const userState = localStorage.getItem('userState');
+
+    if (userTokenStorage) {
+      const parsedToken = JSON.parse(userTokenStorage);
+      const refreshTokenStr = parsedToken.refreshToken;
+      const authorization = `Bearer ${parsedToken.token}`;
+      const existingTokenMiddlewareOptions: ExistingTokenMiddlewareOptions = {
+        force: true,
+      };
+      const refreshAuthMiddlewareOptions: RefreshAuthMiddlewareOptions = {
+        host: process.env.CTP_AUTH_URL ?? '',
+        projectKey: process.env.CTP_PROJECT_KEY ?? '',
+        credentials: {
+          clientId: process.env.CTP_CLIENT_ID ?? '',
+          clientSecret: process.env.CTP_CLIENT_SECRET ?? '',
+        },
+        refreshToken: refreshTokenStr,
+        tokenCache: userTokenCache,
+        fetch,
+      };
+      if (userState === 'true') {
         this.ctpClientFlow = new ClientBuilder()
           .withRefreshTokenFlow(refreshAuthMiddlewareOptions)
           .withExistingTokenFlow(authorization, existingTokenMiddlewareOptions)
           .withHttpMiddleware(httpMiddlewareOptions)
           .build();
+      } else if (userState === 'false') {
+        const anonymousMiddlewareOptions: AnonymousAuthMiddlewareOptions = {
+          host: process.env.CTP_AUTH_URL ?? '',
+          projectKey: process.env.CTP_PROJECT_KEY ?? '',
+          credentials: {
+            clientId: process.env.CTP_CLIENT_ID ?? '',
+            clientSecret: process.env.CTP_CLIENT_SECRET ?? '',
+            anonymousId: localStorage.getItem('anonymousId') as string,
+          },
+          scopes: [process.env.CTP_SCOPES ?? ''],
+          fetch,
+          tokenCache: userTokenCache,
+        };
+
+        this.ctpClientFlow = new ClientBuilder()
+          .withRefreshTokenFlow(refreshAuthMiddlewareOptions)
+          .withAnonymousSessionFlow(anonymousMiddlewareOptions)
+          .withHttpMiddleware(httpMiddlewareOptions)
+          .withExistingTokenFlow(authorization, existingTokenMiddlewareOptions)
+          .build();
       }
     }
+  }
+
+  async setAnonymousFlow() {
+    let anonymousId;
+    if (!localStorage.getItem('anonymousId') || localStorage.getItem('anonymousId') === null) {
+      anonymousId = this.setAnonymousId();
+      if (anonymousId) {
+        const anonymousMiddlewareOptions: AnonymousAuthMiddlewareOptions = {
+          host: process.env.CTP_AUTH_URL ?? '',
+          projectKey: process.env.CTP_PROJECT_KEY ?? '',
+          credentials: {
+            clientId: process.env.CTP_CLIENT_ID ?? '',
+            clientSecret: process.env.CTP_CLIENT_SECRET ?? '',
+            anonymousId,
+          },
+          scopes: [process.env.CTP_SCOPES ?? ''],
+          fetch,
+          tokenCache: userTokenCache,
+        };
+
+        const ctpClientAnonymousFlow = new ClientBuilder()
+          .withAnonymousSessionFlow(anonymousMiddlewareOptions)
+          .withHttpMiddleware(httpMiddlewareOptions)
+          .build();
+        this.ctpClientFlow = ctpClientAnonymousFlow;
+      }
+    }
+  }
+
+  setAnonymousId() {
+    const anonymousId = crypto.randomUUID();
+    localStorage.setItem('anonymousId', anonymousId);
+    return anonymousId;
   }
 
   createApiPasswordAuthClient(customerData: CustomerSignin) {
@@ -115,6 +164,12 @@ export class User {
           this.createApiPasswordAuthClient(customerData);
           const apiRoot = this.createApiRoot(this.ctpClientFlow);
           try {
+            userTokenCache.set({
+              token: '',
+              expirationTime: 0,
+              refreshToken: '',
+            });
+            localStorage.setItem('anonymousId', '');
             await apiRoot.me().login().post({ body: customerData }).execute();
 
             this.setUserToken(userTokenCache.get());
@@ -133,6 +188,7 @@ export class User {
     this.setUserState('false');
     this.ctpClientFlow = this.ctpClientCredentialFlow;
     localStorage.setItem('userTokenStorage', '');
+    localStorage.setItem('anonymousId', '');
     userTokenCache.set({
       token: '',
       expirationTime: 0,
@@ -153,7 +209,7 @@ export class User {
           body: customerData,
         })
         .execute();
-      this.login({ email: customerData.email, password: customerData.password });
+      await this.login({ email: customerData.email, password: customerData.password });
     } catch (error) {
       responseObj.email = (error as Error).message;
     }

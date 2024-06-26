@@ -14,7 +14,17 @@ test('renders the Header component', () => {
       <Routes>
         <Route
           path="/"
-          element={<Layout closeModal={() => {}} showModal={false} modalContent={null} />}
+          element={
+            <Layout
+              closeModal={() => {}}
+              showModal={false}
+              modalContent={null}
+              cartItemsQuantity={0}
+              updateCartItemsQuantity={(newQuantity: number) => {
+                console.log('updateCartItemsQuantity called with:', newQuantity);
+              }}
+            />
+          }
         >
           <Route index element={<div>Test Content</div>} />
         </Route>

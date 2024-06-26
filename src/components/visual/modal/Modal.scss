@@ -19,7 +19,7 @@
   justify-content: center;
   align-items: center;
   position: relative;
-  padding: 70px 10px 40px 10px;
+  padding: 40px 45px 15px 45px;
   min-width: 300px;
   max-width: 90%;
   max-height: 90%;
@@ -52,4 +52,10 @@
     transform: rotate(90deg);
     transition: transform 0.3s ease;
   }
+}
+
+.accept-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }

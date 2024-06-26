@@ -3,8 +3,9 @@ import { useLocation, NavLink } from 'react-router-dom';
 import { Logo } from '../logo/Logo';
 import { BurgerButton } from '../buttons/BurgerButton/BurgerButton';
 import { user } from '../../../index';
+import { IHeaderProps } from './IHeader';
 
-export const Header: React.FC = () => {
+export const Header: React.FC<IHeaderProps> = ({ cartItemsQuantity }) => {
   const location = useLocation();
   const isAuthPage = location.pathname === '/login' || location.pathname === '/registration';
   const userState = localStorage.getItem('userState');
@@ -57,15 +58,6 @@ export const Header: React.FC = () => {
             <>
               <li>
                 <NavLink
-                  to="/shop"
-                  className={({ isActive }) => (isActive ? 'active' : undefined)}
-                  onClick={closeBurgerMenu}
-                >
-                  Shop
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
                   to="/about"
                   className={({ isActive }) => (isActive ? 'active' : undefined)}
                   onClick={closeBurgerMenu}
@@ -75,11 +67,21 @@ export const Header: React.FC = () => {
               </li>
               <li>
                 <NavLink
+                  to="/shop"
+                  className={({ isActive }) => (isActive ? 'active' : undefined)}
+                  onClick={closeBurgerMenu}
+                >
+                  Shop
+                </NavLink>
+              </li>
+              <li id="cart-link">
+                <NavLink
                   to="/cart"
                   className={({ isActive }) => (isActive ? 'active' : undefined)}
                   onClick={closeBurgerMenu}
                 >
-                  Cart
+                  <img src="/assets/icons/shopping-cart.svg" alt="shopping cart" />
+                  Cart: {cartItemsQuantity}
                 </NavLink>
               </li>
               {userState === 'false' ? (
